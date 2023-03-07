@@ -1,0 +1,15 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="requests" />
+          <option value="case.Api_param.api_account_transfer_except" />
+          <option value="case.Api_param.api_symbol_and_riskLimit" />
+          <option value="case.Api_param.api_symbol_and_riskLimit_except" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
