@@ -1,11 +1,7 @@
-import json
-import requests
 from BU.spot.api import webapi
 import time,datetime,random
 from decimal import *
 import sys
-from ws4py.client.threadedclient import WebSocketClient
-
 
 #获取买一卖一价 和数量
 def price(symbol):
@@ -13,6 +9,7 @@ def price(symbol):
     res = webapi.orderBook(symbol=symbol)
     if res['code'] !=0:
         print("获取买卖盘接口异常，异常原因：",res['msg'])
+        return False
     orderbook['bid'][0] = res['data']['bids'][0][0]
     orderbook['bid'][1] = res['data']['bids'][0][1]
     orderbook['ask'][0] = res['data']['asks'][1][0]
@@ -53,20 +50,3 @@ def newhisorder(orderid,symbol):
         if tmp['id'] == orderid:
             return tmp
 
-def send_dingtalk(text, token):
-    url = "https://oapi.dingtalk.com/robot/send?access_token=" + token
-    headers = {"Content-Type": "application/json"}
-    data = {
-        'msgtype': "text",
-        'text': {
-            "content": text
-        }
-    }
-    r = requests.post(url, headers=headers, json=data)
-    return r
-
-
-
-
-if __name__ == '__main__':
-    print(assets())

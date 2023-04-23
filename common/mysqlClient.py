@@ -1,13 +1,19 @@
 import time
-
+# from api import app
+from gevent.pywsgi import WSGIServer
+import pem
+from pem import RSAPrivateKey
+from pem import Certificate
+import os
 import pymysql
 from config.mysqlConfig import mysqlHost
-
 class mysql():
     def __init__(self,server,product=None):
         mysql_server=mysqlHost[server]
-        if product : mysql_server=mysqlHost[server][product-1]
-        self.serverIP=mysql_server[0];self.serverPort=mysql_server[1];self.serverUserName=mysql_server[2];self.serverPassword=mysql_server[3]
+        self.serverIP=mysql_server[0];
+        self.serverPort=mysql_server[1];
+        self.serverUserName=mysql_server[2];
+        self.serverPassword=mysql_server[3]
         # print(mysql_server);#time.sleep(100)
     def dbExcute(self,db, sql):
         try:
@@ -31,5 +37,5 @@ class mysql():
         else: return ret
 
 
-# t=mysql('3').mysql('select * from mulan_btc1.t_trade')
-# print(t)
+t=mysql(3).mysql('select * from exchange.xrp_usdt_order_fulfillment where id=167078269001744')
+print(t)
