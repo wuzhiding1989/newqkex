@@ -3,6 +3,7 @@ import requests
 from BU.spot.api import webapi
 import time,datetime,random
 from decimal import *
+import math
 import sys
 from ws4py.client.threadedclient import WebSocketClient
 
@@ -39,13 +40,19 @@ def symbolbase(symbol=None):
     return symbols
 
 #转成decimal类型，方便计算
-def d(value,length=None):
+def d(value,y=None,length=None):
     p=len(str(int(float(value))))
-    if not length: length=28
+    if not length:
+        length=28
     mycontext = Context(prec=p+length, rounding=ROUND_DOWN)  # ROUND_UP
     setcontext(mycontext)
+    if y !=None:
+        digits = y
+        factor = 10 ** digits
+        result = math.floor(value * factor) / factor
+        return result
     return Decimal(value)
-
+#查询历史订单id
 def newhisorder(orderid,symbol):
     res = webapi.hisOrders(page=1,pageSize=10,symbol=symbol)
     res = res['data']['orders']

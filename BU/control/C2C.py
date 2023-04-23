@@ -4,7 +4,7 @@ import ast
 
 
 def otc_public_orders(symbol, legalSymbol, side, page, pageSize,id, amount=None, payType=None):
-    res = wb.otcPublicOrders(amount=amount, payType=payType, symbol=symbol, legalSymbol=legalSymbol, side=side,
+    res = wb.otc_PublicOrders(amount=amount, payType=payType, symbol=symbol, legalSymbol=legalSymbol, side=side,
                              page=page, pageSize=pageSize)
     orders ={}
     if res['code'] !=0:

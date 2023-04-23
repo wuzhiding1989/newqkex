@@ -10,9 +10,9 @@ user_secret_key='KVPO2AOTEHGCTBHO';mer_secret_key='IGMOVAGVYASVT52N';mer_email='
 user_email='1255@gmail.com'
 import json
 import requests
-token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'
+token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'  #slack的token
 channel='D0539LTSNMU'
-channel1='C05373RARLJ'
+channel1='C05373RARLJ'  #slack的频道ID
 def send_Slack(message):
     message=f'{message}'
     payload = {"text": message,"channel": channel1}
