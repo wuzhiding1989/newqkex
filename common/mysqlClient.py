@@ -33,9 +33,16 @@ class mysql():
         # if str(server)[-1:] == conf.linear_flag:    defaultdb = 'linear_contract_trade'
         db = pymysql.connect(host=self.serverIP, port=self.serverPort, user=self.serverUserName, passwd=self.serverPassword, db=defaultdb,charset='utf8')
         ret=self.dbExcute(db, sql)
-        if not init: return self._init(ret)
-        else: return ret
+        if not init:
+            return self._init(ret)
+        else:
+            return ret
 
 
-t=mysql(3).mysql('select * from exchange.xrp_usdt_order_fulfillment where id=167078269001744')
-print(t)
+
+# t=mysql(3).mysql('select * from exchange.xrp_usdt_order_fulfillment where id=167078269001744')
+# print(t)
+# user_id=10122165; legal_symbol='usd'; symbol='btc'
+# sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
+# a = mysql(3).mysql(sql)
+# print(a)

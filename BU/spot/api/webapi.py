@@ -1,10 +1,9 @@
 import copy
 import requests
-from common.util import d
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMjkzZDhiMi00MzA3LTQ4YjktODQ3ZS05MmVhOWFhZWJmMzE0MDcxMzQzNzUiLCJ1aWQiOiJ5YlRXQzNSU1VKbVhndkdJLzNWbFlnPT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6IkE0akhmalBoeWxKbVJWa2VubTdmRWc9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjc5NTY4NTQ0LCJleHAiOjE2Nzk2NTQ5NDQsImlzcyI6IndjcyJ9.005ekNPToC9T-7tD0QksQt0sUx-ADexnOD47Ryd45mQ'
+Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0ZWY0MTlkYi01NzljLTQ3YmYtYWI2Ny0xMzUyZTQ2ODJiNjk3NzE4OTgxMTciLCJ1aWQiOiJPd0FrTmN0WTlHUmlzL0Z6QlpjZGRBPT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6IlNIK2ZVb2xFejkwU1FwcGlsUzFqcUE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjgyMjM4MzM0LCJleHAiOjE2ODIzMjQ3MzQsImlzcyI6IndjcyJ9.hLuLfJ0I5y9kNg803Tt1X1G5bAE8QTYaBT_BsTaLBno'
 headers['X-Authorization']=Authorization
 url = 'http://13.215.135.141'
 account='10081@qq.com'
@@ -158,16 +157,7 @@ def user(headers):
     path = '/user/detail'
     res =requests.get(url=url+path,headers=headers).json()
 
-#根据币种获取otc资产
-def otc_assets_symbol(headers1=None,symbol=None):
-    path = '/otc/assets'
-    res = requests.get(url=url+path,headers=headers1).json()
-    for tmp in res['data']:
-        if tmp['symbol'] ==symbol:
-            availableBalance = tmp['availableBalance']
-            frozenBalance = tmp['frozenBalance']
-            ava=str(d(availableBalance)),str(d(frozenBalance))
-            return ava
+
 #发布广告/otc/orders
 def otc_orders(amount=None,side=None,quote=None,base=None):
     path = '/otc/orders'
@@ -194,9 +184,15 @@ def otc_cancel(id):
     print(url+path)
     return res
 
+#根据币种获取otc资产
+def otc_assets_symbol():
+    path = '/otc/assets'
+    res = requests.get(url=url+path,headers=headers).json()
+    return res
+
 if __name__ == '__main__':
     cachedParams = {'symbol':'BTC', }
     # print(login(account,password,verifyCode))
     # print(orders(symbol='BTC_USDT',systemOrderType='limit',side='buy',volume=0.01,price=1003,source='web'))
     # print(pending())
-    print(otcPublicOrders(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))
+    print(otc_PublicOrders(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))

@@ -72,8 +72,17 @@ def send_dingtalk(text, token):
     r = requests.post(url, headers=headers, json=data)
     return r
 
-
+#根据币种获取otc资产(可用和冻结）
+def otc_assets_symbol(symbol=None):
+    res =webapi.otc_assets_symbol()
+    for tmp in res['data']:
+        if tmp['symbol'] ==symbol:
+            availableBalance = tmp['availableBalance']
+            frozenBalance = tmp['frozenBalance']
+            ava=str(d(availableBalance)),str(d(frozenBalance))
+            return ava
 
 
 if __name__ == '__main__':
-    print(assets())
+    print(d(23456.44422,2))
+    print(otc_assets_symbol('BTC'))
