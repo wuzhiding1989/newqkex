@@ -1,10 +1,11 @@
-import json
+from common.googleCode import read_google_authenticator_code as goolgle
 import requests
+import copy
 from BU.spot.api import webapi
 import time,datetime,random
 from decimal import *
 import math
-import sys
+from common.mysql_san import mysql_select
 from ws4py.client.threadedclient import WebSocketClient
 
 
@@ -82,7 +83,37 @@ def otc_assets_symbol(symbol=None):
             ava=str(d(availableBalance)),str(d(frozenBalance))
             return ava
 
+#登录获取headers带token，失败后继续重试，重试6次后退出---兼容邮件登录和谷歌登录，输入账号和密码就可登录
+def login_email(email,password):
+    newheaders=copy.deepcopy(webapi.headers)
+    sql = f"SELECT c.google_auth_flag,a.google_code FROM user_center.user_info a ,user_center.user_settings c WHERE a.id=c.user_id AND a.email='{email}'"
+    cw = mysql_select(sql)
+    google_auth_flag = cw[0][0];bind_google_code = cw[0][1]#获取账号的是否绑定谷歌和谷歌验证码
+    for i in range(6):
+        try:
+            if google_auth_flag == 1:
+                locode = goolgle(secret_key=bind_google_code)
+                res = webapi.login(account=email,password=password,verifyCode=locode)
+                token = res['data']['accessToken']
+                newheaders['X-Authorization'] = token
+                return newheaders
+                reak
+            else:
+                res=webapi.login(account=email,password=password,verifyCode='111111')
+                token = res['data']['accessToken']
+                newheaders['X-Authorization'] = token
+                return newheaders
+                reak
+        except Exception as e:
+            print('获取token失败,报错为',res['msg'],'2秒后自动重试')
+            time.sleep(2)
+    else:
+        print('重试6次后，登录失败，请检查服务或配置信息')
+        return
 
 if __name__ == '__main__':
-    print(d(23456.44422,2))
-    print(otc_assets_symbol('BTC'))
+    # account='shangjia001@testcc.com';ss="C51CD8E64B0AEB778364765013DF9EBE";cc='111111';aa='1234@q.com'
+    # sa='q123456'
+    print(login_email('1234@q.com','q123456'))
+    #print(otc_assets_symbol('BTC'))
+

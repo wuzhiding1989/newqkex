@@ -1,5 +1,5 @@
 import pymysql
-from common import util as u
+#from common import util as u
 host='database-1.cnxpymarugg3.ap-southeast-1.rds.amazonaws.com'
 user='admin'
 password='6Gp0iz1ZHNceJKwSpNg6'

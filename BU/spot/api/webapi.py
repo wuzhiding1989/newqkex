@@ -110,8 +110,8 @@ def otc_pending(orderId,amount,price,googleVerifyCode=None,tradePassword=None):
     newheaders['Content-Type'] = 'application/x-www-form-urlencoded'
     path = '/otc/pendings'
     params = {
-        'orderId':orderId ,
-        'amount':amount ,
+        'orderId':orderId,
+        'amount':amount,
         'price':price,
         'googleVerifyCode':googleVerifyCode,
         'tradePassword':tradePassword
@@ -153,7 +153,7 @@ def otc_pendings_complete(orderid=None,googleVerifyCode=None,tradePassword=None)
     return res
 
 #http://13.215.135.141/user/detail 查询用户信息
-def user(headers):
+def user():
     path = '/user/detail'
     res =requests.get(url=url+path,headers=headers).json()
 
