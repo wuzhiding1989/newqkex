@@ -189,10 +189,20 @@ def otc_assets_symbol():
     path = '/otc/assets'
     res = requests.get(url=url+path,headers=headers).json()
     return res
+#获取币种价格
+def otc_tickers():
+    path = '/foundation/indexes/tickers'
+    res = requests.get(url=url+path,headers=headers).json()
+    return res
+#获取汇率
+def otc_rate():
+    path = '/foundation/indexes/exchange-rate'
+    res = requests.get(url=url + path, headers=headers).json()
+    return res
 
 if __name__ == '__main__':
     cachedParams = {'symbol':'BTC', }
     # print(login(account,password,verifyCode))
     # print(orders(symbol='BTC_USDT',systemOrderType='limit',side='buy',volume=0.01,price=1003,source='web'))
-    # print(pending())
-    print(otc_PublicOrders(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))
+    print(otc_tickers())
+    #print(otc_PublicOrde)rs(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))

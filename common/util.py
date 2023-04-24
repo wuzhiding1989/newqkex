@@ -60,7 +60,21 @@ def newhisorder(orderid,symbol):
     for tmp in res:
         if tmp['id'] == orderid:
             return tmp
-
+#获取OTC最新价格
+def otc_tickers_rate(symbol,quote):#未完成，待续
+    res = webapi.otc_tickers()
+    res2 = webapi.otc_rate()
+    rate = res2['data'][f'USD_{quote}']
+    print(rate)
+    res1 = res['data']
+    if symbol!='USDT':
+        for tmp in res1:
+            if tmp['symbol'] == symbol:
+                ccc=tmp['last']
+                return ccc
+    else:
+        usdt_cc=1
+        return usdt_cc
 def send_dingtalk(text, token):
     url = "https://oapi.dingtalk.com/robot/send?access_token=" + token
     headers = {"Content-Type": "application/json"}
@@ -80,10 +94,10 @@ def otc_assets_symbol(symbol=None):
         if tmp['symbol'] ==symbol:
             availableBalance = tmp['availableBalance']
             frozenBalance = tmp['frozenBalance']
-            ava=str(d(availableBalance)),str(d(frozenBalance))
-            return ava
+            assets=str(d(availableBalance)),str(d(frozenBalance))
+            return assets
 
-#登录获取headers带token，失败后继续重试，重试6次后退出---兼容邮件登录和谷歌登录，输入账号和密码就可登录
+#登录获取headers带token，失败后继续重试，重试6次后退出---兼容邮件登录和谷歌登录，不用输谷歌key，输入账号和密码就可登录
 def login_email(email,password):
     newheaders=copy.deepcopy(webapi.headers)
     sql = f"SELECT c.google_auth_flag,a.google_code FROM user_center.user_info a ,user_center.user_settings c WHERE a.id=c.user_id AND a.email='{email}'"
@@ -97,13 +111,13 @@ def login_email(email,password):
                 token = res['data']['accessToken']
                 newheaders['X-Authorization'] = token
                 return newheaders
-                reak
+                break #终止循环
             else:
                 res=webapi.login(account=email,password=password,verifyCode='111111')
                 token = res['data']['accessToken']
                 newheaders['X-Authorization'] = token
                 return newheaders
-                reak
+                break
         except Exception as e:
             print('获取token失败,报错为',res['msg'],'2秒后自动重试')
             time.sleep(2)
@@ -112,8 +126,7 @@ def login_email(email,password):
         return
 
 if __name__ == '__main__':
-    # account='shangjia001@testcc.com';ss="C51CD8E64B0AEB778364765013DF9EBE";cc='111111';aa='1234@q.com'
     # sa='q123456'
-    print(login_email('1234@q.com','q123456'))
-    #print(otc_assets_symbol('BTC'))
+    #print(login_email('yonghu001@testcc.com','q123456'))
+    print(otc_tickers_rate('USDT','INR'))
 
