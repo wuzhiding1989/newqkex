@@ -266,6 +266,34 @@ def sign(timestamp, method, requestPath, queryString, body):
     signature = base64.b64encode(hmac.new(api_secret.encode('utf-8'), preHash.encode('utf-8'), hashlib.sha256).digest())
     return signature
 
+def order(pairCode=None, side=None, volume=None, price=None, quoteVolume=None, systemOrderType=None, source=None,):
+    path = '/openapi/exchange/' + pairCode + '/orders'
+    url = base_url + path
+    timestamp = time.time()
+    now = int(timestamp * 1000)
+    data = [{
+        "side": side,
+        "price": price,
+        "volume": volume,
+        "quoteVolume": quoteVolume,
+        "source": source,
+        "systemOrderType": systemOrderType
+    }]
+    data_json = json.dumps(data)
+
+    signature = sign(now, 'POST', path, '', data_json)
+    headers = {
+        "ACCESS-SIGN": signature,
+        "ACCESS-TIMESTAMP": str(now),
+        "ACCESS-KEY": api_key,
+        "ACCESS-PASSPHRASE": api_passphrase,
+        "Content-Type": "application/json",
+        "Cookie": "locale=en-US",
+        "x-locale": "en-US"
+    }
+    response = requests.request('POST', url, headers=headers, data=data_json).json()
+    return response
+
 
 if __name__ == '__main__':
     # 批量下单 （测试通过）
@@ -288,3 +316,5 @@ if __name__ == '__main__':
     # print(assetsAll())
     # 查单个币种资产 (测试通过)
     # print(assets(symbol='QK'))
+    print(order(pairCode='QK_USDT'))
+
