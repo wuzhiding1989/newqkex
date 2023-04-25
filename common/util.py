@@ -17,8 +17,8 @@ def price(symbol):
         print("获取买卖盘接口异常，异常原因：",res['msg'])
     orderbook['bid'][0] = res['data']['bids'][0][0]
     orderbook['bid'][1] = res['data']['bids'][0][1]
-    orderbook['ask'][0] = res['data']['asks'][1][0]
-    orderbook['ask'][1] = res['data']['asks'][1][1]
+    orderbook['ask'][0] = res['data']['asks'][0][0]
+    orderbook['ask'][1] = res['data']['asks'][0][1]
     return orderbook
 #拿到所有币对余额
 def assets():
@@ -128,5 +128,5 @@ def login_email(email,password):
 if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
-    print(otc_tickers_rate('USDT','INR'))
+    print(price('QK_USDT'))
 

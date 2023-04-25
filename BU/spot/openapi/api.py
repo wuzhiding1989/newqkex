@@ -3,6 +3,8 @@ import hashlib
 import hmac
 import json
 import time
+from common.mysql_san import mysql_select
+from common.util import d,symbolbase
 
 import requests as requests
 
@@ -266,42 +268,110 @@ def sign(timestamp, method, requestPath, queryString, body):
     signature = base64.b64encode(hmac.new(api_secret.encode('utf-8'), preHash.encode('utf-8'), hashlib.sha256).digest())
     return signature
 
-def order(pairCode=None, side=None, volume=None, price=None, quoteVolume=None, systemOrderType=None, source=None,):
-    path = '/openapi/exchange/' + pairCode + '/orders'
+def order(pairCode=None, side=None, volume=None, price=None, quoteVolume=None, systemOrderType=None, source=None,locale=None):
+    path = '/openapi/exchange/' + pairCode + '/orders'#单个下单接口
     url = base_url + path
     timestamp = time.time()
     now = int(timestamp * 1000)
-    data = [{
+    data = {
         "side": side,
         "price": price,
         "volume": volume,
         "quoteVolume": quoteVolume,
         "source": source,
         "systemOrderType": systemOrderType
-    }]
+    }
     data_json = json.dumps(data)
 
-    signature = sign(now, 'POST', path, '', data_json)
+    signature = sign(now, 'POST', path, '', data_json)#zh-HK,en-US
     headers = {
         "ACCESS-SIGN": signature,
         "ACCESS-TIMESTAMP": str(now),
         "ACCESS-KEY": api_key,
         "ACCESS-PASSPHRASE": api_passphrase,
         "Content-Type": "application/json",
-        "Cookie": "locale=en-US",
-        "x-locale": "en-US"
+        "Cookie": f"locale={locale}",
+        "x-locale": locale
     }
     response = requests.request('POST', url, headers=headers, data=data_json).json()
     return response
 
+def delete_order(pairCode,id,locale=None):#撤销单个订单
+    path = f'/openapi/exchange/{pairCode}/orders/{id}'
+    url = base_url + path
+    timestamp = time.time()
+    now = int(timestamp * 1000)
+    signature = sign(now, 'DELETE', path, '', '')
+    headers = {
+        "ACCESS-SIGN": signature,
+        "ACCESS-TIMESTAMP": str(now),
+        "ACCESS-KEY": api_key,
+        "ACCESS-PASSPHRASE": api_passphrase,
+        "Content-Type": "application/json",
+        "Cookie": f"locale={locale}",
+        "x-locale": locale
+    }
+    response = requests.request('DELETE', url, headers=headers)
+    if response.status_code == 200:
+        return response
+    else:
+        return response.json()
+def te_test(locale='en-US',side='buy',pairCode='QK_USDT'):#zh-HK,en-US
+    base=(symbolbase(pairCode))['base'];quote=(symbolbase(pairCode))['quote']
+    if side=='buy':
+        assets1=assets(quote)
+        available=assets1['available'];hold=assets1['hold']
+        print(f'{quote}初始可用资产为{available},初始冻结资产为{hold}')
+        order_id = order(pairCode=pairCode, side=side, price='0.0802', volume='310', systemOrderType='limit', source='api',locale=locale)
+        time.sleep(2)
+        print(order_id)
+        data=orders(pairCode=pairCode)
+        ids = [item['id'] for item in data]
+        sql_select=f"SELECT id,side,entrust_price,amount,entrust_price*amount,source_info,`status` FROM exchange.qk_usdt_orders WHERE id={order_id}"
+        cc=mysql_select(sql_select)
+        print(ids,cc)
+        print('数据库查询订单数据',cc)
+        if order_id in ids:
+            print("当前委托订单包含当前订单id")
+        else:
+            print("当前委托订单不包含当前订单id")
+        assets2 = assets('USDT')
+        available1 = assets2['available'];hold1 = assets2['hold']
+        ava=d(available)-d(available1);una=d(hold1)-d(hold)
+        print(f'{quote}变化后可用资产为{available1},变化后冻结资产为{hold1},可用减少了{ava},冻结增多了{una}')
+    else:
+        assets1 = assets(base)
+        available = assets1['available'];
+        hold = assets1['hold']
+        print(f'{base}初始可用资产为{available},初始冻结资产为{hold}')
+        order_id = order(pairCode=pairCode, side=side, price='0.0803', volume='310', systemOrderType='limit',
+                         source='api', locale=locale)
+        time.sleep(2)
+        print(order_id)
+        data = orders(pairCode=pairCode)
+        ids = [item['id'] for item in data]
+        sql_select = f"SELECT id,side,entrust_price,amount,entrust_price*amount,source_info,`status` FROM exchange.qk_usdt_orders WHERE id={order_id}"
+        cc = mysql_select(sql_select)
+        print(ids)
+        print('数据库查询订单数据', cc)
+        if order_id in ids:
+            print("当前委托订单包含当前订单id")
+        else:
+            print("当前委托订单不包含当前订单id")
+        assets2 = assets(base)
+        available1 = assets2['available'];
+        hold1 = assets2['hold']
+        ava = d(available) - d(available1);
+        una = d(hold1) - d(hold)
+        print(f'{base}变化后可用资产为{available1},变化后冻结资产为{hold1},可用减少了{ava},冻结增多了{una}')
 
 if __name__ == '__main__':
     # 批量下单 （测试通过）
-    # print(placeOrder('QK_USDT', 'buy', '0.303', '1', 'limit'))
+    #print(placeOrder('QK_USDT', 'buy', '0.303', '1', 'limit'))
     # 批量撤单 (测试通过)
     # print(cancelOrders(symbol='QK_USDT'))
     # 查询当前订单列表 （返回空数组[]）
-    print(orders(pairCode='QK_USDT'))
+    #print(123,orders(pairCode='QK_USDT'))
     # 查询市场价格(测试通过)
     # print(ticker(pairCode='QK_USDT'))
     # 查盘口数据 （测试通过）
@@ -315,6 +385,11 @@ if __name__ == '__main__':
     # 查所有资产 （测试通过）
     # print(assetsAll())
     # 查单个币种资产 (测试通过)
-    # print(assets(symbol='QK'))
-    print(order(pairCode='QK_USDT'))
+    # print(assets(symbol='QK'))171613964292160
+    #A=(order(pairCode='QK_USDT',side='buy',price='0.0795',volume='300',systemOrderType='limit',source='api'))
+    # print(123,orders(pairCode='QK_USDT'))
+    # time.sleep(2)
+    # print(delete_order(pairCode='QK_USDT',id=171618715009088))
+    print(te_test())
+
 
