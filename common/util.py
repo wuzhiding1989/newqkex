@@ -88,7 +88,7 @@ def send_dingtalk(text, token):
     return r
 
 #根据币种获取otc资产(可用和冻结）
-def otc_assets_symbol(symbol=None):
+def otc_assets_symbol(symbol):
     res =webapi.otc_assets_symbol()
     for tmp in res['data']:
         if tmp['symbol'] ==symbol:
@@ -96,6 +96,14 @@ def otc_assets_symbol(symbol=None):
             frozenBalance = tmp['frozenBalance']
             assets=str(d(availableBalance)),str(d(frozenBalance))
             return assets
+def exchange_fee(pairCode=None):#获取现货手续费makerFeesRate
+    res=webapi.exchange_currencies()
+    fee = {'makerFeesRate': 1000, 'tickerFeesRate': 1001 }
+    for tmp in res['data']:
+        if tmp['pairCode']==pairCode:
+            fee['makerFeesRate']=tmp['makerFeesRate']
+            fee['tickerFeesRate'] = tmp['tickerFeesRate']
+            return fee
 
 #登录获取headers带token，失败后继续重试，重试6次后退出---兼容邮件登录和谷歌登录，不用输谷歌key，输入账号和密码就可登录
 def login_email(email,password):
@@ -128,5 +136,7 @@ def login_email(email,password):
 if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
-    print(price('QK_USDT'))
+    print(exchange_fee(pairCode='ABF_USDT'))
+    #p=exchange_fee(pairCode='ETH_USDT')
+    #rint(p)
 

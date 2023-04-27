@@ -3,7 +3,7 @@ import requests
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0ZWY0MTlkYi01NzljLTQ3YmYtYWI2Ny0xMzUyZTQ2ODJiNjk3NzE4OTgxMTciLCJ1aWQiOiJPd0FrTmN0WTlHUmlzL0Z6QlpjZGRBPT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6IlNIK2ZVb2xFejkwU1FwcGlsUzFqcUE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjgyMjM4MzM0LCJleHAiOjE2ODIzMjQ3MzQsImlzcyI6IndjcyJ9.hLuLfJ0I5y9kNg803Tt1X1G5bAE8QTYaBT_BsTaLBno'
+Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNTc1Y2MyNy03MmNhLTRhY2EtYTQ5NS02ODhkODY5NTc4NTQxNTY5NzE5ODc2IiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJTSCtmVW9sRXo5MFNRcHBpbFMxanFBPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4MjQxODY5NiwiZXhwIjoxNjgyNTA1MDk2LCJpc3MiOiJ3Y3MifQ.BGI1X55bAfkCmp4bkwnTFG6cms9S-wkY4gxRtVNRUfw'
 headers['X-Authorization']=Authorization
 url = 'http://13.215.135.141'
 account='10081@qq.com'
@@ -58,8 +58,7 @@ def exchange_assets():
     res = requests.get(url=url+path,headers=headers).json()
     return res
 
-#单个撤单
-'http://13.215.135.141/exchange/BTC_USDT/orders/167356484372496'
+#单个撤单'http://13.215.135.141/exchange/BTC_USDT/orders/167356484372496'
 def cancelorder(symbol=None,orderid=None):
     path = f'/exchange/{symbol}/orders/{orderid}'
     res = requests.delete(url=url + path, headers=headers).json()
@@ -200,9 +199,15 @@ def otc_rate():
     res = requests.get(url=url + path, headers=headers).json()
     return res
 
+#/exchange/public/currencies
+def exchange_currencies():
+    path = '/exchange/public/currencies'
+    res = requests.get(url=url + path, headers=headers).json()
+    return res
+
 if __name__ == '__main__':
     cachedParams = {'symbol':'BTC', }
     # print(login(account,password,verifyCode))
     # print(orders(symbol='BTC_USDT',systemOrderType='limit',side='buy',volume=0.01,price=1003,source='web'))
-    print(otc_tickers())
+    print(exchange_currencies())
     #print(otc_PublicOrde)rs(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))
