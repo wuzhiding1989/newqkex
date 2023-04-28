@@ -108,12 +108,35 @@ def exchange_fee(pairCode=None):#获取现货手续费
 
 def openapi_order_History(pairCode,id=None):
     res = api.fulfillment(pairCode=pairCode,isHistory=True,systemOrderType=0)
-    print(res)
-    fle = {'dealQuoteAmount': '0', 'averagePrice': '9'}
+    fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
+           'dealQuoteAmount': '0', 'side': '0', 'status': 1, 'openAmount': '0','entrustPrice': '0'}
+    #print(res)
     for tmp in res:
         if tmp['id']==id:
             fle['averagePrice']=tmp['averagePrice']
-            fle['dealQuoteAmount']=tmp['dealQuoteAmount']
+            fle['dealAmount']=tmp['dealAmount']
+            fle['amount'] = tmp['amount']
+            fle['dealQuoteAmount'] = tmp['dealQuoteAmount']
+            fle['side'] = tmp['side']
+            fle['status'] = tmp['status']
+            fle['openAmount'] = tmp['openAmount']
+            fle['entrustPrice'] = tmp['entrustPrice']
+            return fle
+def openapi_order(pairCode,id=None):
+    res = api.orders(pairCode=pairCode)
+    fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
+           'dealQuoteAmount': '0', 'side': '0', 'status': 1, 'openAmount': '0','entrustPrice': '0'}
+    print(res)
+    for tmp in res:
+        if tmp['id']==id:
+            fle['averagePrice']=tmp['averagePrice']
+            fle['dealAmount']=tmp['dealAmount']
+            fle['amount'] = tmp['amount']
+            fle['dealQuoteAmount'] = tmp['dealQuoteAmount']
+            fle['side'] = tmp['side']
+            fle['status'] = tmp['status']
+            fle['openAmount'] = tmp['openAmount']
+            fle['entrustPrice'] = tmp['entrustPrice']
             return fle
 
 
@@ -150,7 +173,8 @@ if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
     #print(exchange_fee(pairCode='ABF_USDT'))
-    p=openapi_order_History(pairCode='ABF_USDT',id=171784369092672)
+    p=openapi_order(pairCode='ADA_USDT',id=171960320359488)
+    q=openapi_order_History(pairCode='ADA_USDT',id=171960320359488)
     print(p)
-    print(d('23456'))
+
 
