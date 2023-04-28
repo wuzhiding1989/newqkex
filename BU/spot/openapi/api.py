@@ -4,7 +4,7 @@ import hmac
 import json
 import time
 from common.mysql_san import mysql_select
-from common.util import d,symbolbase,price,exchange_fee
+from common.util import d,symbolbase,price,exchange_fee,openapi_order_History
 
 import requests as requests
 
@@ -39,7 +39,6 @@ def placeOrder(symbol, side, price, volume, systemOrderType):
     }
     response = requests.request('POST', url, headers=headers, data=data_json).json()
     return response
-
 
 def cancelOrders(symbol):
     path = f'/openapi/exchange/{symbol}/orders'
@@ -80,7 +79,6 @@ def ticker(pairCode):
     response = requests.request('POST', url, headers=headers).json()
     return response
 
-
 def orders(pairCode=None, startDate=None, endDate=None, price=None, amount=None, systemOrderType=None, source=None,
            page=None, pageSize=None):
     path = f'/openapi/exchange/orders'
@@ -112,7 +110,6 @@ def orders(pairCode=None, startDate=None, endDate=None, price=None, amount=None,
     response = requests.request('GET', url, headers=headers, data=data_json).json()
     return response
 
-
 def orderBook(pairCode, size=None):
     path = f'/openapi/exchange/public/{pairCode}/orderBook'
     params = {
@@ -134,7 +131,6 @@ def orderBook(pairCode, size=None):
     }
     response = requests.request('GET', url, headers=headers, data=data_json).json()
     return response
-
 
 def kline(pairCode, interval, start=None, end=None):
     path = f'/openapi/exchange/public/{pairCode}/candles'
@@ -396,7 +392,9 @@ def te_test1(locale='en-US',side='buy',pairCode='ABF_USDT',systemOrderType='limi
             else:
                 print(f'资产校验失败,{base}变化后可用资产为{newbase_available},变化后冻结资产为{newbase_hold},{quote}变化后可用资产为{newquote_available},变化后冻结资产为{newquote_hold}')
         elif order_status[0][0]==2:#订单已成交
-            c=d(newquote_available)+d(price1)*d(volume)-d(quote_available)
+            his=openapi_order_History(pairCode=pairCode,id=order_id)
+            dealQuoteAmount=his['dealQuoteAmount'];averagePrice=his['averagePrice']
+            c=d(newquote_available)+d(averagePrice)*d(dealQuoteAmount)-d(quote_available)
             cc=d(newbase_available)- d(price1) -d(base_available)
             print(1222222,c,cc)
 
@@ -439,7 +437,7 @@ if __name__ == '__main__':
     # k线数据  (测试通过)
     # print(kline(pairCode='BTC_USDT', interval='15min'))
     # 查历史成交 （返回空数组[]）
-    print(fulfillment(pairCode='ABF_USDT',isHistory=True,systemOrderType=0))
+    #print(fulfillment(pairCode='ABF_USDT',isHistory=True,systemOrderType=0))
     # 查最新成交 (测试通过)
     # print(fills(pairCode='QK_USDT'))
     # 查所有资产 （测试通过）
@@ -450,6 +448,6 @@ if __name__ == '__main__':
     # print(123,orders(pairCode='QK_USDT'))
     # time.sleep(2)
     # print(delete_order(pairCode='QK_USDT',id=171618715009088))
-    #print(te_test1())
+    print(te_test1())
 
 

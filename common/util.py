@@ -7,6 +7,7 @@ from decimal import *
 import math
 from common.mysql_san import mysql_select
 from ws4py.client.threadedclient import WebSocketClient
+from BU.spot.openapi import api
 
 
 #获取买一卖一价 和数量
@@ -96,7 +97,7 @@ def otc_assets_symbol(symbol):
             frozenBalance = tmp['frozenBalance']
             assets=str(d(availableBalance)),str(d(frozenBalance))
             return assets
-def exchange_fee(pairCode=None):#获取现货手续费makerFeesRate
+def exchange_fee(pairCode=None):#获取现货手续费
     res=webapi.exchange_currencies()
     fee = {'makerFeesRate': 1000, 'tickerFeesRate': 1001 }
     for tmp in res['data']:
@@ -104,6 +105,18 @@ def exchange_fee(pairCode=None):#获取现货手续费makerFeesRate
             fee['makerFeesRate']=tmp['makerFeesRate']
             fee['tickerFeesRate'] = tmp['tickerFeesRate']
             return fee
+
+def openapi_order_History(pairCode,id=None):
+    res = api.fulfillment(pairCode=pairCode,isHistory=True,systemOrderType=0)
+    print(res)
+    fle = {'dealQuoteAmount': '0', 'averagePrice': '9'}
+    for tmp in res:
+        if tmp['id']==id:
+            fle['averagePrice']=tmp['averagePrice']
+            fle['dealQuoteAmount']=tmp['dealQuoteAmount']
+            return fle
+
+
 
 #登录获取headers带token，失败后继续重试，重试6次后退出---兼容邮件登录和谷歌登录，不用输谷歌key，输入账号和密码就可登录
 def login_email(email,password):
@@ -136,7 +149,8 @@ def login_email(email,password):
 if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
-    print(exchange_fee(pairCode='ABF_USDT'))
-    #p=exchange_fee(pairCode='ETH_USDT')
-    #rint(p)
+    #print(exchange_fee(pairCode='ABF_USDT'))
+    p=openapi_order_History(pairCode='ABF_USDT',id=171784369092672)
+    print(p)
+    print(d('23456'))
 

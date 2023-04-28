@@ -6,7 +6,6 @@ mysqlHost={
      3 :qa_mysql_server
     # ,6:[NTS_tidb_server],7:NTS_mysql_server
 }
-#123456789
 dbList={
     "20l":{"ex1":"linear_order_seq1","btc1":"linear_btc","btc2":"linear_eos"},
     "20hl":{"ex1":"linear_order_seq","btc1":"linear_btc","btc2":"linear_eos"}}
