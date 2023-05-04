@@ -110,7 +110,7 @@ def openapi_order_History(pairCode,id=None):
     res = api.fulfillment(pairCode=pairCode,isHistory=True,systemOrderType=0)
     fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
            'dealQuoteAmount': '0', 'side': '0', 'status': 1, 'openAmount': '0','entrustPrice': '0'}
-    #print(res)
+    print(res)
     for tmp in res:
         if tmp['id']==id:
             fle['averagePrice']=tmp['averagePrice']

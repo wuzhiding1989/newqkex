@@ -46,7 +46,7 @@ def cancelOrders(symbol):
     url = base_url + path
     timestamp = time.time()
     now = int(timestamp * 1000)
-    data = [123, 345]
+    data = [172503507132480, 172502735600704,171967297305664,171967147931712]
     data_json = json.dumps(data)
     signature = sign(now, 'DELETE', path, '', data_json)
     headers = {
@@ -58,7 +58,7 @@ def cancelOrders(symbol):
         "Cookie": "locale=en-US",
         "x-locale": "en-US"
     }
-    response = requests.request('DELETE', url, headers=headers, json=data).json()
+    response = requests.request('DELETE', url, headers=headers, json=data)
     return response
 
 
@@ -368,9 +368,9 @@ if __name__ == '__main__':
     # 批量下单 （测试通过）
     #print(placeOrder('QK_USDT', 'buy', '0.303', '1', 'limit'))
     # 批量撤单 (测试通过)
-    # print(cancelOrders(symbol='QK_USDT'))
+    print(cancelOrders(symbol='ADA_USDT'))
     # 查询当前订单列表 （返回空数组[]）
-    print(123,orders(pairCode='ada_USDT'))
+    print(123,orders(pairCode='ADA_USDT'))
     # 查询市场价格(测试通过)
     # print(ticker(pairCode='QK_USDT'))
     # 查盘口数据 （测试通过）
@@ -389,7 +389,7 @@ if __name__ == '__main__':
     # print(123,orders(pairCode='QK_USDT'))
     # time.sleep(2)
     # print(delete_order(pairCode='QK_USDT',id=171618715009088))
-    print(u.d('234'))
+    #print(u.d('234'))
     # print(u.openapi_order_History(pairCode='ABF_USDT',id=171784369092672))
 
 

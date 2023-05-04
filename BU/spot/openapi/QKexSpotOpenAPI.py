@@ -78,7 +78,6 @@ class QKexSpotOpenAPI:
             "volume": volume,
             "systemOrderType": systemOrderType
         }]
-
         path = f'/openapi/exchange/{symbol}/bulkOrders'
 
         res = self.request(method='POST', params=params, path=path, auth=True)
