@@ -105,12 +105,19 @@ def exchange_fee(pairCode=None):#获取现货手续费
             fee['makerFeesRate']=tmp['makerFeesRate']
             fee['tickerFeesRate'] = tmp['tickerFeesRate']
             return fee
-
+def exchange_assets_symbol(symbol):
+    res =webapi.exchange_assets()
+    for tmp in res['data']:
+        if tmp['symbol'] ==symbol:
+            availableBalance = tmp['available']
+            frozenBalance = tmp['hold']
+            assets=str(d(availableBalance)),str(d(frozenBalance))
+            return assets
 def openapi_order_History(pairCode,id=None):
     res = api.fulfillment(pairCode=pairCode,isHistory=True,systemOrderType=0)
     fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
            'dealQuoteAmount': '0', 'side': '0', 'status': 1, 'openAmount': '0','entrustPrice': '0'}
-    print(res)
+    #print(res)
     for tmp in res:
         if tmp['id']==id:
             fle['averagePrice']=tmp['averagePrice']
@@ -138,6 +145,11 @@ def openapi_order(pairCode,id=None):
             fle['openAmount'] = tmp['openAmount']
             fle['entrustPrice'] = tmp['entrustPrice']
             return fle
+def openapi_order1(pairCode,id=None):
+    res = api.orders(pairCode=pairCode)
+    print(res)
+    ids = [d['id'] for d in res if d['pairCode'] == 'ADA_USDT']
+    print(ids)
 
 
 
@@ -173,8 +185,8 @@ if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
     #print(exchange_fee(pairCode='ABF_USDT'))
-    p=openapi_order(pairCode='ADA_USDT',id=171960320359488)
-    q=openapi_order_History(pairCode='ADA_USDT',id=171960320359488)
+    p=openapi_order1(pairCode='ADA_USDT')
+    #q=openapi_order_History(pairCode='ADA_USDT',id=171960320359488)
     print(p)
 
 

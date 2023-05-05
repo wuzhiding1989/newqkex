@@ -46,7 +46,7 @@ def cancelOrders(symbol):
     url = base_url + path
     timestamp = time.time()
     now = int(timestamp * 1000)
-    data = [172503507132480, 172502735600704,171967297305664,171967147931712]
+    data = [172563236786240]
     data_json = json.dumps(data)
     signature = sign(now, 'DELETE', path, '', data_json)
     headers = {
@@ -370,7 +370,7 @@ if __name__ == '__main__':
     # 批量撤单 (测试通过)
     print(cancelOrders(symbol='ADA_USDT'))
     # 查询当前订单列表 （返回空数组[]）
-    print(123,orders(pairCode='ADA_USDT'))
+    print(123,order(pairCode='ADA_USDT'))
     # 查询市场价格(测试通过)
     # print(ticker(pairCode='QK_USDT'))
     # 查盘口数据 （测试通过）

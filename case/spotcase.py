@@ -1,3 +1,5 @@
+import time
+from common import googleCode
 from BU.spot.api import webapi as wp
 from common import util as ut, data as dt
 
@@ -107,7 +109,24 @@ def marketOrder(symbol=None):
         his = ut.newhisorder(orderid=orderid, symbol=symbol)
         ut.d(his['averagePrice']) * ut.d(amount) * ut.d(1 + dt.feeRate[symbol][1])
 
-
-
+#测试现货下架币对后兑换测试
+def coun(baseSymbol,quoteSymbol,amount):
+    assets1 = ut.exchange_assets_symbol(baseSymbol)
+    assets2 = ut.exchange_assets_symbol(quoteSymbol)
+    print(f'{baseSymbol}资产为{assets1},{quoteSymbol}资产为{assets2}')
+    re = wp.exchange_exchange_set('ABC')
+    price1=re['data'][0]['price']
+    gol=googleCode.read_google_authenticator_code('DBBGNEM3POXAYRSO')
+    res =wp.exchange_convert(baseSymbol=baseSymbol,quoteSymbol=quoteSymbol,amount=amount,googleVerifyCode='123456')
+    print(res)
+    amoun=ut.d(price1)*ut.d(amount)
+    print(f'预期结果：{baseSymbol}需要兑换的数量为{amount}，{quoteSymbol}兑换得到的数量为{amoun}')
+    time.sleep(3)
+    assets3 = ut.exchange_assets_symbol(baseSymbol)
+    assets4 = ut.exchange_assets_symbol(quoteSymbol)
+    print(f'{baseSymbol}资产变化后为{assets3},{quoteSymbol}资产变化后为{assets4}')
+    ass=ut.d(assets3[0])-ut.d(assets1[0]);ass1=ut.d(assets4[0])-ut.d(assets2[0])
+    print(f'预期结果：{baseSymbol}需要兑换的数量为{amount}，{quoteSymbol}兑换得到的数量为{amoun}')
+    print(f'实际结果：{baseSymbol}减少资产为{ass},{quoteSymbol}增加资产为{ass1}')
 if __name__ == '__main__':
-    print(PlaceOrder(symbol='BTC_USDT'))
+    print(coun(baseSymbol='ABC',quoteSymbol='USDT',amount='2020'))
