@@ -1,5 +1,5 @@
 from BU.spot.api import webapi as wb
-from common.util import login_email,otc_assets_symbol,d
+from common import util as u
 import ast,random
 
 symbol='BTC'
@@ -21,12 +21,16 @@ def otc_public_orders(symbol, legalSymbol, side, page, pageSize,id, amount=None,
             orders['payType'] = ast.literal_eval(tmp['paySupport'])[0]['payType']
     return orders
 
-def otc_send_ads():
-    avb_1=otc_assets_symbol(symbol=symbol)
-    a=(d(avb_1[0]))/d(str(random.randint(4,9)))
+def otc_send_ads(quote,symbol,side):
+    avb_1=u.otc_assets_symbol(symbol=symbol)
+    a=(u.d(avb_1[0]))/u.d(str(random.randint(4,9)))
     c=("{:.5f}".format(a))
-    fabu = wb.otc_orders(amount=c, side='buy', quote='USD', base=symbol)
-    print(c)
+    price1=u.otc_tickers_rate(quote=quote,symbol=symbol)
+    fabu = wb.otc_orders(amount=c, side=side, quote=quote, base=symbol, price=price1)
+    cw = wb.otc_orders_ads_select()
+    a=wb.otc_orders_adsid(id='623')
+    print(a)
+    print(fabu)
 
 
 
@@ -34,4 +38,4 @@ def otc_send_ads():
 
 if __name__ == '__main__':
     #print(otc_public_orders(amount=None,payType=None,symbol='BTC',id=114,legalSymbol='USD',side='sell',page=1,pageSize=1000))
-    print(otc_send_ads())
+    print(otc_send_ads(quote='USD',symbol='BTC',side='buy'))

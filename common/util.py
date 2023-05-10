@@ -62,20 +62,30 @@ def newhisorder(orderid,symbol):
         if tmp['id'] == orderid:
             return tmp
 #获取OTC最新价格
-def otc_tickers_rate(symbol,quote):#未完成，待续
+def otc_tickers_rate(symbol,quote):
     res = webapi.otc_tickers()
-    res2 = webapi.otc_rate()
-    rate = res2['data'][f'USD_{quote}']
-    print(rate)
-    res1 = res['data']
-    if symbol!='USDT':
-        for tmp in res1:
-            if tmp['symbol'] == symbol:
-                ccc=tmp['last']
-                return ccc
-    else:
+    if symbol=='USDT' and quote =='USD':
         usdt_cc=1
         return usdt_cc
+    elif symbol!='USDT' and quote =='USD':
+        for tmp in res['data']:
+            if tmp['symbol'] == symbol:
+                ccc = tmp['last']
+                return ccc
+    elif symbol=='USDT' and quote !='USD':
+        res2 = webapi.otc_rate()
+        rate = res2['data'][f'USD_{quote}']
+        if quote !='USD':
+            return d(rate,2)
+    else:
+        res2 = webapi.otc_rate()
+        rate = res2['data'][f'USD_{quote}']
+        for tmp in res['data']:
+            if tmp['symbol'] == symbol:
+                ccc=tmp['last']
+                ass= d(ccc) * d(rate)
+                return d(ass,2)
+
 def send_dingtalk(text, token):
     url = "https://oapi.dingtalk.com/robot/send?access_token=" + token
     headers = {"Content-Type": "application/json"}
@@ -107,12 +117,16 @@ def exchange_fee(pairCode=None):#获取现货手续费
             return fee
 def exchange_assets_symbol(symbol):
     res =webapi.exchange_assets()
-    for tmp in res['data']:
-        if tmp['symbol'] ==symbol:
-            availableBalance = tmp['available']
-            frozenBalance = tmp['hold']
-            assets=str(d(availableBalance)),str(d(frozenBalance))
-            return assets
+    if res['code']==0:
+        for tmp in res['data']:
+            if tmp['symbol'] ==symbol:
+                availableBalance = tmp['available']
+                frozenBalance = tmp['hold']
+                assets=str(d(availableBalance)),str(d(frozenBalance))
+                return assets
+    else:
+        print('请求失败，返回结果为',res)
+        return
 def openapi_order_History(pairCode,id=None):
     res = api.fulfillment(pairCode=pairCode,isHistory=True,systemOrderType=0)
     fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
@@ -145,10 +159,10 @@ def openapi_order(pairCode,id=None):
             fle['openAmount'] = tmp['openAmount']
             fle['entrustPrice'] = tmp['entrustPrice']
             return fle
-def openapi_order1(pairCode,id=None):
+def openapi_order1(pairCode):
     res = api.orders(pairCode=pairCode)
     print(res)
-    ids = [d['id'] for d in res if d['pairCode'] == 'ADA_USDT']
+    ids = [d['id'] for d in res if d['pairCode'] == pairCode]
     print(ids)
 
 
@@ -184,7 +198,7 @@ def login_email(email,password):
 if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
-    #print(exchange_fee(pairCode='ABF_USDT'))
+    #print(otc_tickers_rate(symbol='BTC',quote='INR'))
     p=openapi_order1(pairCode='ADA_USDT')
     #q=openapi_order_History(pairCode='ADA_USDT',id=171960320359488)
     print(p)

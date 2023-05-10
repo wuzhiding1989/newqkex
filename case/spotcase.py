@@ -2,12 +2,9 @@ import time
 from common import googleCode
 from BU.spot.api import webapi as wp
 from common import util as ut, data as dt
+from common import mysql_san as my
 
-symbol = 'BTC_USDT';
-side = 'buy';
-price = 20000.12;
-volume = 0;
-source = 'app'
+symbol = 'BTC_USDT';side = 'buy';price = 20000.12;volume = 0;source = 'app'
 
 
 # 限价成交场景
@@ -113,14 +110,24 @@ def marketOrder(symbol=None):
 def coun(baseSymbol,quoteSymbol,amount):
     assets1 = ut.exchange_assets_symbol(baseSymbol)
     assets2 = ut.exchange_assets_symbol(quoteSymbol)
+    sql='SELECT user_id,symbol,available FROM exchange.user_assets WHERE user_id IN (10122313)'
+    sql01 = 'SELECT user_id,symbol,available FROM exchange.user_assets WHERE user_id IN (169014)'
+    cc01=my.mysql_select(sql01)
+    cc = my.mysql_select(sql)
     print(f'{baseSymbol}资产为{assets1},{quoteSymbol}资产为{assets2}')
-    re = wp.exchange_exchange_set('ABC')
-    price1=re['data'][0]['price']
-    gol=googleCode.read_google_authenticator_code('DBBGNEM3POXAYRSO')
-    res =wp.exchange_convert(baseSymbol=baseSymbol,quoteSymbol=quoteSymbol,amount=amount,googleVerifyCode='123456')
-    print(res)
-    amoun=ut.d(price1)*ut.d(amount)
-    print(f'预期结果：{baseSymbol}需要兑换的数量为{amount}，{quoteSymbol}兑换得到的数量为{amoun}')
+    re = wp.exchange_exchange_set(baseSymbol)
+    price1=re['data'][0]['price'];feeRate=re['data'][0]['feeRate'];Min=re['data'][0]['baseSymbolMin'];Max=re['data'][0]['baseSymbolMax']
+    #print(f'{baseSymbol}兑换价格为{price1}手续费为{feeRate}最小值为{Min}最大值为{Max}')
+    gol=googleCode.read_google_authenticator_code('DBBGNEM3POXAYRSO')#`，DBBGNEM3POXAYRSO；6XOQ65YMT6S2ZKA4
+    res =wp.exchange_convert(baseSymbol=baseSymbol,quoteSymbol=quoteSymbol,amount=amount,googleVerifyCode=gol)
+    if res['code']==0:
+        print('兑换成功，返回结果为',res)
+    else:
+        print('兑换失败，返回结果为',res)
+        return
+    amoun=ut.d(price1)*ut.d(amount)-ut.d(price1)*ut.d(amount)*ut.d(feeRate)
+    fee=ut.d(price1)*ut.d(amount)*ut.d(feeRate)
+    print(f'预期结果：{baseSymbol}需要兑换的数量为{amount}，{quoteSymbol}兑换得到的数量为{amoun},{quoteSymbol}产生的手续为{fee}')
     time.sleep(3)
     assets3 = ut.exchange_assets_symbol(baseSymbol)
     assets4 = ut.exchange_assets_symbol(quoteSymbol)
@@ -128,5 +135,11 @@ def coun(baseSymbol,quoteSymbol,amount):
     ass=ut.d(assets3[0])-ut.d(assets1[0]);ass1=ut.d(assets4[0])-ut.d(assets2[0])
     print(f'预期结果：{baseSymbol}需要兑换的数量为{amount}，{quoteSymbol}兑换得到的数量为{amoun}')
     print(f'实际结果：{baseSymbol}减少资产为{ass},{quoteSymbol}增加资产为{ass1}')
+    cc1 = my.mysql_select(sql)
+    cc02 = my.mysql_select(sql01)
+    print('收取手续费的系统账号数据库前后资产',cc,cc1)
+    print('收取系统账号数据库前资产', cc01)
+    print('收取系统账号数据库后资产', cc02)
 if __name__ == '__main__':
-    print(coun(baseSymbol='ABC',quoteSymbol='USDT',amount='2020'))
+    print(coun(baseSymbol='ABC',quoteSymbol='USDT',amount='10000'))
+    print(coun(baseSymbol='QQ', quoteSymbol='USDT', amount='2090'))

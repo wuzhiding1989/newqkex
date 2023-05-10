@@ -3,7 +3,8 @@ import requests
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhYTI3Mjg3Zi00ZmE0LTQzNDMtYmIwNi05ZmZiMzJiM2EwZDk5ODAwMzg2ODIiLCJ1aWQiOiJPd0FrTmN0WTlHUmlzL0Z6QlpjZGRBPT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6InRFVmY2ZjY4TStDUm1QOVYrN0FIV1E9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjgzMjUzNzA2LCJleHAiOjE2ODMzNDAxMDYsImlzcyI6IndjcyJ9.euYxCGtGuZSN_MYW20sdrf1Ad9pybmaWWrO1T5Txjlg'
+Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNzdmYzA1Yi1mN2U2LTRhZjgtYTBhMS01N2UyYjZkMjAwNmIxOTU2OTY1OTAzIiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJkRmxJM3RwSFdJdHpsNk9rTDRBSlBRPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4MzY5ODc0MiwiZXhwIjoxNjgzNzg1MTQyLCJpc3MiOiJ3Y3MifQ.FMdGkko4zQPKqJ7KAOGrWe16XbZukV7I8hyNcx2vrV4'
+Authorization1='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjMWQ0YmU4OC1kMTA4LTRjYmYtYjE4Ny00MzdmOWFmZGNjMzE4MDc2NDg0NzkiLCJ1aWQiOiJsN1ZkOHlLTCswQWxXcUU5TWJXcmpBPT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6ImRGbEkzdHBIV0l0emw2T2tMNEFKUFE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjgzMzQ0NzQ1LCJleHAiOjE2ODM0MzExNDUsImlzcyI6IndjcyJ9.WxpT2f6vHMazjm7EYsdcN4k20lIwl8KnsqoZ39GC4Go'
 headers['X-Authorization']=Authorization
 url = 'http://13.215.135.141'
 account='10081@qq.com'
@@ -158,14 +159,14 @@ def user():
 
 
 #发布广告/otc/orders
-def otc_orders(amount=None,side=None,quote=None,base=None):
+def otc_orders(amount=None,side=None,quote=None,base=None,price=None):
     path = '/otc/orders'
     params ={"side":side,
            "base":base,
            "quote":quote,
            "type":"limit",
            "floatingRate":0,
-           "price":"89898.1200",
+           "price":price,
            "amount":amount,
            "minAmount":"200.00000000",
            "maxAmount":"30000.00000000",
@@ -175,6 +176,16 @@ def otc_orders(amount=None,side=None,quote=None,base=None):
     res = requests.post(url=url+path,headers=headers,json=params).json()
     #print(res.json())
     return  res
+#查询我的广告/otc/orders?status=1
+def otc_orders_ads_select():
+    path = '/otc/orders?status=1'
+    res = requests.get(url=url+path,headers=headers).json()
+    return res
+
+def otc_orders_adsid(id):
+    path = f'/otc/orders/{id}'
+    res = requests.get(url=url+path,headers=headers).json()
+    return res
 
 #http://13.215.135.141/otc/pendings/1179/cancel 取消otc订单
 def otc_cancel(id):
@@ -221,9 +232,9 @@ def exchange_convert(baseSymbol,quoteSymbol,amount,googleVerifyCode):
     return res
 
 if __name__ == '__main__':
-    cachedParams = {'symbol':'BTC', }
-    print(exchange_assets())
+    #cachedParams = {'symbol':'BTC', }
+    #print(exchange_assets())
     # print(orders(symbol='BTC_USDT',systemOrderType='limit',side='buy',volume=0.01,price=1003,source='web'))
-    print(exchange_exchange_set('ABC'))
+    print(exchange_exchange_set('QQ'))
     #print(exchange_convert(baseSymbol='ABC',quoteSymbol='USDT',amount=2090))
     #print(otc_PublicOrde)rs(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))

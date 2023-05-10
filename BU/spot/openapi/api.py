@@ -46,7 +46,7 @@ def cancelOrders(symbol):
     url = base_url + path
     timestamp = time.time()
     now = int(timestamp * 1000)
-    data = [172563236786240]
+    data = [172578371956800]
     data_json = json.dumps(data)
     signature = sign(now, 'DELETE', path, '', data_json)
     headers = {
@@ -313,55 +313,6 @@ def delete_order(pairCode,id,locale=None):#撤销单个订单
         return response
     else:
         return response.json()
-def te_test(locale='en-US',side='sell',pairCode='ADA_USDT',systemOrderType='limit'):#zh-HK,en-US
-    base=(u.symbolbase(pairCode))['base'];quote=(u.symbolbase(pairCode))['quote']
-    if side=='buy':
-        assets1=assets(quote)
-        available=assets1['available'];hold=assets1['hold']
-        print(f'{quote}初始可用资产为{available},初始冻结资产为{hold}')
-        order_id = order(pairCode=pairCode, side=side, price='0.0802', volume='310', systemOrderType=systemOrderType,
-                         source='api',locale=locale)
-        time.sleep(2)
-        print(order_id)
-        data=orders(pairCode=pairCode)
-        ids = [item['id'] for item in data]
-        sql_select=f"SELECT id,side,entrust_price,amount,entrust_price*amount,source_info,`status` FROM exchange.qk_usdt_orders WHERE id={order_id}"
-        cc=mysql_select(sql_select)
-        print(ids,cc)
-        print('数据库查询订单数据',cc)
-        if order_id in ids:
-            print("当前委托订单包含当前订单id")
-        else:
-            print("当前委托订单不包含当前订单id")
-        assets2 = assets('USDT')
-        available1 = assets2['available'];hold1 = assets2['hold']
-        ava=u.d(available)-u.d(available1);una=u.d(hold1)-u.d(hold)
-        print(f'{quote}变化后可用资产为{available1},变化后冻结资产为{hold1},可用减少了{ava},冻结增多了{una}')
-    else:
-        assets1 = assets(base)
-        available = assets1['available'];hold = assets1['hold']
-        print(f'{base}初始可用资产为{available},初始冻结资产为{hold}')
-        order_id = order(pairCode=pairCode, side=side, price='0.0803', volume='310', systemOrderType=systemOrderType,
-                         source='api', locale=locale)
-        time.sleep(2)
-        print(order_id)
-        data = orders(pairCode=pairCode)
-        ids = [item['id'] for item in data]
-        sql_select = f"SELECT id,side,entrust_price,amount,entrust_price*amount,source_info,`status` FROM exchange.qk_usdt_orders WHERE id={order_id}"
-        cc = mysql_select(sql_select)
-        print(ids)
-        print('数据库查询订单数据', cc)
-        if order_id in ids:
-            print("当前委托订单包含当前订单id")
-        else:
-            print("当前委托订单不包含当前订单id")
-        assets2 = assets(base)
-        available1 = assets2['available'];
-        hold1 = assets2['hold']
-        ava = u.d(available) - u.d(available1);
-        una = u.d(hold1) - u.d(hold)
-        print(f'{base}变化后可用资产为{available1},变化后冻结资产为{hold1},可用减少了{ava},冻结增多了{una}')
-
 
 
 if __name__ == '__main__':
