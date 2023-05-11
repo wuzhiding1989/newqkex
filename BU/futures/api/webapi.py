@@ -264,6 +264,8 @@ def web_position_closed(tradeType=None, symbol=None, startTime=None, endTime=Non
         "pnlType": pnlType
 
     }
+    res = requests.get(url=queryurl + path, params=params, headers=headers).json()
+    return res
 
 
 if __name__ == '__main__':
