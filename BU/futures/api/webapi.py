@@ -21,7 +21,7 @@ queryurl = 'http://qraft-trade-api.qkex.com'
 
 
 # 划转
-def futures_transfer(fromAccountType=None, toAccountType=None, currency=None, amount=None):  # 合约划转
+def futures_transfer(fromAccountType=None, toAccountType=None, currency=None, amount=None):  
     path = '/trade/web/account/transfer'
     params = {
         "fromAccountType": fromAccountType,
@@ -31,9 +31,9 @@ def futures_transfer(fromAccountType=None, toAccountType=None, currency=None, am
     res = requests.post(url=tradeurl + path, json=params, headers=headers).json()
     return res
 
-
+# 单个下单
 def futures_order(tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,
-                  marginType=None, price=None, priceType=None, orderQty=None, postOnly=None, timeInForce=None):  # 单个下单
+                  marginType=None, price=None, priceType=None, orderQty=None, postOnly=None, timeInForce=None):
     path = '/trade/web/orders'
     params = {"tradeType": tradeType,
               "symbol": symbol,
@@ -50,8 +50,8 @@ def futures_order(tradeType=None, symbol=None, side=None, positionSide=None, ord
     res = requests.post(url=tradeurl + path, json=params, headers=headers).json()
     return res
 
-
-def futures_oneClickClose(tradeType=None, symbol=None):  # 一键平仓
+ # 一键平仓
+def futures_oneClickClose(tradeType=None, symbol=None):
     path = '/trade/web/oneClickClose'
     params = {
         "tradeType": tradeType,
@@ -60,7 +60,8 @@ def futures_oneClickClose(tradeType=None, symbol=None):  # 一键平仓
     return res
 
 
-def futures_position(tradeType=None, symbol=None, marginType=None):  # 查询持仓
+ # 查询持仓
+def futures_position(tradeType=None, symbol=None, marginType=None):
     path = '/trade/web/position'
     params = {
         "tradeType": tradeType,
@@ -69,8 +70,8 @@ def futures_position(tradeType=None, symbol=None, marginType=None):  # 查询持
     res = requests.get(url=tradeurl + path, params=params, headers=headers).json()
     return res
 
-
-def futures_orders_cancel(tradeType=None, symbol=None, orderId=None):  # 撤销单个订单
+ # 撤销单个订单
+def futures_orders_cancel(tradeType=None, symbol=None, orderId=None):
     path = '/trade/web/orders/cancel'
     params = {
         "tradeType": tradeType,
