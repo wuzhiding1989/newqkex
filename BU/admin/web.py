@@ -33,6 +33,12 @@ def userLogin(account,password,verifyCode):
     res = requests.post(url=url + path, json=params, headers=headers).json()
     return res
 
+#https://test.qkex.com/exchange/exchange
+def exchange():
+    path = '/exchange/exchange'
+    params = {"baseSymbol":"ABC","googleVerifyCode":"411767","quoteSymbol":"USDT","amount":"2000"}
+
+
 
 def aaa():
     userLoginVerify(account,password)
