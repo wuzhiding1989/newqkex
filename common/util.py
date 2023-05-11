@@ -198,10 +198,9 @@ def login_email(email,password):
 
 if __name__ == '__main__':
     # sa='q123456'
-    #print(login_email('yonghu001@testcc.com','q123456'))
+    print(login_email('y001@cc.com','q123456'))
     #print(otc_tickers_rate(symbol='BTC',quote='INR'))
-    p=exchange_assets_symbol('BTC')
+    #p=exchange_assets_symbol('BTC')
     #q=openapi_order_History(pairCode='ADA_USDT',id=171960320359488)
-    print(p)
 
 
