@@ -182,7 +182,7 @@ def otc_orders_ads_select():
     res = requests.get(url=url+path,headers=headers).json()
     return res
 
-def otc_orders_adsid(id):
+def otc_orders_adsid(id):#根据广告id查询广告订单
     path = f'/otc/orders/{id}'
     res = requests.get(url=url+path,headers=headers).json()
     return res

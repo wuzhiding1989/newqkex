@@ -115,19 +115,19 @@ def exchange_fee(pairCode=None):#获取现货手续费
             fee['makerFeesRate']=tmp['makerFeesRate']
             fee['tickerFeesRate'] = tmp['tickerFeesRate']
             return fee
-def exchange_assets_symbol(symbol):
+def exchange_assets_symbol(symbol):#打印现货单个资产的可用和不可用
+    assets={'available':'','hold':''}
     res =webapi.exchange_assets()
     if res['code']==0:
         for tmp in res['data']:
             if tmp['symbol'] ==symbol:
-                availableBalance = tmp['available']
-                frozenBalance = tmp['hold']
-                assets=str(d(availableBalance)),str(d(frozenBalance))
+                assets['available'] = tmp['available']
+                assets['hold'] = tmp['hold']
                 return assets
     else:
         print('请求失败，返回结果为',res)
         return
-def openapi_order_History(pairCode,id=None):
+def openapi_order_History(pairCode,id=None):#open历史委托查询订单数据
     res = api.fulfillment(pairCode=pairCode,isHistory=True,systemOrderType=0)
     fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
            'dealQuoteAmount': '0', 'side': '0', 'status': 1, 'openAmount': '0','entrustPrice': '0'}
@@ -143,7 +143,7 @@ def openapi_order_History(pairCode,id=None):
             fle['openAmount'] = tmp['openAmount']
             fle['entrustPrice'] = tmp['entrustPrice']
             return fle
-def openapi_order(pairCode,id=None):
+def openapi_order(pairCode,id=None):#open当前委托查询订单数据
     res = api.orders(pairCode=pairCode)
     fle = {'dealAmount': '0', 'averagePrice': '0','amount': '0',
            'dealQuoteAmount': '0', 'side': '0', 'status': 1, 'openAmount': '0','entrustPrice': '0'}
@@ -159,11 +159,12 @@ def openapi_order(pairCode,id=None):
             fle['openAmount'] = tmp['openAmount']
             fle['entrustPrice'] = tmp['entrustPrice']
             return fle
-def openapi_order1(pairCode):
+def openapi_order1(pairCode):#打印当前币对所有的当前委托订单
     res = api.orders(pairCode=pairCode)
     print(res)
     ids = [d['id'] for d in res if d['pairCode'] == pairCode]
     print(ids)
+    return ids
 
 
 
@@ -199,7 +200,7 @@ if __name__ == '__main__':
     # sa='q123456'
     #print(login_email('yonghu001@testcc.com','q123456'))
     #print(otc_tickers_rate(symbol='BTC',quote='INR'))
-    p=openapi_order1(pairCode='ADA_USDT')
+    p=exchange_assets_symbol('BTC')
     #q=openapi_order_History(pairCode='ADA_USDT',id=171960320359488)
     print(p)
 
