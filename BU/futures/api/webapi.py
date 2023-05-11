@@ -7,7 +7,7 @@ Authorization1='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNTk4ZDBiOS1lOTcyLTQ1N2MtOWRmOS1
 headers['X-Authorization']=Authorization
 tradeurl = 'http://qraft-trade-api.qkex.com/v1'
 
-def futures_transfer(fromAccountType,toAccountType,currency,amount):#合约划转
+def futures_transfer(fromAccountType=None,toAccountType=None,currency=None,amount=None):#合约划转
     path = '/trade/web/account/transfer'
     params = {
     "fromAccountType": fromAccountType,
@@ -37,6 +37,14 @@ def futures_order():#单个下单
     "timeInForce": "GTC"}#GTC/IOC/FOK
     res = requests.post(url=tradeurl+path,json=params,headers=headers).json()
     return res
+
+def futures_oneClickClose():#一键平仓
+    path = '/trade/web/oneClickClose'
+    params = {
+        "tradeType": "linearPerpetual",
+         "symbol": "BTCUSDT"}
+    res = requests.post(url=tradeurl+path,json=params,headers=headers).json()
+    return res
 def futures_position():#查询持仓
     path = '/trade/web/position'
     params = {
@@ -60,13 +68,7 @@ def futures_orders_oneClickClose():#一键撤销所有订单
          "symbol": "BTCUSDT"}
     res = requests.post(url=tradeurl+path,json=params,headers=headers).json()
     return res
-def futures_oneClickClose():#一键平仓
-    path = '/trade/web/oneClickClose'
-    params = {
-        "tradeType": "linearPerpetual",
-         "symbol": "BTCUSDT"}
-    res = requests.post(url=tradeurl+path,json=params,headers=headers).json()
-    return res
+
 def futures_openOrders():#当前委托-tradeType=linearPerpetual&side=buy&symbol=BTCUSDT&orderId=6699123456653&clOrdId=6699123456653&pageNum=1&pageSize=10
     path = '/trade/web/openOrders'
     params = {
