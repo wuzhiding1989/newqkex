@@ -4,16 +4,16 @@ import requests
 symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'positionSide'
 postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimalN';pageNum = '1';pageSize = '10'
 headers = {"Content-Type": "application/json", "Accept-Language": "zh-CN", "source": "web", "X-Authorization": ""}
-Authorization = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MjI0MzhiNy1jODRjLTQ5YWQtYjZkMS1jYzFhNjU3NWYwNmQxMzcwMjYyOTIxIiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJiaDBpVFlFS0VGNFZOT2lXc3FMUnN3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4Mzg3ODI4NCwiZXhwIjoxNjgzOTY0Njg0LCJpc3MiOiJ3Y3MifQ.-N-qRUlZ8a6GRLtLpCpxnCXPqCDQEI2fgWxvSWWQQgg'
+Authorization = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YmRlZTIyOC02MzMwLTRlZmUtYTkxZi1mMTZhNDAxMzNlMWQxNTc4OTQ4MzEzIiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJiaDBpVFlFS0VGNFZOT2lXc3FMUnN3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4Mzg3MzU0NCwiZXhwIjoxNjgzOTU5OTQ0LCJpc3MiOiJ3Y3MifQ.qbhaWLUFCXlf2CkAzooogH7nOmXwLC54fDKVvMd_B-k'
 Authorization1 = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNTk4ZDBiOS1lOTcyLTQ1N2MtOWRmOS1lMTAyOGQ2MmM1Y2YxOTkyNDEyMzQzIiwidWlkIjoiaDBsVXZiR0t2SkdkdGVscGYxQWRZUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJkRmxJM3RwSFdJdHpsNk9rTDRBSlBRPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4Mzc5MjQ0NiwiZXhwIjoxNjgzODc4ODQ2LCJpc3MiOiJ3Y3MifQ.IErDpB3ydg6mbOxbq6TlMA-0quPgzx6ep2uNkE0Q7nU'
 headers['X-Authorization'] = Authorization
-tradeurl = 'https://qraft-trade-api.qkex.com'
-queryurl = 'https://qraft-trade-api.qkex.com'
+tradeurl = 'http://qraft-trade-api.qkex.com/v1'
+queryurl = 'http://qraft-trade-api.qkex.com'
 
 
 # 划转
 def web_transfer(fromAccountType=None, toAccountType=None, currency=None, amount=None):
-    path = '/v1/trade/web/account/transfer'
+    path = '/trade/web/account/transfer'
     params = {
         "fromAccountType": fromAccountType,
         "toAccountType": toAccountType,
@@ -25,7 +25,7 @@ def web_transfer(fromAccountType=None, toAccountType=None, currency=None, amount
 # 单个下单
 def web_order(tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,
                   marginType=None, price=None, priceType=None, orderQty=None, postOnly=None, timeInForce=None):
-    path = '/v1/trade/web/orders'
+    path = '/trade/web/orders'
     params = {"tradeType": tradeType,
               "symbol": symbol,
               "side": side,
@@ -38,12 +38,28 @@ def web_order(tradeType=None, symbol=None, side=None, positionSide=None, orderTy
               "orderQty": orderQty,
               "postOnly": postOnly,
               "timeInForce": timeInForce}  # GTC/IOC/FOK
-    res = requests.post(url=tradeurl + path, json=params, headers=headers).json()
+    ps={
+  "tradeType": "linearPerpetual",
+  "symbol": "BTCUSDT",
+  "side": "buy",
+  "positionSide": "long",
+  "orderType": "limit",
+  "reduceOnly": 'false',
+  "marginType": "cross",
+  "price": "20000",
+  "priceType": "optimalN",
+  "orderQty": "1",
+  "clOrdId": "123456",
+  "postOnly": 'false',
+  "timeInForce": "GTC",
+  "startTime": 1683872710441}
+    res = requests.post(url=tradeurl + path, json=ps, headers=headers).json()
+    print(tradeurl+path)
     return res
 
  # 一键平仓
 def web_oneClickClose(tradeType=None, symbol=None):
-    path = '/v1/trade/web/oneClickClose'
+    path = '/trade/web/oneClickClose'
     params = {
         "tradeType": tradeType,
         "symbol": symbol}
@@ -53,7 +69,7 @@ def web_oneClickClose(tradeType=None, symbol=None):
 
  # 查询持仓
 def web_position(tradeType=None, symbol=None, marginType=None):
-    path = '/v1/trade/web/position'
+    path = '/trade/web/position'
     params = {
         "tradeType": tradeType,
         "symbol": symbol,
@@ -63,7 +79,7 @@ def web_position(tradeType=None, symbol=None, marginType=None):
 
  # 撤销单个订单
 def web_orders_cancel(tradeType=None, symbol=None, orderId=None):
-    path = '/v1/trade/web/orders/cancel'
+    path = '/trade/web/orders/cancel'
     params = {
         "tradeType": tradeType,
         "symbol": symbol,
@@ -73,7 +89,7 @@ def web_orders_cancel(tradeType=None, symbol=None, orderId=None):
 
 
 def web_orders_oneClickClose(tradeType=None, symbol=None):  # 一键撤销所有订单
-    path = '/v1/trade/web/orders/oneClickCancel'
+    path = '/trade/web/orders/oneClickCancel'
     params = {
         "tradeType": tradeType,
         "symbol": symbol}
@@ -83,7 +99,7 @@ def web_orders_oneClickClose(tradeType=None, symbol=None):  # 一键撤销所有
 # 当前委托
 def web_openOrders(tradeType=None, symbol=None, side=None, clOrdId=None, orderId=None, pageNum=None,
                        pageSize=None):
-    path = '/v1/trade/web/openOrders'
+    path = '/trade/web/openOrders'
     params = {
         "tradeType": tradeType,
         "symbol": symbol,
@@ -258,17 +274,103 @@ def web_position_closed(tradeType=None, symbol=None, startTime=None, endTime=Non
     }
     res = requests.get(url=queryurl + path, params=params, headers=headers).json()
     return res
-#/v1/trade/web/tradingAccount
-def web_tradingAccount(currency=None):
-    path = '/v1/trade/web/tradingAccount'
-    params ={'currency':currency}
-    res = requests.get(url=tradeurl+path,data=params,headers=headers).json()
+
+# 切换更杠
+def web_change_reverage(tradeType=None,symbol=None,leverage=None,marginType=None):
+    path = '/v1/trade/web/leverage'
+    data = {
+            "tradeType": tradeType,
+            "symbol": symbol,
+            "leverage": leverage,
+            "marginType": marginType
+            }
+    res = requests.post(url=queryurl + path, json=data, headers=headers).json()
+    return res
+
+# 查询当前用户更杠信息 /v1/trade/web/leverage/info
+def web_leverage_info(tradeType=None, symbol=None,marginType=None):
+    path = '/v1/trade/web/leverage/info'
+    params = {
+        "tradeType": tradeType,
+        "symbol": symbol,
+        "marginType": marginType,
+
+    }
+    res = requests.get(url=queryurl + path, params=params, headers=headers).json()
     return res
 
 
+# 二次确认 /v1/trade/web/orders/preview
+def web_orders_preview(tradeType=None, symbol=None,side=None,positionSide=None, orderType=None,
+                       reduceOnly=None, marginType=None,price=None,priceType=None,orderQty=None,postOnly=None,timeInForce=None):
+    path = '/v1/trade/web/orders/preview'
+
+    params = {
+        "tradeType": tradeType,
+        "symbol": symbol,
+        "side": side,
+        "positionSide": positionSide,
+        "orderType": orderType,
+        "reduceOnly": reduceOnly,
+        "marginType": marginType,
+        "price": price,
+        "priceType": priceType,
+        "orderQty": orderQty,
+        "postOnly": postOnly,
+        "timeInForce":timeInForce
+    }
+    res = requests.get(url=queryurl + path, params=params, headers=headers).json()
+    return res
+
+# 查看用户全部币对 /v1/trade/web/user/allSymbol
+def web_user_allSymbol(type=None):
+    path = '/v1/trade/web/orders/preview'
+
+    params = {
+            "type":type
+    }
+    res = requests.get(url=queryurl + path, params=params, headers=headers).json()
+    return res
+
+# 调整逐仓保证金 /v1/trade/web/position/margin
+def web_position_margin(tradeTyp=None, symbol=None, positionSide=None, amount=None,type=None):
+    path = '/v1/trade/web/position/margin'
+    params ={
+      "tradeType": tradeTyp,
+      "symbol": symbol,
+      "positionSide": positionSide,
+      "amount": amount,
+      "type": type
+    }
+    res = requests.post(url=tradeurl + path, json=params, headers=headers).json()
+    return res
+
+#查看风险限额-与仓位挂单对应档位 /v1/trade/web/riskLimit
+def web_riskLimit(tradeType=None,symbol=None,marginType=None):
+    path = '/v1/trade/web/riskLimit'
+
+    params = {
+            "tradeType": tradeType,
+            "symbol": symbol,
+            "marginType":marginType
+    }
+    res = requests.get(url=queryurl + path, params=params, headers=headers).json()
+    return res
+
+#查看用户全部风险限额 /v1/trade/web/allRiskLimit
+def web_allRiskLimit(tradeType=None,symbol=None,marginType=None):
+    path = '/v1/trade/web/allRiskLimit'
+
+    params = {
+            "tradeType": tradeType,
+            "symbol": symbol,
+            "marginType":marginType
+    }
+    res = requests.get(url=queryurl + path, params=params, headers=headers).json()
+    return res
+
 
 if __name__ == '__main__':
-    #print(web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
-    # print(web_openOrders(tradeType=tradeType, symbol=symbol))
-    # print(web_position(tradeType, symbol, marginType))
-    print(web_order())
+    print(web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
+    print(web_openOrders(tradeType=tradeType, symbol=symbol))
+    print(web_position(tradeType, symbol, marginType))
