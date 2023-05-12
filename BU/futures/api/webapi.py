@@ -369,6 +369,13 @@ def web_allRiskLimit(tradeType=None,symbol=None,marginType=None):
     res = requests.get(url=queryurl + path, params=params, headers=headers).json()
     return res
 
+#/v1/trade/web/tradingAccount
+def web_tradingAccount(currency=None):
+    path = '/v1/trade/web/tradingAccount'
+    params ={'currency':currency}
+    res = requests.get(url=tradeurl+path,data=params,headers=headers).json()
+    return res
+
 
 if __name__ == '__main__':
     print(web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
