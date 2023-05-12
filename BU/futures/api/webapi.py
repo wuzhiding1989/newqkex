@@ -4,16 +4,16 @@ import requests
 symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'positionSide'
 postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimalN';pageNum = '1';pageSize = '10'
 headers = {"Content-Type": "application/json", "Accept-Language": "zh-CN", "source": "web", "X-Authorization": ""}
-Authorization = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YmRlZTIyOC02MzMwLTRlZmUtYTkxZi1mMTZhNDAxMzNlMWQxNTc4OTQ4MzEzIiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJiaDBpVFlFS0VGNFZOT2lXc3FMUnN3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4Mzg3MzU0NCwiZXhwIjoxNjgzOTU5OTQ0LCJpc3MiOiJ3Y3MifQ.qbhaWLUFCXlf2CkAzooogH7nOmXwLC54fDKVvMd_B-k'
+Authorization = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1MjI0MzhiNy1jODRjLTQ5YWQtYjZkMS1jYzFhNjU3NWYwNmQxMzcwMjYyOTIxIiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJiaDBpVFlFS0VGNFZOT2lXc3FMUnN3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4Mzg3ODI4NCwiZXhwIjoxNjgzOTY0Njg0LCJpc3MiOiJ3Y3MifQ.-N-qRUlZ8a6GRLtLpCpxnCXPqCDQEI2fgWxvSWWQQgg'
 Authorization1 = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNTk4ZDBiOS1lOTcyLTQ1N2MtOWRmOS1lMTAyOGQ2MmM1Y2YxOTkyNDEyMzQzIiwidWlkIjoiaDBsVXZiR0t2SkdkdGVscGYxQWRZUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJkRmxJM3RwSFdJdHpsNk9rTDRBSlBRPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4Mzc5MjQ0NiwiZXhwIjoxNjgzODc4ODQ2LCJpc3MiOiJ3Y3MifQ.IErDpB3ydg6mbOxbq6TlMA-0quPgzx6ep2uNkE0Q7nU'
 headers['X-Authorization'] = Authorization
-tradeurl = 'http://qraft-trade-api.qkex.com/v1'
-queryurl = 'http://qraft-trade-api.qkex.com'
+tradeurl = 'https://qraft-trade-api.qkex.com'
+queryurl = 'https://qraft-trade-api.qkex.com'
 
 
 # 划转
 def web_transfer(fromAccountType=None, toAccountType=None, currency=None, amount=None):
-    path = '/trade/web/account/transfer'
+    path = '/v1/trade/web/account/transfer'
     params = {
         "fromAccountType": fromAccountType,
         "toAccountType": toAccountType,
@@ -25,7 +25,7 @@ def web_transfer(fromAccountType=None, toAccountType=None, currency=None, amount
 # 单个下单
 def web_order(tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,
                   marginType=None, price=None, priceType=None, orderQty=None, postOnly=None, timeInForce=None):
-    path = '/trade/web/orders'
+    path = '/v1/trade/web/orders'
     params = {"tradeType": tradeType,
               "symbol": symbol,
               "side": side,
@@ -38,28 +38,12 @@ def web_order(tradeType=None, symbol=None, side=None, positionSide=None, orderTy
               "orderQty": orderQty,
               "postOnly": postOnly,
               "timeInForce": timeInForce}  # GTC/IOC/FOK
-    ps={
-  "tradeType": "linearPerpetual",
-  "symbol": "BTCUSDT",
-  "side": "buy",
-  "positionSide": "long",
-  "orderType": "limit",
-  "reduceOnly": 'false',
-  "marginType": "cross",
-  "price": "20000",
-  "priceType": "optimalN",
-  "orderQty": "1",
-  "clOrdId": "123456",
-  "postOnly": 'false',
-  "timeInForce": "GTC",
-  "startTime": 1683872710441}
-    res = requests.post(url=tradeurl + path, json=ps, headers=headers).json()
-    print(tradeurl+path)
+    res = requests.post(url=tradeurl + path, json=params, headers=headers).json()
     return res
 
  # 一键平仓
 def web_oneClickClose(tradeType=None, symbol=None):
-    path = '/trade/web/oneClickClose'
+    path = '/v1/trade/web/oneClickClose'
     params = {
         "tradeType": tradeType,
         "symbol": symbol}
@@ -69,7 +53,7 @@ def web_oneClickClose(tradeType=None, symbol=None):
 
  # 查询持仓
 def web_position(tradeType=None, symbol=None, marginType=None):
-    path = '/trade/web/position'
+    path = '/v1/trade/web/position'
     params = {
         "tradeType": tradeType,
         "symbol": symbol,
@@ -79,7 +63,7 @@ def web_position(tradeType=None, symbol=None, marginType=None):
 
  # 撤销单个订单
 def web_orders_cancel(tradeType=None, symbol=None, orderId=None):
-    path = '/trade/web/orders/cancel'
+    path = '/v1/trade/web/orders/cancel'
     params = {
         "tradeType": tradeType,
         "symbol": symbol,
@@ -89,7 +73,7 @@ def web_orders_cancel(tradeType=None, symbol=None, orderId=None):
 
 
 def web_orders_oneClickClose(tradeType=None, symbol=None):  # 一键撤销所有订单
-    path = '/trade/web/orders/oneClickCancel'
+    path = '/v1/trade/web/orders/oneClickCancel'
     params = {
         "tradeType": tradeType,
         "symbol": symbol}
@@ -99,7 +83,7 @@ def web_orders_oneClickClose(tradeType=None, symbol=None):  # 一键撤销所有
 # 当前委托
 def web_openOrders(tradeType=None, symbol=None, side=None, clOrdId=None, orderId=None, pageNum=None,
                        pageSize=None):
-    path = '/trade/web/openOrders'
+    path = '/v1/trade/web/openOrders'
     params = {
         "tradeType": tradeType,
         "symbol": symbol,
@@ -274,9 +258,17 @@ def web_position_closed(tradeType=None, symbol=None, startTime=None, endTime=Non
     }
     res = requests.get(url=queryurl + path, params=params, headers=headers).json()
     return res
+#/v1/trade/web/tradingAccount
+def web_tradingAccount(currency=None):
+    path = '/v1/trade/web/tradingAccount'
+    params ={'currency':currency}
+    res = requests.get(url=tradeurl+path,data=params,headers=headers).json()
+    return res
+
 
 
 if __name__ == '__main__':
-    print(web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
-    print(web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(web_position(tradeType, symbol, marginType))
+    #print(web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
+    # print(web_openOrders(tradeType=tradeType, symbol=symbol))
+    # print(web_position(tradeType, symbol, marginType))
+    print(web_order())
