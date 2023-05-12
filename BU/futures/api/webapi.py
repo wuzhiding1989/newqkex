@@ -39,7 +39,6 @@ def web_order(tradeType=None, symbol=None, side=None, positionSide=None, orderTy
               "postOnly": postOnly,
               "timeInForce": timeInForce}  # GTC/IOC/FOK
     res = requests.post(url=tradeurl + path, json=params, headers=headers).json()
-    print(tradeurl+path)
     return res
 
  # 一键平仓

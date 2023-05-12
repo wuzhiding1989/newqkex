@@ -165,7 +165,15 @@ def openapi_order1(pairCode):#打印当前币对所有的当前委托订单
     ids = [d['id'] for d in res if d['pairCode'] == pairCode]
     print(ids)
     return ids
-
+def StampToTime(timeStamp,type=None):
+    if not type:
+        dateArray = datetime.datetime.fromtimestamp(int(str(timeStamp)[0:]))  # 获取创建时间戳,并转换
+        time = dateArray.strftime("%Y-%m-%d %H:%M:%S")  # 时间再次转换
+        return  time
+    if type=='MicroSecond':
+        dateArray = datetime.datetime.fromtimestamp(int(str(timeStamp)[0:-3]))  # 获取创建时间戳,并转换
+        time = dateArray.strftime("%Y-%m-%d %H:%M:%S")  # 时间再次转换
+        return  time
 
 
 #登录获取headers带token，失败后继续重试，重试6次后退出---兼容邮件登录和谷歌登录，不用输谷歌key，输入账号和密码就可登录
