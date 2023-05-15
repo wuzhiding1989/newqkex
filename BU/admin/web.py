@@ -1,4 +1,5 @@
 import requests
+import sys
 from common import googleCode as gc
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
@@ -48,6 +49,9 @@ def getAccessToken(account,password,secret=None):
     else:
         code = 111111
     res = userLogin(account,password,verifyCode=code)
+    if res['code']!=0:
+        print(res['msg'],f'，请检查账号{account}的谷歌secret是否填写正确')
+        sys.exit()
     accessToken = res['data']['accessToken']
     return accessToken
 
