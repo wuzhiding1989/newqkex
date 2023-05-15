@@ -75,7 +75,7 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol,
             "orderId": orderId}
-        res = requests.post(self,url=self.tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
 
