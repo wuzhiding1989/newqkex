@@ -1,21 +1,22 @@
 import copy
 import requests
 from BU.admin import web
-from config.userdate import weblogin
+from config import userdate,serverdate
 
 symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'positionSide'
 postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimalN';pageNum = '1';pageSize = '10'
-tradeurl = 'https://qraft-trade-api.qkex.com'
-queryurl = 'https://qraft-trade-api.qkex.com'
+
 
 
 class webapi():
     def __init__(self,user,server=None):
         self.headers = {"Content-Type": "application/json", "Accept-Language": "zh-CN", "source": "web"}
-        self.account = weblogin[user]['username']
-        self.password = weblogin[user]['password']
-        self.secret = weblogin[user]['secret']
+        self.account = userdate.weblogin[user]['username']
+        self.password = userdate.weblogin[user]['password']
+        self.secret = userdate.weblogin[user]['secret']
         self.headers['X-Authorization'] = web.getAccessToken(account=self.account,password=self.password,secret=self.secret)
+        self.tradeurl = serverdate.server[server]['tradeapi']
+        self.queryurl = serverdate.server[server]['queryapi']
 
     # 划转
     def web_transfer(self,fromAccountType=None, toAccountType=None, currency=None, amount=None):
@@ -25,7 +26,7 @@ class webapi():
             "toAccountType": toAccountType,
             "currency": currency,
             "amount": amount}
-        res = requests.post(url=tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
     # 单个下单
@@ -44,7 +45,7 @@ class webapi():
                   "orderQty": orderQty,
                   "postOnly": postOnly,
                   "timeInForce": timeInForce}  # GTC/IOC/FOK
-        res = requests.post(url=tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
      # 一键平仓
@@ -53,7 +54,7 @@ class webapi():
         params = {
             "tradeType": tradeType,
             "symbol": symbol}
-        res = requests.post(url=tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
 
@@ -64,7 +65,7 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol,
             "marginType": marginType}
-        res = requests.get(url=tradeurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers).json()
         return res
 
      # 撤销单个订单
@@ -74,7 +75,7 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol,
             "orderId": orderId}
-        res = requests.post(self,url=tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(self,url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
 
@@ -83,7 +84,7 @@ class webapi():
         params = {
             "tradeType": tradeType,
             "symbol": symbol}
-        res = requests.post(url=tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
     # 当前委托
@@ -98,7 +99,7 @@ class webapi():
             "clOrdId": clOrdId,
             "pageNum": pageNum,
             "pageSize": pageSize}
-        res = requests.get(url=tradeurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -117,7 +118,7 @@ class webapi():
             "orderType": orderType,
             "stopOrderId": stopOrderId
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -127,7 +128,7 @@ class webapi():
         params = {
             "tradeType": tradeType
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -138,7 +139,7 @@ class webapi():
             "tradeType": tradeType,
             "symbolList": symbolList
         }
-        res = requests.post(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.post(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -149,7 +150,7 @@ class webapi():
             "tradeType": tradeType,
             "symbolList": symbolList
         }
-        res = requests.post(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.post(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -159,7 +160,7 @@ class webapi():
         params = {
             "tradeType": tradeType
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -171,7 +172,7 @@ class webapi():
             "preview": preview,
             "tradeUnit": tradeUnit
         }
-        res = requests.post(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.post(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -182,7 +183,7 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -203,7 +204,7 @@ class webapi():
             "clOrdId": clOrdId,
             "orderStatus": orderStatus
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -225,7 +226,7 @@ class webapi():
             "clOrdId": clOrdId,
             "tradeId": tradeId
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -243,7 +244,7 @@ class webapi():
             "incomeType": incomeType,
             "currency": currency
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -262,7 +263,7 @@ class webapi():
             "pnlType": pnlType
 
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
     # 切换更杠
@@ -274,7 +275,7 @@ class webapi():
                 "leverage": leverage,
                 "marginType": marginType
                 }
-        res = requests.post(url=queryurl + path, json=data, headers=self.headers).json()
+        res = requests.post(url=self.queryurl + path, json=data, headers=self.headers).json()
         return res
 
     # 查询当前用户更杠信息 /v1/trade/web/leverage/info
@@ -286,7 +287,7 @@ class webapi():
             "marginType": marginType,
 
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
 
@@ -309,7 +310,7 @@ class webapi():
             "postOnly": postOnly,
             "timeInForce":timeInForce
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
     # 查看用户全部币对 /v1/trade/web/user/allSymbol
@@ -319,7 +320,7 @@ class webapi():
         params = {
                 "type":type
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
     # 调整逐仓保证金 /v1/trade/web/position/margin
@@ -332,7 +333,7 @@ class webapi():
           "amount": amount,
           "type": type
         }
-        res = requests.post(url=tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
 
     #查看风险限额-与仓位挂单对应档位 /v1/trade/web/riskLimit
@@ -344,7 +345,7 @@ class webapi():
                 "symbol": symbol,
                 "marginType":marginType
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
     #查看用户全部风险限额 /v1/trade/web/allRiskLimit
@@ -356,19 +357,19 @@ class webapi():
                 "symbol": symbol,
                 "marginType":marginType
         }
-        res = requests.get(url=queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
         return res
 
     #/v1/trade/web/tradingAccount
     def web_tradingAccount(self,currency=None):
         path = '/v1/trade/web/tradingAccount'
         params ={'currency':currency}
-        res = requests.get(url=tradeurl+path,data=params,headers=self.headers).json()
+        res = requests.get(url=self.tradeurl+path,data=params,headers=self.headers).json()
         return res
 
 
 if __name__ == '__main__':
-    wb = webapi(1)
+    wb = webapi(1,server='test')
     # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
     print(wb.web_position(tradeType, symbol, marginType))

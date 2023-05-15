@@ -6,7 +6,7 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9
 # Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MmU0Y2Y4ZC1hODdmLTQ4MTgtODJmMS0xNDgxYjYwOTRhMTAxMTEyODg0ODYzIiwidWlkIjoic1F6S2RTODJUN0dDeEluck1XSDBpUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiI4NFJ2dzRsWUo3SUZUamdLTDFZbjJ3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY3ODE4MDg3NywiZXhwIjoxNjc4MjY3Mjc3LCJpc3MiOiJ3Y3MifQ.mZjUU6EYebXG-NijCZ80bMKeCE_1f24sMnR89tIgEUo'
 # headers['X-Authorization']=Authorization
 url = 'https://test.qkex.com'
-account='110089@qq.com'
+account='10089@qq.com'
 password='aa123456'
 secret ='22CQPSL3ROAAN53K'
 
@@ -53,7 +53,7 @@ def getAccessToken(account,password,secret=None):
         print(res['msg'], '，请检查账号密码是否填写正确')
         sys.exit()
     res = userLogin(account,password,verifyCode=code)
-    if res['code']!=0:
+    if res['code'] != 0:
         print(res['msg'],f'，请检查账号{account}的谷歌secret是否填写正确')
         sys.exit()
     accessToken = res['data']['accessToken']
