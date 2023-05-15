@@ -1,6 +1,6 @@
 server = {
     'test': {
-        'tradeapi': 'https://qraft-trade-api.qkex.com',
-        'queryapi': 'https://qraft-query-api.qkex.com'
+        'tradeapi': 'https://test-futures-rest.qkex.com',
+        'queryapi': 'https://test-futures-rest.qkex.com'
     }
 }
