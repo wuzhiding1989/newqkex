@@ -4,9 +4,10 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
 # Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI5MmU0Y2Y4ZC1hODdmLTQ4MTgtODJmMS0xNDgxYjYwOTRhMTAxMTEyODg0ODYzIiwidWlkIjoic1F6S2RTODJUN0dDeEluck1XSDBpUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiI4NFJ2dzRsWUo3SUZUamdLTDFZbjJ3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY3ODE4MDg3NywiZXhwIjoxNjc4MjY3Mjc3LCJpc3MiOiJ3Y3MifQ.mZjUU6EYebXG-NijCZ80bMKeCE_1f24sMnR89tIgEUo'
 # headers['X-Authorization']=Authorization
-url = 'http://13.215.135.141'
-account='10086@qq.com'
+url = 'https://test.qkex.com'
+account='10089@qq.com'
 password='aa123456'
+secret ='22CQPSL3ROAAN53K'
 
 
 #登录
@@ -40,11 +41,15 @@ def exchange():
 
 
 
-def aaa():
-    userLoginVerify(account,password)
-    code = gc.get_google_code()
+def getAccessToken(account,password,secret):
+    res = userLoginVerify(account,password)
+    if res['data']['verifyType']=='google':
+        code = gc.read_google_authenticator_code(secret)
+    else:
+        code = 111111
     res = userLogin(account,password,verifyCode=code)
-    return res
+    accessToken = res['data']['accessToken']
+    return accessToken
 
 if __name__ == '__main__':
-    print(aaa())
+    print(getAccessToken(account,password,secret))
