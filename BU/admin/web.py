@@ -41,9 +41,9 @@ def exchange():
 
 
 
-def getAccessToken(account,password,secret):
+def getAccessToken(account,password,secret=None):
     res = userLoginVerify(account,password)
-    if res['data']['verifyType']=='google':
+    if res['data']['verifyType']=='google' and secret !=None:
         code = gc.read_google_authenticator_code(secret)
     else:
         code = 111111
