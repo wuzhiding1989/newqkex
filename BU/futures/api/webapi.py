@@ -9,7 +9,7 @@ postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimal
 
 
 class webapi():
-    def __init__(self,user,server=None):
+    def __init__(self,user,server):
         self.headers = {"Content-Type": "application/json", "Accept-Language": "zh-CN", "source": "web"}
         self.account = userdate.weblogin[user]['username']
         self.password = userdate.weblogin[user]['password']
