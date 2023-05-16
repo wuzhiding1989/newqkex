@@ -1,8 +1,7 @@
 import copy,random
 from BU.futures.api import webapi
-from param.code_list import code_list as code
-import BU.NTS.dataCheck.dataCheck as dataCheck
-import UnitTest.com as pre
+# from param.code_list import code_list as code
+import BU.futures.testcase.dataCheck.dataCheck as dataCheck
 import param.dict as param_dict
 from param.dict import cumQty,avgPrice,lastPrice,leavesQty,commission,orderStatus,base,quote,clOrdId,leverage,price, \
     FailMessage
@@ -12,8 +11,7 @@ from common.asserts import responseCodeAssert as _assert
 from common.other import httpCheck as e
 from common.util import printc,printl,d, countCaseNumber as u,ModeCount,Count,truncate
 from BU.NTS.dataCheck.dataCheck import newPrice
-import case.other.UserDataCheck as UserDataCheck
-from UnitTest.com import GetBusinessName
+import BU.other.UserDataCheck as UserDataCheck
 
 caseMark=1
 symbol = 'BTCUSDT';price=random.randint(6999,8999);tradeType = 'linearPerpetual';side = 'Buy';positionSide = 'Long';marginType1 = 'cross';marginType = 'cross';orderType = 'limit';orderQty =random.randint(1,5);
