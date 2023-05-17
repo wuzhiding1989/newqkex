@@ -106,7 +106,7 @@ class webapi():
     # 查询历史计划委托 /v1/trade/record/web/stopOrdersHistory
     def web_stopOrdersHistory(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                           marginType=None, orderType=None, stopOrderId=None):
-        path = '/v1/trade/record/web/stopOrdersHistory'
+        path = '/v1/record/web/stopOrdersHistory'
         params = {
             "tradeType": tradeType,
             "symbol": symbol,
@@ -190,7 +190,7 @@ class webapi():
     # 查询历史订单 /v1/trade/record/web/orders/history
     def web_orders_history(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                            side=None, orderType=None, orderId=None, clOrdId=None, orderStatus=None):
-        path = '/v1/trade/record/web/orders/history'
+        path = '/v1/record/web/orders/history'
         params = {
             "tradeType": tradeType,
             "symbol": symbol,
@@ -204,14 +204,14 @@ class webapi():
             "clOrdId": clOrdId,
             "orderStatus": orderStatus
         }
-        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, json=params, headers=self.headers).json()
         return res
 
 
     # 查询历史成交 /v1/trade/record/web/orders/fills
     def web_orders_fills(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                          side=None, orderType=None, orderId=None, clOrdId=None, tradeId=None):
-        path = '/v1/trade/record/web/orders/fills'
+        path = '/v1/record/web/orders/fills'
 
         params = {
             "tradeType": tradeType,
@@ -226,14 +226,14 @@ class webapi():
             "clOrdId": clOrdId,
             "tradeId": tradeId
         }
-        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, json=params, headers=self.headers).json()
         return res
 
 
     # 查询历史流水记录 /v1/trade/record/web/account/income
     def web_account_income(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                            incomeType=None, currency=None):
-        path = '/v1/trade/record/web/account/income'
+        path = '/v1/record/web/account/income'
         params = {
             "tradeType": tradeType,
             "symbol": symbol,
@@ -251,7 +251,7 @@ class webapi():
     # 查询历史完全平仓记录 /v1/trade/record/web/position/closed
     def web_position_closed(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                             marginType=None, pnlType=None):
-        path = '/v1/trade/record/web/position/closed'
+        path = '/v1/record/web/position/closed'
         params = {
             "tradeType": tradeType,
             "symbol": symbol,
@@ -263,7 +263,7 @@ class webapi():
             "pnlType": pnlType
 
         }
-        res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.queryurl + path, json=params, headers=self.headers).json()
         return res
 
     # 切换更杠
@@ -361,15 +361,16 @@ class webapi():
         return res
 
     #/v1/trade/web/tradingAccount
-    def web_tradingAccount(self,currency=None):
+    def web_tradingAccount(self,currency=None):#/v1/trade/web/tradingAccount
         path = '/v1/trade/web/tradingAccount'
         params ={'currency':currency}
-        res = requests.get(url=self.tradeurl+path,data=params,headers=self.headers).json()
+        #print(self.tradeurl+path)
+        res = requests.get(url=self.tradeurl+path,json=params,headers=self.headers).json()
         return res
 
 
 if __name__ == '__main__':
-    wb = webapi(1,server='test')
+    wb = webapi(2,server='test')
     # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(wb.web_position(tradeType, symbol, marginType))
+    print(wb.web_tradingAccount())

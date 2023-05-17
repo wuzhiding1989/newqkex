@@ -1,6 +1,6 @@
 import copy,random
 from BU.futures.api import webapi
-# from param.code_list import code_list as code
+from param.code_list import code_list as code
 import BU.futures.testcase.dataCheck.dataCheck as dataCheck
 import param.dict as param_dict
 from param.dict import cumQty,avgPrice,lastPrice,leavesQty,commission,orderStatus,base,quote,clOrdId,leverage,price, \
