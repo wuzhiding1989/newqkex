@@ -1,0 +1,87 @@
+# 公共参数
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: CTC模块
+  allureStory: CTC资产接口
+
+ctc_consumer_uploadFile_01:
+    host: ${{host()}}
+    url: /otc/files/upload
+    method: post
+    detail: C2C用户上传凭证接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_consumer_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: file
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      file:
+        file: test.png
+
+
+    dependence_case: true
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: ctc_consumer_take_paid_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data
+            set_cache: take_id_0
+
+            #      #用户我的订单列表接口
+            #      - case_id: ctc_advertise_consumer_list_01
+            #        dependent_data:
+            #          - dependent_type: response
+            #            jsonpath: $.data.items.[0].id
+            #            set_cache: consumer_take_paid_id_0
+        #广告商我的订单接口
+      - case_id: ctc_advertise_my_order_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.items.[0].id
+            set_cache: advertise_my_order_list_0
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: ctc_advertise_consumer_list_01
+        param_prepare:
+          - dependent_type: self_response
+            jsonpath: $.data.items.[0].id
+            set_cache: ctc_advertise_consumer_list_01
+
+      - case_id: ctc_consumer_cancel_01
+        send_request:
+          - dependent_type: cache
+            cache_data: ctc_advertise_consumer_list_01
+            replace_key: ctc_advertise_consumer_list_01
+
+      - case_id: ctc_advertise_list_01
+        param_prepare:
+          - dependent_type: self_response
+            jsonpath: $.data.[0].id
+            set_cache: move_id
+
+      - case_id: ctc_advertise_move_01
+        send_request:
+          - dependent_type: cache
+            cache_data: move_id
+            replace_key: move_id
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1

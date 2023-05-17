@@ -1,9 +1,9 @@
-"""
-@author: xinkuncai
-@license: (C) Copyright 2020-2099, Node Supply Chain Manager Corporation Limited.
-@contact:  
-@software: 
-@file: __init__.py
-@time: 2023-05-11 
-@desc: 
-"""
+
+from utils.read_files_tools.yaml_control import GetYamlData
+from common.setting import ensure_path_sep
+from utils.other_tools.models import Config
+
+
+_data = GetYamlData(ensure_path_sep("\\common\\config.yaml")).get_yaml_data()
+config = Config(**_data)
+

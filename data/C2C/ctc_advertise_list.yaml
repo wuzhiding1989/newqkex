@@ -1,0 +1,49 @@
+# 公共参数
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: CTC模块
+  allureStory: CTC资产接口
+
+ctc_advertise_list_01:
+    host: ${{host()}}
+    url: /otc/orders
+    method: get
+    detail: C2C广告商广告列表接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      status: 1
+
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: ctc_asset_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1

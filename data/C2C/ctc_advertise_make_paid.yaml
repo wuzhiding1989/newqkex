@@ -1,0 +1,346 @@
+# 公共参数
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: CTC模块
+  allureStory: CTC资产接口
+
+ctc_advertise_make_paid_01:
+    host: ${{host()}}
+    url: /otc/pendings/$cache{advertise_my_order_list_0}/complete
+    method: put
+    detail: C2C广告商支付币种接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      pendingId: 1692
+      tradePassword: qa123456
+      googleVerifyCode: 909885
+
+    dependence_case: True
+    # 依赖的数据
+    dependence_case_data:
+
+
+      #用户广告支付接口
+      - case_id: ctc_consumer_take_paid_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data
+            set_cache: take_id_0
+
+#      #用户我的订单列表接口
+#      - case_id: ctc_advertise_consumer_list_01
+#        dependent_data:
+#          - dependent_type: response
+#            jsonpath: $.data.items.[0].id
+#            set_cache: consumer_take_paid_id_0
+      #广告商我的订单接口
+      - case_id: ctc_advertise_my_order_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.items.[0].id
+            set_cache: advertise_my_order_list_0
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data
+        # 自定义的缓存名称
+        name: ctc_consumer_take_paid
+    sql:
+    teardown:
+      - case_id: ctc_asset_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+
+ctc_advertise_make_paid_02:
+    host: ${{host()}}
+    url: /otc/pendings/$cache{advertise_my_order_list_0}/complete
+    method: put
+    detail: C2C广告商支付币种接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      pendingId: 1692
+      tradePassword: qa123456
+      googleVerifyCode: 909885
+
+    dependence_case: True
+    # 依赖的数据
+    dependence_case_data:
+
+
+      #用户广告支付接口
+      - case_id: ctc_consumer_take_paid_02
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data
+            set_cache: take_id_0
+
+#      #用户我的订单列表接口
+#      - case_id: ctc_advertise_consumer_list_01
+#        dependent_data:
+#          - dependent_type: response
+#            jsonpath: $.data.items.[0].id
+#            set_cache: consumer_take_paid_id_0
+      #广告商我的订单接口
+      - case_id: ctc_advertise_my_order_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.items.[0].id
+            set_cache: advertise_my_order_list_0
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data
+        # 自定义的缓存名称
+        name: ctc_consumer_take_paid
+    sql:
+    teardown:
+      - case_id: ctc_asset_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+
+ctc_advertise_make_paid_03:
+    host: ${{host()}}
+    url: /otc/pendings/$cache{advertise_my_order_list_1}/complete
+    method: put
+    detail: C2C广告商支付币种接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      pendingId: 1692
+      tradePassword: qa123456
+      googleVerifyCode: 909885
+
+    dependence_case: True
+    # 依赖的数据
+    dependence_case_data:
+
+
+      #用户广告支付接口
+      - case_id: ctc_consumer_take_paid_03
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data
+            set_cache: take_id_0
+
+#      #用户我的订单列表接口
+#      - case_id: ctc_advertise_consumer_list_01
+#        dependent_data:
+#          - dependent_type: response
+#            jsonpath: $.data.items.[0].id
+#            set_cache: consumer_take_paid_id_0
+      #广告商我的订单接口
+      - case_id: ctc_advertise_my_order_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.items.[0].id
+            set_cache: advertise_my_order_list_1
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data
+        # 自定义的缓存名称
+        name: ctc_consumer_take_paid
+    sql:
+    teardown:
+      - case_id: ctc_asset_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+
+
+
+ctc_advertise_make_paid_04:
+    host: ${{host()}}
+    url: /otc/pendings/$cache{advertise_my_order_list_0}/complete
+    method: put
+    detail: C2C广告商支付币种接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      pendingId: 1692
+      tradePassword: qa123456
+      googleVerifyCode: 909885
+
+    dependence_case: True
+    # 依赖的数据
+    dependence_case_data:
+
+
+      #用户广告支付接口
+      - case_id: ctc_consumer_take_paid_04
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data
+            set_cache: take_id_0
+
+#      #用户我的订单列表接口
+#      - case_id: ctc_advertise_consumer_list_01
+#        dependent_data:
+#          - dependent_type: response
+#            jsonpath: $.data.items.[0].id
+#            set_cache: consumer_take_paid_id_0
+      #广告商我的订单接口
+      - case_id: ctc_advertise_my_order_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.items.[0].id
+            set_cache: advertise_my_order_list_0
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data
+        # 自定义的缓存名称
+        name: ctc_consumer_take_paid
+    sql:
+    teardown:
+      - case_id: ctc_asset_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+
+ctc_advertise_make_paid_05:
+    host: ${{host()}}
+    url: /otc/pendings/$cache{advertise_my_order_list_1}/complete
+    method: put
+    detail: C2C广告商支付币种接口
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      X-Authorization: $cache{login_cookie}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      pendingId: 1692
+      tradePassword: qa123456
+      googleVerifyCode: 909885
+
+    dependence_case: True
+    # 依赖的数据
+    dependence_case_data:
+
+
+      #用户广告支付接口
+      - case_id: ctc_consumer_take_paid_05
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data
+            set_cache: take_id_0
+
+#      #用户我的订单列表接口
+#      - case_id: ctc_advertise_consumer_list_01
+#        dependent_data:
+#          - dependent_type: response
+#            jsonpath: $.data.items.[0].id
+#            set_cache: consumer_take_paid_id_0
+      #广告商我的订单接口
+      - case_id: ctc_advertise_my_order_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.items.[0].id
+            set_cache: advertise_my_order_list_1
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertType:
+        message: "success"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data
+        # 自定义的缓存名称
+        name: ctc_consumer_take_paid
+    sql:
+    teardown:
+      - case_id: ctc_asset_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
