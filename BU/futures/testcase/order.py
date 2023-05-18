@@ -12,7 +12,8 @@ from common.other import httpCheck as e
 from common.util import printc,printl,d, countCaseNumber as u,ModeCount,Count,truncate
 from BU.NTS.dataCheck.dataCheck import newPrice
 import BU.other.UserDataCheck as UserDataCheck
-
+from BU.futures.api import webapi
+NTS=webapi.webapi(2,'test')
 caseMark=1
 symbol = 'BTCUSDT';price=random.randint(6999,8999);tradeType = 'linearPerpetual';side = 'Buy';positionSide = 'Long';marginType1 = 'cross';marginType = 'cross';orderType = 'limit';orderQty =random.randint(1,5);
 for i in param_dict.funtionMap:
@@ -23,9 +24,9 @@ resultVerify_caseTitle = "下单 返参校验"
 exception_caseTitle = "下单 异常入参"
 
 # caseTile: 全仓开仓买入下单流程：包括下单、当前委托、撤单、历史委托、资金验证  P0用例
-def makerOrderCase_P0(NTS,log_level=None,_type=None,MarginType=None):
-    BusinessName = GetBusinessName(positionSide, MarginType)
-    marginType=MarginType  if MarginType else marginType1
+def makerOrderCase_P0(NTS=NTS,log_level=None,_type=None,MarginType=None):
+    BusinessName ='全仓开仓买入下单流程'
+    marginType=MarginType if MarginType else marginType1
     caseResult=True;global caseMark;caseTitle=f'<{BusinessName}>下单P0 '+ str(side)+str(positionSide)
     if caseMark:
         # 步骤1：下限价单 并验证 当前委托

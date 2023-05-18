@@ -19,6 +19,19 @@ def read_google_authenticator_code(secret_key):
     current_time = int(time.time())
     return totp.at(current_time)
 
+import pyotp
+
+# Replace this with your own secret key
+secret_key = '2KYSFNGE3YJCZGTS'
+
+# Generate a TOTP object
+totp = pyotp.TOTP(secret_key)
+
+# Get the current OTP
+otp = totp.now()
+
+print(otp)
+
 
 if __name__ == '__main__':
     # secret_key = 'KAYMZOHRHT2LO3VY'
