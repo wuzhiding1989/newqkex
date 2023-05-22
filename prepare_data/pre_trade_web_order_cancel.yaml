@@ -1,0 +1,100 @@
+-
+  key: "tradeType"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "symbol"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+-
+  key: "orderId"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "orderId"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "orderId"
+  value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "orderId"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+-
+  key: "currency"
+  value: "etesfdsg"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "currency"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "currency"
+  value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "currency"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"

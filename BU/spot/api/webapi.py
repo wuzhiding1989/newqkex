@@ -1,13 +1,16 @@
 import copy
+import json
+
 import requests
+from werkzeug.sansio.multipart import MultipartEncoder
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJhNzdmYzA1Yi1mN2U2LTRhZjgtYTBhMS01N2UyYjZkMjAwNmIxOTU2OTY1OTAzIiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJkRmxJM3RwSFdJdHpsNk9rTDRBSlBRPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4MzY5ODc0MiwiZXhwIjoxNjgzNzg1MTQyLCJpc3MiOiJ3Y3MifQ.FMdGkko4zQPKqJ7KAOGrWe16XbZukV7I8hyNcx2vrV4'
-Authorization1='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjMWQ0YmU4OC1kMTA4LTRjYmYtYjE4Ny00MzdmOWFmZGNjMzE4MDc2NDg0NzkiLCJ1aWQiOiJsN1ZkOHlLTCswQWxXcUU5TWJXcmpBPT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6ImRGbEkzdHBIV0l0emw2T2tMNEFKUFE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjgzMzQ0NzQ1LCJleHAiOjE2ODM0MzExNDUsImlzcyI6IndjcyJ9.WxpT2f6vHMazjm7EYsdcN4k20lIwl8KnsqoZ39GC4Go'
+Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMzhjYWFiNy1hOWM0LTQ4NzgtODQ4NC01YmRhYmZmNjcyYzI4MjU2NDUzIiwidWlkIjoieUdxdFQwbzMvZmdwN08wRlcvR1pZQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJqcExPcHZRVDMxdXYycjZaN0tBY3hRPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NDMxOTAyNSwiZXhwIjoxNjg0NDA1NDI1LCJpc3MiOiJ3Y3MifQ.ZgCtdjgPT6h1ZlFX6C5Lh7AoGZmBLr4QaifaKMxGh4Q'
+Authorization1='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyYTJmZjgzOC1iZjY3LTQ5ZjktYjA0Ny03MGE2ODU0NzQzNGYzNTIwMDQ2NDMiLCJ1aWQiOiJWbDhaZ3lJWWkxZ2w1L1BDRjE1RlN3PT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6ImpwTE9wdlFUMzF1djJyNlo3S0FjeFE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjg0MzE5MDcwLCJleHAiOjE2ODQ0MDU0NzAsImlzcyI6IndjcyJ9.9VTdrYJZbrgpZ0rNWWXobKuGQZT1nNDKEsa3lB9_4h8'
 headers['X-Authorization']=Authorization
-url = 'https://test.qkex.com'
-account='10081@qq.com'
+url = 'https://test-public-rest.qkex.com'
+account='12345678@qq.com'
 password='aa123456'
 verifyCode='111111'
 
@@ -118,6 +121,22 @@ def otc_pending(orderId,amount,price,googleVerifyCode=None,tradePassword=None):
     }
     res = requests.post(url=url+path,data=params,headers=newheaders).json()
     return res
+
+#用户c2c下单
+def consumer_otc_pending(Authorization1,orderId,amount):
+    # newheaders = copy.deepcopy(headers)
+    headers['X-Authorization']=Authorization1
+    headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    path = '/otc/pendings'
+    params = {
+        'orderId':orderId,
+        'amount':amount,
+        'cacheParams': "[object Object]",
+
+    }
+    res = requests.post(url=url+path,data=params,headers=headers).json()
+    return res
+
 #获取c2c广告信息
 def otc_PublicOrders(amount=None,payType=None,symbol=None,legalSymbol=None,side=None,page=None,pageSize=None):
     #'http://13.215.135.141/otc/public/orders?amount=&payType=&symbol=USDT&legalSymbol=USD&side=sell&page=1&pageSize=1000'
@@ -136,13 +155,40 @@ def otc_PublicOrders(amount=None,payType=None,symbol=None,legalSymbol=None,side=
 
 #我已付款/otc/pendings/940/paid
 def otc_pendings_paid(orderid=None,payment=None):
+    # headers['X-Authorization']=Authorization1
+    headers['Content-Type']="application/x-www-form-urlencoded"
     path = f'/otc/pendings/{orderid}/paid'
     parms = {'payment': payment}
     res = requests.put(url=url+path,headers=headers,data=parms).json()
     return res
+#我已付款/otc/pendings/940/paid
+def consumer_otc_pendings_paid(Authorization1,orderid=None,payment=None):
+    # newheaders = copy.deepcopy(headers)
+    headers['Content-Type']="application/x-www-form-urlencoded"
+    headers['X-Authorization']=Authorization1
+    path = f'/otc/pendings/{orderid}/paid'
+    parms = {'payment': payment}
+    # request_data = MultipartEncoder(parms)
+    # parms=json.dumps(parms)
+    print(type(parms))
+    print(url+path,headers,parms)
+    res = requests.put(url=url+path,headers=headers,data=parms).json()
+    return res
+#用户-我的订单列表
+def consumer_my_order(Authorization1,status,page,pageSize):
+
+    # newheaders = copy.deepcopy(headers)
+    # newheaders['X-Authorization']=Authorization1
+    headers['X-Authorization']=Authorization1
+    path = f'/otc/pendings'
+    parms = {"status":status,"page":page,"pageSize":pageSize}
+    res = requests.get(url=url + path, headers=headers, params=parms).json()
+    return res
 
 #确认收款并放币/otc/pendings/940/complete
 def otc_pendings_complete(orderid=None,googleVerifyCode=None,tradePassword=None):
+    headers['Content-Type'] = "application/x-www-form-urlencoded"
+    headers['X-Authorization'] = Authorization
     path = f'/otc/pendings/{orderid}/complete'
     parms={
         'pendingId': orderid,
@@ -159,7 +205,7 @@ def user():
 
 
 #发布广告/otc/orders
-def otc_orders(amount=None,side=None,quote=None,base=None,price=None):
+def otc_orders(amount=None,side=None,quote=None,base=None,price=None,payType=None):
     path = '/otc/orders'
     params ={"side":side,
            "base":base,
@@ -170,8 +216,8 @@ def otc_orders(amount=None,side=None,quote=None,base=None,price=None):
            "amount":amount,
            "minAmount":"200.00000000",
            "maxAmount":"30000.00000000",
-           "notes":"瑞士是一个位于欧洲中部的联邦制国家，其历史可以追溯到公元前1世纪。以下是有关瑞士的一些基本信息：\n\n历史：早在公元前1世纪的罗马帝国时期，瑞士境内就已有人居住。1291年，三个山区小州——乌里、施维茨和下瓦尔登组成了原始的瑞士联邦。之后，瑞士陆续加入了其他州和城市，并在1848年颁布宪法。现今的瑞士政治体制为联邦制，由26个州组成。\n\n国土面积：瑞士国土面积约41,285平方千米，位于阿尔卑斯山脉中心地带。\n\n人口：截至2021年，瑞士人口约为8,673,000人。瑞士拥有四种官方语言，分别是德语、法语、意大利语和罗曼什语。\n\nGDP：根据国际货币基金组织（IMF）发布的数据，2019年瑞士的GDP总量为7090亿美元，是全球最富有的国家之一。该国以服务业和制造业为主要经济支柱，其中银行和金融业是瑞士最重要的产业之一。\n\n总体而言，瑞士历史悠久、文化多元，经济发达，同时保持着良好的社会秩序和治安环境。它是一个非常受欢迎的旅游目的地，吸引着数百万游客前来观光、滑雪、品尝当地美食等。",
-           "payType":[5]
+           "notes": "瑞士是",
+           "payType":payType
            }
     res = requests.post(url=url+path,headers=headers,json=params).json()
     #print(res.json())
@@ -231,10 +277,13 @@ def exchange_convert(baseSymbol,quoteSymbol,amount,googleVerifyCode):
     res =requests.post(url=url+path,json=parpms,headers=headers).json()
     return res
 
+
 if __name__ == '__main__':
     #cachedParams = {'symbol':'BTC', }
-    print(login(account='y005@cc.com',password='q123456',verifyCode='111111'))
+    # print(login(account='y005@cc.com',password='q123456',verifyCode='111111'))
     # print(orders(symbol='BTC_USDT',systemOrderType='limit',side='buy',volume=0.01,price=1003,source='web'))
     #print(exchange_exchange_set('QQ'))
     #print(exchange_convert(baseSymbol='ABC',quoteSymbol='USDT',amount=2090))
     #print(otc_PublicOrde)rs(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))
+    # print(otc_orders(amount="0.10000000",side="sell",base="BTC",quote="USD",price="30000.00000000",payType=[3]))
+    print(consumer_otc_pendings_paid(orderid="1910",payment="403"))

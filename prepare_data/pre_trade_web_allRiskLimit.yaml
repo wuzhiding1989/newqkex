@@ -1,0 +1,73 @@
+-
+  key: "tradeType"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "symbol"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+-
+  key: "marginType"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "marginType"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "marginType"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "marginType"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"

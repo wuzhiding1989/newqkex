@@ -27,7 +27,7 @@ from utils import config
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
+from utils.cache_process.cache_control import CacheHandler, _cache_config
 class RequestControl:
     """ 封装请求 """
 
@@ -164,6 +164,7 @@ class RequestControl:
         _headers = self.check_headers_str_null(headers)
         _data = self.__yaml_case.data
         _url = self.__yaml_case.url
+
         res = requests.request(
             method=method,
             url=cache_regular(str(_url)),
@@ -251,12 +252,17 @@ class RequestControl:
             method: Text,
             **kwargs):
         """判断 requestType 为 data 类型"""
+        print("self.__yaml_case:",self.__yaml_case)
         data = self.__yaml_case.data
+        print("data:",data)
         _data, _headers = self.multipart_in_headers(
             ast.literal_eval(cache_regular(str(data))),
             headers
         )
         _url = self.__yaml_case.url
+
+        print("_data", _data)
+        print("_cache_config = {}", _cache_config)
         res = requests.request(
             method=method,
             url=cache_regular(_url),
@@ -410,7 +416,7 @@ class RequestControl:
             # 处理多业务逻辑
             if dependent_switch is True:
                 DependentCase(self.__yaml_case).get_dependent_data()
-
+            # 请求
             res = requests_type_mapping.get(self.__yaml_case.requestType)(
                 headers=self.__yaml_case.headers,
                 method=self.__yaml_case.method,
@@ -419,6 +425,7 @@ class RequestControl:
 
             if self.__yaml_case.sleep is not None:
                 time.sleep(self.__yaml_case.sleep)
+
 
             _res_data = self._check_params(
                 res=res,
@@ -433,7 +440,7 @@ class RequestControl:
                 res_time=str(_res_data.res_time),
                 res=_res_data.response_data
             )
-            # 将当前请求数据存入缓存中
+            #将当前请求数据存入缓存中
             # SetCurrentRequestCache(
             #     current_request_set_cache=self.__yaml_case.current_request_set_cache,
             #     request_data=self.__yaml_case.data,

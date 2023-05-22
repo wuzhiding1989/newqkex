@@ -86,4 +86,9 @@ class CacheHandler:
 
     @staticmethod
     def update_cache(*, cache_name, value):
+        # print("_cache_config:",_cache_config)
         _cache_config[cache_name] = value
+
+    @staticmethod
+    def clean_cache():
+        _cache_config.clear()

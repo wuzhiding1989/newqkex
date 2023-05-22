@@ -74,9 +74,9 @@ ctc_advertise_frozen_advertiser_paid_01:
 
     current_request_set_cache:
       - type: response
-        jsonpath: $.data.id
+        jsonpath: $.data
         # 自定义的缓存名称
-        name: test_sql
+        name: response_data
     sql:
     teardown:
       - case_id: ctc_asset_01

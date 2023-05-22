@@ -1,0 +1,59 @@
+# 公共参数
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: futures模块
+  allureStory: futures用户下单
+
+trade_web_order_cancel_01:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders/cancel
+    method: post
+    detail: futures单个撤单
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      source: "api"
+      Accept-Language: "zh-CN"
+      X-Authorization: $cache{login_futures_user}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "BTCUSDT"
+#      orderId: $cache{orderId}
+      orderId: "123456023424242423"
+      currency: ""
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+      - case_id: trade_web_order_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data.orderId
+            set_cache: take_id
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: "1021"
+        AssertType:
+        message: ""
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1

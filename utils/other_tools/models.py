@@ -215,6 +215,7 @@ class Config(BaseModel):
     lark: "Webhook"
     real_time_update_test_cases: bool = False
     host: Text
+    host1: Text
     app_host: Union[Text, None]
 
 

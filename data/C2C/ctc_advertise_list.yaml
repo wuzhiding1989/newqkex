@@ -47,3 +47,4 @@ ctc_advertise_list_01:
 
     teardown_sql:
 #      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+    sleep: 2

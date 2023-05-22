@@ -1,11 +1,11 @@
 """
 @author: xinkuncai
 @license: (C) Copyright 2020-2099, Node Supply Chain Manager Corporation Limited.
-@contact:  
-@software: 
+@contact:
+@software:
 @file: conftest
-@time: 2023-05-15 
-@desc: 
+@time: 2023-05-15
+@desc:
 """
 import jsonpath
 import pytest
@@ -61,7 +61,8 @@ def work_login_init():
     cookies=jsonpath.jsonpath(res_data, "$.data.accessToken")[0]
     CacheHandler.update_cache(cache_name='login_cookie', value=cookies)
 
-    account = '52345678@qq.com'
+    # account = '52345678@qq.com'
+    account="72345678@qq.com"
     password = 'qa123456'
     verifyCode = '111111'
     res_data = login(account, password, verifyCode)
@@ -74,6 +75,12 @@ def work_login_init():
     res_data = login(account, password, verifyCode)
     cookies=jsonpath.jsonpath(res_data, "$.data.accessToken")[0]
     CacheHandler.update_cache(cache_name='login_consumer2_cookie', value=cookies)
+
+    # cookies="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyN2MwNjE5Zi04N2FlLTQ4ODEtYjFkMi1lODFlZGZjNzcxZmEiLCJ1aWQiOiJXWFAxUS8xa2s5NVQxTjRxOWxuSFRBPT0iLCJiaWQiOiJXWFAxUS8xa2s5NVQxTjRxOWxuSFRBPT0iLCJpcCI6IkdwdHl4M01ZbzBJemNsL3pwN0ZiNXc9PSIsImRldiI6InAva3BIckF3RkJjSUZleXg0U2xkZGc9PSIsInN0cyI6MCwiaWF0IjoxNjcyNTAyNDAwLCJleHAiOjE2ODgxNDA4MDAsImlzcyI6InFrZXgifQ.7HKuzZz-IC0_Zs5hVK420jVbgpsgRP-NlYtxrUiTs0U"
+    cookies="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ZjBiNWZkNS1kZjE2LTQwYTYtYTUxNS0yZDkwYmQ4YTZiZWYyMTAzNzIyMDIzIiwidWlkIjoieUdxdFQwbzMvZmdwN08wRlcvR1pZQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJXWU5oVGYvdXNWUkFQb3BFenpra0RnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NDcyMTc0OSwiZXhwIjoxNjg0ODA4MTQ5LCJpc3MiOiJ3Y3MifQ.gozTXQlo3CclpyBC7DbC5wqBAN0WbuP8saM7_65p6-U"
+    CacheHandler.update_cache(cache_name="login_futures_user",value=cookies)
+    yield
+    CacheHandler.clean_cache()
 
 def pytest_collection_modifyitems(items):
     """
@@ -125,9 +132,9 @@ def case_skip(in_data):
         allure_step("预期数据: ", in_data.assert_data)
         pytest.skip()
 
-@pytest.fixture(scope="function", autouse=True)
-def teardown():
-    _cache_config={}
+# @pytest.fixture(scope="function", autouse=True)
+# def case_clean_cache():
+#     CacheHandler.clean_cache()
 
 
 def pytest_terminal_summary(terminalreporter):

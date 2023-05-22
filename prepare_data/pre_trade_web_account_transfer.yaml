@@ -1,0 +1,98 @@
+-
+  key: "fromAccountType"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "fromAccountType"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "fromAccountType"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "fromAccountType"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "toAccountType"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "toAccountType"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "toAccountType"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "toAccountType"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "currency"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "currency"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "currency"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "currency"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "amount"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "amount"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "amount"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "amount"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"

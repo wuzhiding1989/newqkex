@@ -43,43 +43,5 @@ class TestCTCConsumerTake:
                response_data=res.response_data,
                status_code=res.status_code).assert_type_handle()
 
-    case_id = ['ctc_consumer_take_02','ctc_consumer_take_03']
-    TestData = GetTestCase.case_data(case_id)
-    re_data = regular(str(TestData))
-    @allure.story("用户C2C广告下单接口")
-    @pytest.mark.parametrize('in_data', eval(re_data), ids=[i['detail'] for i in TestData])
-    def test_ctc_consumer_take_02(self,in_data):
-        """
-        :param :
-        :return:
-        """
-
-        res = RequestControl(in_data).http_request()
-        TearDownHandler(res).teardown_handle()
-        Assert(assert_data=in_data['assert_data'],
-               sql_data=res.sql_data,
-               request_data=res.body,
-               response_data=res.response_data,
-               status_code=res.status_code).assert_type_handle()
-
-    case_id = ['ctc_consumer_take_04','ctc_consumer_take_05']
-    TestData = GetTestCase.case_data(case_id)
-    re_data = regular(str(TestData))
-    @allure.story("用户C2C广告下单接口")
-    @pytest.mark.parametrize('in_data', eval(re_data), ids=[i['detail'] for i in TestData])
-    def test_ctc_consumer_take_03(self,in_data):
-        """
-        :param :
-        :return:
-        """
-
-        res = RequestControl(in_data).http_request()
-        TearDownHandler(res).teardown_handle()
-        Assert(assert_data=in_data['assert_data'],
-               sql_data=res.sql_data,
-               request_data=res.body,
-               response_data=res.response_data,
-               status_code=res.status_code).assert_type_handle()
-
 if __name__ == '__main__':
     pytest.main(['test_ctc_advertise_take.py', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])

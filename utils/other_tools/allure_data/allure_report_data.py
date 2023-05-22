@@ -63,7 +63,10 @@ class AllureFileClean:
             values = "成功用例:\n"
             values += "        **********************************\n"
             for i in date:
-                values += "        " + i[0] + ":" + i[1] + "\n"
+                #用例：前半部
+                # values += "        " + i[0] + ":" + i[1] + "\n"
+                # 用例：前半部
+                values += "        " + i[0]+ "\n"
         return values
     @classmethod
     def get_case_count(cls) -> "TestMetrics":
