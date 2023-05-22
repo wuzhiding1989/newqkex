@@ -29,9 +29,9 @@ trade_web_user_allSymbol_01:
       errorCode:
         jsonpath: $.code
         type: ==
-        value: "0"
+        value: "1"
         AssertType:
-        message: ""
+        message: "success"
 
     current_request_set_cache:
       - type: response

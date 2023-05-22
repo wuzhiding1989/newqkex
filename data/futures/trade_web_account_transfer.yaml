@@ -22,7 +22,7 @@ trade_web_account_transfer_01:
       fromAccountType: "funding"
       toAccountType: "futures"
       currency: "USDT"
-      amount: "10.666666"
+      amount: "0.0001"
 
     dependence_case: false
     # 依赖的数据

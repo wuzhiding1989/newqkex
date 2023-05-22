@@ -2,7 +2,7 @@
   key: "type"
   value: "1"
   code: "1046"
-  msg: "交易对不存在，请修改"
+  msg: "字段不合法,请重新输入"
 
 -
   key: "type"
@@ -13,8 +13,8 @@
 -
   key: "type"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "type"

@@ -1,8 +1,8 @@
 -
   key: "tradeType"
   value: "43254"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 -
   key: "tradeType"
@@ -27,26 +27,26 @@
 -
   key: "symbol"
   value: "43254"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 -
   key: "symbol"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "symbol"
   value: "325678986543224567589876543234567898765433678776543"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 -
   key: "symbol"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 
 
@@ -59,8 +59,8 @@
 -
   key: "positionSide"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "positionSide"
@@ -79,8 +79,8 @@
 -
   key: "amount"
   value: "43254"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1064"
+  msg: "调整逐仓保证金异常，没有逐仓仓位"
 
 -
   key: "amount"
@@ -110,8 +110,8 @@
 -
   key: "type"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "type"

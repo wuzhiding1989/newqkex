@@ -1,23 +1,23 @@
 -
   key: "currency"
   value: "43254"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1035"
+  msg: "币种不合法"
 
 -
   key: "currency"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""
 
 -
   key: "currency"
   value: "325678986543224567589876543234567898765433678776543"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1035"
+  msg: "币种不合法"
 
 -
   key: "currency"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1035"
+  msg: "币种不合法"

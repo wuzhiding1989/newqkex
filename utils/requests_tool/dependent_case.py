@@ -14,7 +14,7 @@ from utils.logging_tool.log_control import WARNING
 from utils.other_tools.models import DependentType
 from utils.other_tools.models import TestCase, DependentCaseData, DependentData
 from utils.other_tools.exceptions import ValueNotFoundError
-from utils.cache_process.cache_control import CacheHandler
+from utils.cache_process.cache_control import CacheHandler, _cache_config
 from utils import config
 
 
@@ -148,6 +148,8 @@ class DependentCase:
             _jsonpath
         )
         if set_value is not None:
+            # print("set_value:---->", set_value)
+            # print("jsonpath_data:---->",jsonpath_data)
             if len(jsonpath_data) > 1:
                 CacheHandler.update_cache(cache_name=set_value, value=jsonpath_data)
             else:
@@ -184,8 +186,13 @@ class DependentCase:
                             dependence_case_data=dependence_case_data,
                             jsonpath_dates=jsonpath_dates)
                     else:
+                        # print("_case_id:",_case_id)
+                        # if _cache_config.has_key("take_id")
+                        #     print("_cache_config = {}",_cache_config["take_id"])
+                        #通过case_id获取相应的的参数
                         re_data = regular(str(self.get_cache(_case_id)))
                         re_data = ast.literal_eval(cache_regular(str(re_data)))
+                        # print("re_data:---依赖请求",re_data)
                         res = RequestControl(re_data).http_request()
                         if dependence_case_data.dependent_data is not None:
                             dependent_data = dependence_case_data.dependent_data

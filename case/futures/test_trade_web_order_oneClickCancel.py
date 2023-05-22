@@ -23,7 +23,7 @@ case_id = ['trade_web_order_oneClickCancel_01']
 TestData = GetTestCase.case_data(case_id)
 re_data = regular(str(TestData))
 print("re_data:",re_data)
-list2=generateData(eval(re_data)[0],"pre_trade_web_order_oneClickeCancel.yaml")
+list2=generateData(eval(re_data)[0],"pre_trade_web_order_oneClickCancel.yaml")
 @allure.epic("交易平台接口")
 @allure.feature("futures模块")
 class TestTradeWebOrderOneClickCancel:

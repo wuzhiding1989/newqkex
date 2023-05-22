@@ -50,7 +50,8 @@ def run():
 
         pytest.main(['-s', '-W', 'ignore:Module already imported:pytest.PytestWarning',
                      '--alluredir', './report/tmp', "--clean-alluredir"])
-
+        # pytest.main(['-vs',"D:/code/qkex_api_master/newqkex5/newqkex/case/C2C/",
+        #              '--alluredir', './report/tmp', "--clean-alluredir"])
         """
                    --reruns: 失败重跑次数
                    --count: 重复执行次数
@@ -88,7 +89,7 @@ def run():
         # 如有异常，相关异常发送邮件
         e = traceback.format_exc()
         send_email = SendEmail(AllureFileClean.get_case_count())
-        send_email.error_mail(e)
+        # send_email.error_mail(e)
         raise
 
 

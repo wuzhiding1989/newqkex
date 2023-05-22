@@ -99,6 +99,11 @@ class Context:
         from utils import config
         """ 获取接口域名 """
         return config.host
+    @classmethod
+    def host1(cls) -> str:
+        from utils import config
+        """ 获取接口域名 """
+        return config.host1
 
     @classmethod
     def app_host(cls) -> str:

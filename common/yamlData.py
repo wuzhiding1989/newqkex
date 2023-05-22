@@ -27,7 +27,7 @@ def generateData(re_data,filename):
             datas = copy.deepcopy(re_data)
             datas["data"][i['key']] = i['value']
             datas["assert_data"]['errorCode']['value'] = i['code']
-            datas["assert_data"]['errorCode']['mesage'] = i["msg"]
+            datas["assert_data"]['errorCode']['message'] = i["msg"]
             datas['detail'] = datas['detail'] + str([i['key']]) + str([i['value']])
             print(datas)
             list2.append(datas)

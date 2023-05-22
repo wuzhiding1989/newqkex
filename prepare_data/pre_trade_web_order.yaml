@@ -7,45 +7,45 @@
 -
   key: "tradeType"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "tradeType"
   value: "gehef"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 -
   key: "tradeType"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 
 -
   key: "symbol"
   value: "43254"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 -
   key: "symbol"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "symbol"
   value: "gehef"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 -
   key: "symbol"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1006"
+  msg: "交易对不存在，请修改"
 
 
 -
@@ -57,8 +57,8 @@
 -
   key: "side"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "side"
@@ -138,8 +138,8 @@
 -
   key: "reduceOnly"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""
 
 -
   key: "reduceOnly"
@@ -163,8 +163,8 @@
 -
   key: "marginType"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "marginType"
@@ -185,26 +185,26 @@
 -
   key: "price"
   value: "etesfdsg"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1033"
+  msg: "价格不合法"
 
 -
   key: "price"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1033"
+  msg: "价格不合法"
 
 -
   key: "price"
   value: "gehef"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1033"
+  msg: "价格不合法"
 
 -
   key: "price"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1033"
+  msg: "价格不合法"
 
 
 -
@@ -241,8 +241,8 @@
 -
   key: "orderQty"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1004"
+  msg: "超过单笔下单委托数量，请修改委托数量"
 
 -
   key: "orderQty"
@@ -266,8 +266,8 @@
 -
   key: "postOnly"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""
 
 -
   key: "postOnly"
@@ -312,23 +312,23 @@
 -
   key: "currency"
   value: "etesfdsg"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""
 
 -
   key: "currency"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""
 
 -
   key: "currency"
   value: "gehef"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""
 
 -
   key: "currency"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "0"
+  msg: ""

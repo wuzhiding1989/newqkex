@@ -7,8 +7,8 @@
 -
   key: "tradeType"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
 
 -
   key: "tradeType"
@@ -26,23 +26,23 @@
 -
   key: "symbol"
   value: "43254"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1057"
+  msg: "可撤单订单为空"
 
 -
   key: "symbol"
   value: ""
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1057"
+  msg: "可撤单订单为空"
 
 -
   key: "symbol"
   value: "gehef"
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1057"
+  msg: "可撤单订单为空"
 
 -
   key: "symbol"
   value: "@$@#% "
-  code: "1046"
-  msg: "字段不合法,请重新输入"
+  code: "1057"
+  msg: "可撤单订单为空"

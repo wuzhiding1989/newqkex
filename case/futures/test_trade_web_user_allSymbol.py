@@ -40,6 +40,7 @@ class TestTradeWebUserAllSymbol:
         print("in_data:",in_data)
         res = RequestControl(in_data).http_request()
 
+
         res_data = json.loads(res.response_data)
         assert_data = in_data['assert_data']
 

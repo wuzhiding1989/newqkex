@@ -21,7 +21,7 @@ from utils.requests_tool.teardown_control import TearDownHandler
 
 # case_id = ['trade_web_order_01','trade_web_order_02','trade_web_order_03','trade_web_order_04',
 #            'trade_web_order_05','trade_web_order_06','trade_web_order_07','trade_web_order_08']
-case_id=['trade_web_order_02']
+case_id=['trade_web_order_01']
 TestData = GetTestCase.case_data(case_id)
 re_data = regular(str(TestData))
 print("re_data:",re_data)
@@ -32,7 +32,7 @@ list2=generateData(eval(re_data)[0],"pre_trade_web_order.yaml")
 @allure.feature("futures模块")
 class TestTradeWebOrder:
 
-    @allure.story("杠杆设置接口")
+    @allure.story("单个下单接口")
     @pytest.mark.parametrize('in_data', list2, ids=[i['detail'] for i in list2])
     def test_trade_web_order_01(self, in_data, case_skip):
         """
