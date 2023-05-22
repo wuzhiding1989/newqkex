@@ -1,3 +1,6 @@
+# from slack_sdk import WebClient
+
+# from slack_sdk.errors import SlackApiError
 #用户token
 headers4 = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/x-www-form-urlencoded","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
@@ -10,10 +13,16 @@ user_secret_key='KVPO2AOTEHGCTBHO';mer_secret_key='IGMOVAGVYASVT52N';mer_email='
 user_email='1255@gmail.com'
 import json
 import requests
-token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'  #slack的token
-channel='D0539LTSNMU'
-channel1='C05373RARLJ'  #slack的频道ID
+# token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'  #slack的token
+
+# # token ='xoxb-5068079133173-5280684352613-b5BYGOxC06kXzxyDq6E6skIt'
+# token ='xoxb-3002860893155-5299944191298-CRspfm7IhpCJEb7iJuUwndWD'
+# # channel='D0539LTSNMU'
+# # channel1='C05373RARLJ'  #slack的频道ID
+# # channel1='C058TQPNQH1'  #slack的频道ID
 def send_Slack(message):
+    token = 'xoxb-5068079133173-5280684352613-b5BYGOxC06kXzxyDq6E6skIt'
+    channel1 = 'C05373RARLJ' #slack的频道ID
     message=f'{message}'
     payload = {"text": message,"channel": channel1}
     data = json.dumps(payload).encode("utf8")
@@ -22,5 +31,5 @@ def send_Slack(message):
     response = requests.post(url, data=data, headers=header)
     #print(response.text)
 if __name__ == "__main__":
-    message = "测试 world ! " #发送的消息
+    message = "测试 world11111 ! " #发送的消息
     send_Slack(message)

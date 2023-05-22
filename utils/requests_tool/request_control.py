@@ -12,7 +12,9 @@ import urllib
 from typing import Tuple, Dict, Union, Text
 import requests
 import urllib3
-from requests_toolbelt import MultipartEncoder
+# from requests_toolbelt import MultipartEncoder
+from werkzeug.sansio.multipart import MultipartEncoder
+
 from common.setting import ensure_path_sep
 from utils.other_tools.models import RequestType
 from utils.logging_tool.log_decorator import log_decorator
