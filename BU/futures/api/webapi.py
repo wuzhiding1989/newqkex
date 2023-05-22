@@ -10,7 +10,7 @@ postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimal
 
 class webapi():
     def __init__(self,user,server):
-        self.headers = {"Content-Type": "application/json", "Accept-Language": "zh-CN", "source": "web"}
+        self.headers = {"Content-Type": "application/json", "Accept-Language": "zh-TW", "source": "web"}
         self.account = userdate.weblogin[user]['username']
         self.password = userdate.weblogin[user]['password']
         self.secret = userdate.weblogin[user]['secret']
@@ -144,14 +144,15 @@ class webapi():
 
 
     # 取消用户自选
-    def web_favorite_delete(self,tradeType=None, symbolList=None):
+    def web_favorite_delete(self, tradeType=None, symbolList=None):
         path = '/v1/user/web/favorite/delete'
         params = {
             "tradeType": tradeType,
             "symbolList": symbolList
         }
-        res = requests.post(url=self.queryurl + path, params=params, headers=self.headers).json()
-        return res
+        return requests.post(url=self.queryurl + path, params=params, headers=self.headers).json()
+
+
 
 
     # 查询用户偏好设置/v1/user/web/favorite/setting/query
@@ -361,7 +362,7 @@ class webapi():
         return res
 
     #/v1/trade/web/tradingAccount
-    def web_tradingAccount(self,currency=None):#/v1/trade/web/tradingAccount
+    def web_tradingAccount(self,currency=None):#/v1/trade/web/tradingAccount资产接口
         path = '/v1/trade/web/tradingAccount'
         params ={'currency':currency}
         #print(self.tradeurl+path)
