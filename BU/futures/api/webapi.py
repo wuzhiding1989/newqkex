@@ -5,7 +5,7 @@ from config import userdate,serverdate
 
 symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'positionSide'
 postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimalN';pageNum = '1';pageSize = '10'
-
+gear='depth0';limit=1000;period='1m'
 
 
 class webapi():
@@ -380,10 +380,60 @@ class webapi():
         #print(self.tradeurl+path)
         res = requests.get(url=self.tradeurl+path,json=params,headers=self.headers).json()
         return res
-
+    def web_market_depth(self,tradeType=None,symbol=None,limit=None,gear=None):#/v1/market/depth 查询指定档位深度
+        path = '/v1/market/depth'
+        params = {
+                "tradeType": tradeType,
+                "symbol": symbol,
+                "gear": gear,
+                "limit":limit
+        }
+        res = requests.get(url=self.queryurl+path,params=params).json()
+        return res
+    def web_market_kline(self,tradeType=None,symbol=None,limit=None,period=None):#/v1/market/kline   k线
+        path = '/v1/market/kline'
+        params = {
+                "tradeType": tradeType,
+                "symbol": symbol,
+                "period": period,
+                "limit":limit
+        }
+        res = requests.get(url=self.queryurl+path,params=params).json()
+        return res
+    def web_market_ticker_24hr(self,tradeType=None,symbol=None,limit=None):#/v1/market/ticker/24hr   行情
+        path = '/v1/market/ticker/24hr'
+        params = {
+                "tradeType": tradeType,
+                "symbol": symbol,
+                "limit":limit
+        }
+        res = requests.get(url=self.queryurl+path,params=params).json()
+        return res
+    def web_market_ticker_mini(self,tradeType=None,symbol=None,limit=None):#/v1/market/ticker/mini   查询行情简化信息
+        path = '/v1/market/ticker/mini'
+        params = {
+                "tradeType": tradeType,
+                "symbol": symbol,
+                "limit":limit
+        }
+        res = requests.get(url=self.queryurl+path,params=params).json()
+        return res
+    def web_market_trade(self,tradeType=None,symbol=None,limit=None):#/v1/market/trade   查询成交记录
+        path = '/v1/market/trade'
+        params = {
+                "tradeType": tradeType,
+                "symbol": symbol,
+                "limit":limit
+        }
+        res = requests.get(url=self.queryurl+path,params=params).json()
+        return res
 
 if __name__ == '__main__':
     wb = webapi(2,server='test')
     # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(wb.web_tradingAccount())
+    print(wb.web_market_depth(tradeType=tradeType,gear=gear,symbol=symbol,limit=limit))
+    print(wb.web_market_ticker_mini(tradeType=tradeType,symbol=symbol,limit=limit))
+    print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
+    print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
+    print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))
