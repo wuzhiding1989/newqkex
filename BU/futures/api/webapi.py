@@ -17,6 +17,7 @@ class webapi():
         self.headers['X-Authorization'] = web.getAccessToken(account=self.account,password=self.password,secret=self.secret)
         self.tradeurl = serverdate.server[server]['tradeapi']
         self.queryurl = serverdate.server[server]['queryapi']
+        self.qkurl = serverdate.server[server]['qkurl']
 
     # 划转
     def web_transfer(self,fromAccountType=None, toAccountType=None, currency=None, amount=None):
@@ -27,6 +28,17 @@ class webapi():
             "currency": currency,
             "amount": amount}
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        return res
+    def web_wallet_transfer(self,fromAccountType=None, toAccountType=None, currency=None, amount=None,pairCode=None,symbol=None):
+        path = '/wallet/transfer'
+        params = {
+            "from": fromAccountType,
+            "to": toAccountType,
+            "currency": currency,
+            'pairCode':pairCode,
+            'symbol':symbol,
+            "amount": amount}
+        res = requests.post(url=self.qkurl + path, json=params, headers=self.headers).json()
         return res
 
     # 单个下单

@@ -1,6 +1,6 @@
-symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'long'
+symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce='GTC'
-fromAccountType='funding';toAccountType='futures';currency='USDT';amount=20
+fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount=40;pairCode='P_R_USDT_USD'##short，long
 from BU.futures.api import webapi as wb
 from common import util as ut
 
@@ -49,11 +49,11 @@ def order_ad():
     # Close=user.web_orders_oneClickClose(tradeType=tradeType,symbol=symbol)
     # print('一键撤单',Close)
     # user=wb.webapi(2,'test')
-def order_ad1():
+def order_ad1(use,side,positionSide):
     '''一键平仓、撤单
     当前资金、订单、持仓查询
     历史资金、订单、持仓查询'''
-    user = wb.webapi(3, 'test')
+    user = wb.webapi(use, 'test')
     tradingAccount=user.web_tradingAccount()#资金查询
     if tradingAccount['code'] != '0':
         print(f"web_tradingAccount() failed with error code {tradingAccount['code']}: {tradingAccount['msg']}")
@@ -63,14 +63,14 @@ def order_ad1():
         if 'currency' not in tradingAccount['data'][0] or 'marginEquity' not in tradingAccount['data'][0]:
             print("Error: tradingAccount response does not contain 'currency' or 'marginEquity' field")
             return
-    available=user.web_transfer(fromAccountType=fromAccountType,toAccountType=toAccountType,currency=currency,amount=amount)#划转
-    if available['code'] != '0':
+    available=user.web_wallet_transfer(fromAccountType=fromAccountType,toAccountType=toAccountType,currency=currency,amount=amount,pairCode=pairCode,symbol=currency)#划转
+    if available['code'] != 0:
         print(f"web_transfer() failed with error code {available['code']}: {available['msg']}")
         return
     else:
         print('划转接口',available)
     se=user.web_order(tradeType=tradeType, symbol=symbol, side=side, positionSide=positionSide, orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price='19990', priceType=priceType, orderQty=1, postOnly=postOnly, timeInForce=timeInForce)#下单
+                  marginType=marginType, price='20042', priceType=priceType, orderQty=1, postOnly=postOnly, timeInForce=timeInForce)#下单
     if se['code'] != '0':
         print(f"web_order() failed with error code {se['code']}: {se['msg']}")
         return
@@ -90,13 +90,14 @@ def order_ad1():
         print('当前委托接口',w)
         if 'list' in w['data'] and len(w['data']['list']) > 0:
             id=w['data']['list'][0]['orderId']
-            if id is not None:
-                cl=user.web_orders_cancel(tradeType=tradeType,orderId=id,symbol=symbol)#撤单
-                if cl['code'] != '0':
-                    print(f"web_orders_cancel() failed with error code {cl['code']}: {cl['msg']}")
-                    return
-                else:
-                    print('撤单接口',cl)
+            # if id is not None:
+            #     return
+                # cl=user.web_orders_cancel(tradeType=tradeType,orderId=id,symbol=symbol)#撤单
+                # if cl['code'] != '0':
+                #     print(f"web_orders_cancel() failed with error code {cl['code']}: {cl['msg']}")
+                #     return
+                # else:
+                #     print('撤单接口',cl)
     ws=user.web_orders_history(tradeType=tradeType)
     if ws['code'] != '0':
         print(f"web_orders_history() failed with error code {ws['code']}: {ws['msg']}")
@@ -159,4 +160,7 @@ def http_session(request):
 
 
 if __name__ == '__main__':
-    print(order_ad1())
+    print(order_ad1(use=2,side='buy',positionSide='long'))
+    print(order_ad1(use=2,side='buy',positionSide='short'))
+    print(order_ad1(use=2,side='sell',positionSide='long'))
+    print(order_ad1(use=2,side='sell',positionSide='short'))

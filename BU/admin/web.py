@@ -61,3 +61,4 @@ def getAccessToken(account,password,secret=None):
 
 if __name__ == '__main__':
     print(getAccessToken(account,password,secret))
+    print(userLoginVerify(account,password))

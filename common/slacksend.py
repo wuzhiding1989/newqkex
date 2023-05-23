@@ -15,21 +15,19 @@ import json
 import requests
 # token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'  #slack的token
 
-# # token ='xoxb-5068079133173-5280684352613-b5BYGOxC06kXzxyDq6E6skIt'
-# token ='xoxb-3002860893155-5299944191298-CRspfm7IhpCJEb7iJuUwndWD'
-# # channel='D0539LTSNMU'
-# # channel1='C05373RARLJ'  #slack的频道ID
-# # channel1='C058TQPNQH1'  #slack的频道ID
+token ='xoxb-5068079133173-5280684352613-MS8n6qZj7ivcb1SVu32TUj9q'
+channel1='C05373RARLJ'  #slack的频道ID
+
 def send_Slack(message):
-    token = 'xoxb-5068079133173-5280684352613-b5BYGOxC06kXzxyDq6E6skIt'
-    channel1 = 'C05373RARLJ' #slack的频道ID
+    # token = 'xoxb-5068079133173-5280684352613-b5BYGOxC06kXzxyDq6E6skIt'
+    # channel1 = 'C05373RARLJ' #slack的频道ID
     message=f'{message}'
     payload = {"text": message,"channel": channel1}
     data = json.dumps(payload).encode("utf8")
     url = 'https://slack.com/api/chat.postMessage'
     header = {"Content-Type": "application/json; charset=utf-8", "Authorization": "Bearer " + token}
     response = requests.post(url, data=data, headers=header)
-    #print(response.text)
+    print(response.text)
 if __name__ == "__main__":
     message = "测试 world11111 ! " #发送的消息
     send_Slack(message)
