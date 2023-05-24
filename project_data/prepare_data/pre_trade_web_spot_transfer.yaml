@@ -1,0 +1,17 @@
+-
+  key: "amount"
+  value: "-4"
+  code: 11001
+  msg: "参数错误"
+
+-
+  key: "symbol"
+  value: "USD"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  key: "currency"
+  value: "USD"
+  code: 11202
+  msg: "暂停划转，稍后重"

@@ -1,0 +1,44 @@
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: futures模块
+  allureStory: futures用户下单
+
+trade_web_spot_transfer_01:
+    host: ${{host()}}
+    url: /wallet/transfer
+    method: POST
+    detail: futures-web旧版发起划转
+    headers:
+      source: "api"
+      Accept-Language: "zh-CN"
+      X-Authorization: $cache{login_san_cookie}
+    requestType: json
+    is_run:
+    data:
+      from: 'exchange'
+      to: 'perpetual'
+      currency: 'USDT'
+      pairCode: 'P_R_USDT_USD'
+      symbol: 'USDT'
+      amount: '1'
+    dependence_case: false
+    dependence_case_data:
+    assert:
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: 0
+        AssertTypr:
+        message: 'success'
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+    teardown_sql:
