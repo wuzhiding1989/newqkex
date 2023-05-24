@@ -1,0 +1,406 @@
+-
+  data:
+    -
+      key: "tradeType"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "1006"
+  code: "1046"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "gehef"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+-
+  data:
+    -
+      key: "side"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "side"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "side"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "side"
+      value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: "@$@#%! "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+
+
+-
+  data:
+    -
+      key: "orderType"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "orderType"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "orderType"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "orderType"
+      value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+
+
+
+-
+  data:
+    -
+      key: "reduceOnly"
+      value: "43254"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "reduceOnly"
+      value: ""
+  code: "0"
+  msg: ""
+
+-
+  data:
+    -
+      key: "reduceOnly"
+      value: "gehef"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "reduceOnly"
+      value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+-
+  data:
+    -
+      key: "marginType"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "marginType"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "marginType"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "marginType"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+
+
+-
+  data:
+    -
+      key: "price"
+      value: "etesfdsg"
+  code: "1033"
+  msg: "价格不合法"
+
+-
+  data:
+    -
+      key: "price"
+      value: ""
+  code: "1033"
+  msg: "价格不合法"
+
+-
+  data:
+    -
+      key: "price"
+      value: "gehef"
+  code: "1033"
+  msg: "价格不合法"
+
+-
+  data:
+    -
+      key: "price"
+      value: "@$@#% "
+  code: "1033"
+  msg: "价格不合法"
+
+
+-
+  data:
+    -
+      key: "priceType"
+      value: "etesfdsg"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "priceType"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "priceType"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "priceType"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  data:
+    -
+      key: "orderQty"
+      value: "etesfdsg"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "orderQty"
+      value: ""
+  code: "1004"
+  msg: "超过单笔下单委托数量，请修改委托数量"
+
+-
+  data:
+    -
+      key: "orderQty"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "orderQty"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  data:
+    -
+      key: "postOnly"
+      value: "etesfdsg"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "postOnly"
+      value: ""
+  code: "0"
+  msg: ""
+
+-
+  data:
+    -
+      key: "postOnly"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "postOnly"
+      value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+
+-
+  data:
+    -
+      key: "timeInForce"
+      value: "etesfdsg"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "timeInForce"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "timeInForce"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "timeInForce"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+

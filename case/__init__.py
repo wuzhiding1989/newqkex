@@ -11,7 +11,7 @@ def write_case_process():
     """
 
     # 循环拿到所有存放用例的文件路径
-    for i in get_all_files(file_path=ensure_path_sep("\\data"), yaml_data_switch=True):
+    for i in get_all_files(file_path=ensure_path_sep("\\project_data\\data"), yaml_data_switch=True):
         # print("i,",i)
         # 循环读取文件中的数据
         case_process = CaseData(i).case_process(case_id_switch=True)

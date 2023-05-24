@@ -1,0 +1,132 @@
+-
+  data:
+    -
+      key: "tradeType"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "gehef"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "@$@#% "
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "gehef"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "@$@#% "
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+
+
+-
+  data:
+    -
+      key: "orderId"
+      value: "43254"
+  code: "1021"
+  msg: "订单不存在"
+
+-
+  data:
+    -
+      key: "orderId"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "orderId"
+      value: "gehef"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "orderId"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+-
+  data:
+    -
+      key: "currency"
+      value: "etesfdsg"
+  code: "1021"
+  msg: "订单不存在"
+
+-
+  data:
+    -
+      key: "currency"
+      value: ""
+  code: "1021"
+  msg: "订单不存在"
+
+-
+  data:
+    -
+      key: "currency"
+      value: "gehef"
+  code: "1021"
+  msg: "订单不存在"
+
+-
+  data:
+    -
+      key: "currency"
+      value: "@$@#% "
+  code: "1021"
+  msg: "订单不存在"

@@ -1,0 +1,166 @@
+-
+  data:
+    -
+      key: "tradeType"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "325678986543224567589876543234567898765433678776543"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "325678986543224567589876543234567898765433678776543"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "@$@#% "
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: "325678986543224567589876543234567898765433678776543"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "positionSide"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+
+-
+  data:
+    -
+      key: "amount"
+      value: "43254"
+  code: "1064"
+  msg: "调整逐仓保证金异常，没有逐仓仓位"
+
+-
+  data:
+    -
+      key: "amount"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "amount"
+      value: "325678986543224567589876543234567898765433678776543"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "amount"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  data:
+    -
+      key: "type"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "type"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "type"
+      value: "325678986543224567589876543234567898765433678776543"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "type"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"

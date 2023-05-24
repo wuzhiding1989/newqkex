@@ -1,0 +1,465 @@
+# 公共参数
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: futures模块
+  allureStory: futures用户下单
+
+trade_web_order_01:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "BTCUSDT"
+      side: "buy"
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: "0"
+        AssertType:
+        message: ""
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+trade_web_order_02:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-tradeTypeErro
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "test"
+      symbol: "BTCUSDT"
+      side: "buy"
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.msg
+        type: "contains"
+        value: "交易对不存在，请修改"
+        AssertType:
+        message:
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+# 公共参数
+
+
+trade_web_order_03:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-symbol不存在
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "TestUSDT"
+      side: "buy"
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: "1006"
+        AssertType:
+        message: "1006"
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+trade_web_order_04:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-symbol为空
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: ""
+      side: "buy"
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: "1047"
+        AssertType:
+        message:
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+
+trade_web_order_05:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-side
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "BTCUSDT"
+      side: "sell"
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.msg
+        type: ==
+        value: "可平量不足"
+        AssertType:
+        message: ""
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+trade_web_order_06:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-sideErro
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "BTCUSDT"
+      side: "test"
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.msg
+        type: "contains"
+        value: "字段不合法,请重新输入"
+        AssertType:
+        message:
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+# 公共参数
+
+
+trade_web_order_07:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-side不存在
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "TestUSDT"
+      side: ""
+      positionSide: "long"
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.msg
+        type: "contains"
+        value: "字段不能为空,请重新输入"
+        AssertType:
+        message: ""
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1
+
+trade_web_order_08:
+    host: ${{host1()}}
+    url: /v1/trade/web/orders
+    method: post
+    detail: futures单个下单-positionSide为空
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+
+
+
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "BTCUSDT"
+      side: "buy"
+      positionSide: ""
+      orderType: "limit"
+      reduceOnly: False
+      marginType: "cross"
+      price: "20000"
+      priceType: "optimalN"
+      orderQty: "1"
+      postOnly: False
+      timeInForce: "GTC"
+      currency: ""
+
+    dependence_case: False
+    # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.msg
+        type: contains
+        value: "字段不合法,请重新输入"
+        AssertType:
+        message: ""
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` = '$json($.data.id)$' WHERE `name` = '2' LIMIT 1

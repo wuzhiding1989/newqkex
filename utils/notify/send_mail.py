@@ -8,6 +8,8 @@
 
 import smtplib
 from email.mime.text import MIMEText
+
+from common.slacksend import send_Slack
 from utils.other_tools.allure_data.allure_report_data import TestMetrics, AllureFileClean
 from utils import config
 
@@ -72,14 +74,18 @@ class SendEmail:
             跳过用例个数: {self.metrics.skipped} 个
             成  功   率: {self.metrics.pass_rate} %
 
-        {self.allure_data.get_pass_case_detail()}
+        
         **********************************
         {self.allure_data.get_failed_cases_detail()}
 
         **********************************
+        具体执行详情参考：http://192.168.1.180:9999
         非相关负责人员可忽略此消息。谢谢。
         """
+        # {self.allure_data.get_pass_case_detail()}
+        #
         self.send_mail(user_list, sub, content)
+        send_Slack(content)
 
 
 if __name__ == '__main__':

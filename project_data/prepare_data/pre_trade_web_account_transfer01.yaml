@@ -1,0 +1,10 @@
+-
+  data:
+    -
+      key: "tradeType"
+      value: "43254"
+    -
+      key: "symbol"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"

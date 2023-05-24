@@ -15,6 +15,7 @@ import urllib3
 # from requests_toolbelt import MultipartEncoder
 from werkzeug.sansio.multipart import MultipartEncoder
 
+from common.getCookie import login
 from common.setting import ensure_path_sep
 from utils.other_tools.models import RequestType
 from utils.logging_tool.log_decorator import log_decorator
@@ -72,11 +73,15 @@ class RequestControl:
         """
         headers = ast.literal_eval(cache_regular(str(headers)))
         if headers is None:
-            headers = {"headers": None}
+            # headers = {"headers": None}
+            headers={}
+            headers["X-Authorization"] = login(account="12345678@qq.com",password="qa123456",verifyCode="111111")
         else:
             for key, value in headers.items():
                 if not isinstance(value, str):
                     headers[key] = str(value)
+        headers["source"]="api"
+        headers["Accept-Language"]="zh-CN"
         return headers
 
     @classmethod
@@ -89,7 +94,9 @@ class RequestControl:
         request_data = ast.literal_eval(cache_regular(str(request_data)))
 
         if header is None:
-            header = {"headers": None}
+            # header = {"headers": None}
+            header={}
+            header["X-Authorization"] = login(account="12345678@qq.com",password="qa123456",verifyCode="111111")
         else:
             # 将header中的int转换成str
             for key, value in header.items():
@@ -105,7 +112,8 @@ class RequestControl:
 
                     request_data = MultipartEncoder(request_data)
                     header['Content-Type'] = request_data.content_type
-
+        header["source"]="api"
+        header["Accept-Language"]="zh-CN"
         return request_data, header
 
     def file_prams_exit(self) -> Dict:

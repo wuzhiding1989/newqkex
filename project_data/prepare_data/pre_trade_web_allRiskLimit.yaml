@@ -1,0 +1,97 @@
+-
+  data:
+    -
+      key: "tradeType"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: ""
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "1232145654568658967"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  data:
+    -
+      key: "symbol"
+      value: "@$@#% "
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+
+
+-
+  data:
+    -
+      key: "marginType"
+      value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "marginType"
+      value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "marginType"
+      value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "marginType"
+      value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"

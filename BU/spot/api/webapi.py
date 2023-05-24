@@ -6,7 +6,7 @@ from werkzeug.sansio.multipart import MultipartEncoder
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMzhjYWFiNy1hOWM0LTQ4NzgtODQ4NC01YmRhYmZmNjcyYzI4MjU2NDUzIiwidWlkIjoieUdxdFQwbzMvZmdwN08wRlcvR1pZQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJqcExPcHZRVDMxdXYycjZaN0tBY3hRPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NDMxOTAyNSwiZXhwIjoxNjg0NDA1NDI1LCJpc3MiOiJ3Y3MifQ.ZgCtdjgPT6h1ZlFX6C5Lh7AoGZmBLr4QaifaKMxGh4Q'
+Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OWE4M2EyNS1mZDdkLTQ0YjMtOWVmMi1iYWY0NTQ2YThkYmQyMDE1NjYwNTQyIiwidWlkIjoieUdxdFQwbzMvZmdwN08wRlcvR1pZQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJXWU5oVGYvdXNWUkFQb3BFenpra0RnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NDgxMzc3NSwiZXhwIjoxNjg0OTAwMTc1LCJpc3MiOiJ3Y3MifQ.zEQVXWWqnqbwtYlVBSU40ZxJpNB5mvS7WLBgr09e8TE'
 Authorization1='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyYTJmZjgzOC1iZjY3LTQ5ZjktYjA0Ny03MGE2ODU0NzQzNGYzNTIwMDQ2NDMiLCJ1aWQiOiJWbDhaZ3lJWWkxZ2w1L1BDRjE1RlN3PT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6ImpwTE9wdlFUMzF1djJyNlo3S0FjeFE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjg0MzE5MDcwLCJleHAiOjE2ODQ0MDU0NzAsImlzcyI6IndjcyJ9.9VTdrYJZbrgpZ0rNWWXobKuGQZT1nNDKEsa3lB9_4h8'
 headers['X-Authorization']=Authorization
 url = 'https://test-public-rest.qkex.com'
@@ -277,6 +277,9 @@ def exchange_convert(baseSymbol,quoteSymbol,amount,googleVerifyCode):
     res =requests.post(url=url+path,json=parpms,headers=headers).json()
     return res
 
+def otc_reject():
+    #https://test-public-rest.qkex.com/otc/pendings/1964/reject
+    pass
 
 if __name__ == '__main__':
     #cachedParams = {'symbol':'BTC', }

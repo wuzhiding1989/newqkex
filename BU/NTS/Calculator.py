@@ -299,7 +299,28 @@ def t_symbol_optimum_rate(symbol):
     optimum_rateSql='select optimum_rate from qa_mulan_trade.t_symbol_config where trade_type=81 and symbol=%s'%symbol
     return int(t.mysql(optimum_rateSql, True)[0][0])
 
+# 仓位维持保证金：仓位维持保证金=标记价格*持仓数量/杠杆
+def posMargin(markPrice,positionAmt,leverage):
+    """
 
+    :param markPrice: 标记价格
+    :param positionAmt: 持仓数量
+    :param leverage: 杠杆
+    :return:
+    """
+    posMargin=markPrice*positionAmt/leverage
+    return posMargin
+
+#持仓收益率：仓位收益率 = 未实现盈亏 * 100% / 持仓保证金
+def earningRate(unrealisedPnl,posMargin):
+    """
+
+    :param unrealisedPnl: 未实现盈亏
+    :param posMargin: 持仓保证金
+    :return:
+    """
+    earningRate=unrealisedPnl/posMargin
+    return earningRate
 if __name__ == '__main__':
     class c:
         def __init__(self):pass

@@ -25,4 +25,4 @@ def ensure_path_sep(path: Text) -> Text:
 
 if __name__ == '__main__':
     print(root_path())
-    print(ensure_path_sep("\\data"))
+    print(ensure_path_sep("\\common"))

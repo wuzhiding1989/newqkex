@@ -6,6 +6,8 @@ import os
 import sys
 import traceback
 import pytest
+
+from common.slacksend import send_Slack
 from utils.other_tools.models import NotificationType
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean
 from utils.logging_tool.log_control import INFO
@@ -83,13 +85,14 @@ def run():
             ErrorCaseExcel().write_case()
 
         # 程序运行之后，自动启动报告，如果不想启动报告，可注释这段代码
-        # os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 9999")
+        os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 9999")
 
     except Exception:
         # 如有异常，相关异常发送邮件
         e = traceback.format_exc()
         send_email = SendEmail(AllureFileClean.get_case_count())
         # send_email.error_mail(e)
+        send_Slack(send_email)
         raise
 
 

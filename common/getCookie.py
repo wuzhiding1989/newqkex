@@ -7,8 +7,13 @@
 @time: 2023-05-04 
 @desc: 
 """
+import os
+
 import jsonpath
 import requests
+
+from common.setting import ensure_path_sep
+
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5",
            "Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
             "Accept": "application/json, text/plain, */*",
@@ -25,18 +30,56 @@ password='qa123456'
 verifyCode='111111'
 #登录
 def login(account=account,password=password,verifyCode=verifyCode):
-    email(account)
-    params = {
-        'account':account,
-        'password':password,
-        'verifyCode':verifyCode
+    file_path=ensure_path_sep("\\common\\")
+    fileName=file_path+account+"cookie"
+    if os.path.exists(fileName):
+        print("1")
 
-    }
-    path='/user/login'
-    res =requests.post(url=url+path,json=params,headers=headers,verify=False).json()
-    # print("res:",res)
-    accessToken=res["data"]['accessToken']
-    return res
+    else:
+        f=open(fileName,"w")
+        f.close()
+
+    with open(fileName,"r",encoding="UTF-8") as f :
+        cookie=f.readline()
+    headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5",
+               "Cookie": "token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
+               "Accept": "application/json, text/plain, */*",
+               "Content-Type": "application/json",
+               "Connection": "close",
+               "Accept-Language": "zh-CN",
+               "X-Authorization": cookie,
+               "language": "Chinese"}
+    url = "https://test-public-rest.qkex.com/wallet/currencies"
+    res=requests.request(method="get",url=url,headers=headers)
+    if res.json()["code"]==0:
+        return cookie
+    else:
+        email(account)
+        params = {
+            'account':account,
+            'password':password,
+            'verifyCode':verifyCode
+
+        }
+        headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5",
+                   "Accept": "application/json, text/plain, */*",
+                   "Content-Type": "application/json",
+                   "Connection": "close",
+                   "Accept-Language": "zh-CN",
+                   "language": "zh-CN"}
+        url = 'https://test-public-rest.qkex.com'
+        path='/user/login'
+        # print("url",url+path)
+        # print("params",params)
+        # print("headers",headers)
+
+        res =requests.post(url=url+path,json=params,headers=headers,verify=False).json()
+        # print("res:",res)
+        accessToken=res["data"]['accessToken']
+        #把cookie写入文件
+        with open(fileName,"w",encoding="UTF-8") as f:
+            f.write(accessToken)
+        return accessToken
 
 #登录headers
 def login_headers(account=account,password=password,verifyCode=verifyCode,ContentType="application/json"):
@@ -72,10 +115,12 @@ def email(email):
         "countdownType": "signinEmail"}
     path='/user/send-code/email'
     res = requests.post(url=url+path,json=params,headers=headers,verify=False).json()
+    print("email-res:",res)
     return res
 
 
 
 if __name__ == '__main__':
-    res_data=login(account,password,verifyCode)
+    res_data=login(account="12345678@qq.com",password="qa123456",verifyCode="111111")
+    print(res_data)
     # print(jsonpath.jsonpath(res_data, "$.data.accessToken")[0])

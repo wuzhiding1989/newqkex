@@ -12,7 +12,7 @@ import json
 import allure
 import pytest
 
-from common.yamlData import generateData
+from common.yamlData import generateData, generateData1
 from utils.assertion.assert_control import Assert
 from utils.read_files_tools.get_yaml_data_analysis import GetTestCase
 from utils.read_files_tools.regular_control import regular

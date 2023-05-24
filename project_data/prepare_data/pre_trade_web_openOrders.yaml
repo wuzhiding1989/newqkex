@@ -1,0 +1,177 @@
+-
+  key: "tradeType"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  data:
+    -
+      key: "tradeType"
+      value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "tradeType"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "side"
+  value: "43254"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "side"
+  value: ""
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "side"
+  value: "1232145654568658967"
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+-
+  key: "side"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "symbol"
+  value: "43254"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  key: "symbol"
+  value: ""
+  code: "0"
+  msg: ""
+
+-
+  key: "symbol"
+  value: "1232145654568658967"
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+-
+  key: "symbol"
+  value: "@$@#% "
+  code: "1006"
+  msg: "交易对不存在，请修改"
+
+
+-
+  key: "orderId"
+  value: "43254"
+  code: "0"
+  msg: ""
+
+-
+  key: "orderId"
+  value: ""
+  code: "0"
+  msg: ""
+
+-
+  key: "orderId"
+  value: "1232145654568658967"
+  code: "0"
+  msg: ""
+
+-
+  key: "orderId"
+  value: "@$@#% "
+  code: "1046"
+  msg: "字段不合法,请重新输入"
+
+
+-
+  key: "clOrdId"
+  value: "43254"
+  code: "0"
+  msg: ""
+
+-
+  key: "clOrdId"
+  value: ""
+  code: "0"
+  msg: ""
+
+-
+  key: "clOrdId"
+  value: "1232145654568658967tes"
+  code: "1014"
+  msg: "客户订单号不合法，请修改"
+
+-
+  key: "clOrdId"
+  value: "@$@#% "
+  code: "1014"
+  msg: "客户订单号不合法，请修改"
+
+
+
+
+-
+  key: "pageNum"
+  value: "test"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  key: "pageNum"
+  value: ""
+  code: "0"
+  msg: ""
+
+-
+  key: "pageNum"
+  value: "gehef"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  key: "pageNum"
+  value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+
+-
+  key: "pageSize"
+  value: "43254"
+  code: "0"
+  msg: ""
+
+-
+  key: "pageSize"
+  value: ""
+  code: "0"
+  msg: ""
+
+-
+  key: "pageSize"
+  value: "gehef"
+  code: "1047"
+  msg: "字段不能为空,请重新输入"
+
+-
+  key: "pageSize"
+  value: "@$@#% "
+  code: "1047"
+  msg: "字段不能为空,请重新输入"

@@ -1,0 +1,31 @@
+-
+  data:
+    -
+      key: "currency"
+      value: "43254"
+  code: "1035"
+  msg: "币种不合法"
+
+-
+  data:
+    -
+      key: "currency"
+      value: ""
+  code: "0"
+  msg: ""
+
+-
+  data:
+    -
+      key: "currency"
+      value: "325678986543224567589876543234567898765433678776543"
+  code: "1035"
+  msg: "币种不合法"
+
+-
+  data:
+    -
+      key: "currency"
+      value: "@$@#% "
+  code: "1035"
+  msg: "币种不合法"

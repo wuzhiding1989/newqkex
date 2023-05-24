@@ -1,0 +1,50 @@
+# 公共参数
+case_common:
+  allureEpic: 交易平台接口
+  allureFeature: futures模块
+  allureStory: futures用户下单
+
+trade_web_allRiskLimit_01:
+    host: ${{host1()}}
+    url: /v1/trade/web/allRiskLimit
+    method: get
+    detail: futures查看用户全部风险限额
+    headers:
+      # 这里cookie的值，写的是存入缓存的名称
+      # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      tradeType: "linearPerpetual"
+      symbol: "BTCUSDT"
+      marginType: "cross"
+
+    dependence_case: false
+    # 依赖的数据
+    dependence_case_data:
+
+    assert:
+      # 断言接口状态码
+      errorCode:
+        jsonpath: $.code
+        type: ==
+        value: "0"
+        AssertType:
+        message: ""
+
+    current_request_set_cache:
+      - type: response
+        jsonpath: $.data.id
+        # 自定义的缓存名称
+        name: test_sql
+    sql:
+    teardown:
+      - case_id: reverage_01
+        send_request:
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: Sql_d
+
+    teardown_sql:
+#      - UPDATE `api_test`.`ysq_test` SET `name` : " '$json($.data.id)$' WHERE `name` : " '2' LIMIT 1
