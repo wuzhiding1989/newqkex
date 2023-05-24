@@ -19,6 +19,11 @@ class webapi():
         self.queryurl = serverdate.server[server]['queryapi']
         self.qkurl = serverdate.server[server]['qkurl']
 
+    def headers(self):
+        headers=self.headers
+        sdf=headers['X-Authorization']
+        return sdf
+
     # 划转
     def web_transfer(self,fromAccountType=None, toAccountType=None, currency=None, amount=None):
         path = '/v1/trade/web/account/transfer'
@@ -280,7 +285,7 @@ class webapi():
         return res
 
     # 切换更杠
-    def web_change_reverage(self,tradeType=None,symbol=None,leverage=None,marginType=None):
+    def web_leverage(self,tradeType=None,symbol=None,leverage=None,marginType=None):
         path = '/v1/trade/web/leverage'
         data = {
                 "tradeType": tradeType,
@@ -429,7 +434,8 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(2,server='test')
+    wb = webapi(3,server='test')
+    print(wb.headers['X-Authorization'])
     # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
     print(wb.web_market_depth(tradeType=tradeType,gear=gear,symbol=symbol,limit=limit))

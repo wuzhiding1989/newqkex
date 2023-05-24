@@ -76,6 +76,10 @@ def work_login_init():
 
     CacheHandler.update_cache(cache_name='login_consumer2_cookie', value=res_data)
 
+    from BU.futures.api import webapi as wb
+    web =wb.webapi(3,'test')
+    cookies=web.headers['X-Authorization']
+    CacheHandler.update_cache(cache_name='login_san_cookie', value=cookies)
     # cookies="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyN2MwNjE5Zi04N2FlLTQ4ODEtYjFkMi1lODFlZGZjNzcxZmEiLCJ1aWQiOiJXWFAxUS8xa2s5NVQxTjRxOWxuSFRBPT0iLCJiaWQiOiJXWFAxUS8xa2s5NVQxTjRxOWxuSFRBPT0iLCJpcCI6IkdwdHl4M01ZbzBJemNsL3pwN0ZiNXc9PSIsImRldiI6InAva3BIckF3RkJjSUZleXg0U2xkZGc9PSIsInN0cyI6MCwiaWF0IjoxNjcyNTAyNDAwLCJleHAiOjE2ODgxNDA4MDAsImlzcyI6InFrZXgifQ.7HKuzZz-IC0_Zs5hVK420jVbgpsgRP-NlYtxrUiTs0U"
     # cookies="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI3ZjBiNWZkNS1kZjE2LTQwYTYtYTUxNS0yZDkwYmQ4YTZiZWYyMTAzNzIyMDIzIiwidWlkIjoieUdxdFQwbzMvZmdwN08wRlcvR1pZQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJXWU5oVGYvdXNWUkFQb3BFenpra0RnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NDcyMTc0OSwiZXhwIjoxNjg0ODA4MTQ5LCJpc3MiOiJ3Y3MifQ.gozTXQlo3CclpyBC7DbC5wqBAN0WbuP8saM7_65p6-U"
     account = '12345678@qq.com'
