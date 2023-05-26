@@ -62,6 +62,19 @@ def request_http(method,url,params,WebToken=None,auth=None,log_level=0,op=None,s
     elif r.status_code == 503:return [r.status_code,"<head><title>503 Service Temporarily Unavailable</title></head>"]
     else:   return [r.status_code,r.json()]
 
+
+def dd(value,y=None,length=None):
+    p=len(str(int(float(value))))
+    if not length:
+        length=28
+    mycontext = Context(prec=p+length, rounding=ROUND_DOWN)  # ROUND_UP
+    setcontext(mycontext)
+    if y !=None:
+        digits = y
+        factor = 10 ** digits
+        result = math.floor(value * factor) / factor
+        return result
+    return Decimal(value)
 def printf(log_level=None):
     if log_level >= 2:
         print( ' 验证成功');
@@ -538,15 +551,15 @@ def RabbitMq_WebRquest(SymbolList=None,PriceList=None,ForNumer=1):
             if ForNumer>1: time.sleep(60)
     # print(decimalLength('1.003000000000000000')) 单元测试
 if __name__ == '__main__':
-    p={'tradeType': 'linearPerpetual', 'symbol': 'BTCUSDT', 'positionSide': 'long', 'marginType': 'Cross', 'orderType': 'limit', 'side': 'buy', 'price': 2001, 'orderQty': 2, 'clOrdId': 'Brian092916155089381'}
-    header={'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5', 'Accept-Encoding': 'gzip, deflate, br', 'Cookie': 'token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728', 'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json', 'Connection': 'close', 'Accept-Language': 'zh-CN', 'source': 'Interface', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVE9NSU5UTCIsInVpZCI6OTcyMDE5NjcsImlhdCI6MTY2NDQzOTQ1NywiZXhwIjoxNjY3MDMxNDU3fQ.juHsGgsWkmymtDvvohrAXbg45cmK3W50j-Dl65OCsqW6Ydeqf1KP2QhGkI_1Ob1UBmho2ZGDKCRpHI-ji-R3tcDaa5jAYlKGH4GcvjsuPxKRy6hGLaZ-6N6I9mZmYt9RI-D89MgB-Owqwxiylz6kur26KH5KqZdooGkWTawAoSMsKl98xE9DiEC6HYSXY9vPcbOwGXoVbMT-oNFyOz9Q0H5USDIWEycRx7IM10ik593xLewzg1e8FGirz_zFryp0u0K3n0m7kVwIQ-Kg2NblsMNm2YT04-CxoXq_xFYc6GumvIaSqG47hBNoMtW68oD4qqu4ABP1XMiPESOFvh05bw'}
+    # p={'tradeType': 'linearPerpetual', 'symbol': 'BTCUSDT', 'positionSide': 'long', 'marginType': 'Cross', 'orderType': 'limit', 'side': 'buy', 'price': 2001, 'orderQty': 2, 'clOrdId': 'Brian092916155089381'}
+    # header={'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5', 'Accept-Encoding': 'gzip, deflate, br', 'Cookie': 'token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728', 'Accept': 'application/json, text/plain, */*', 'Content-Type': 'application/json', 'Connection': 'close', 'Accept-Language': 'zh-CN', 'source': 'Interface', 'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJBVE9NSU5UTCIsInVpZCI6OTcyMDE5NjcsImlhdCI6MTY2NDQzOTQ1NywiZXhwIjoxNjY3MDMxNDU3fQ.juHsGgsWkmymtDvvohrAXbg45cmK3W50j-Dl65OCsqW6Ydeqf1KP2QhGkI_1Ob1UBmho2ZGDKCRpHI-ji-R3tcDaa5jAYlKGH4GcvjsuPxKRy6hGLaZ-6N6I9mZmYt9RI-D89MgB-Owqwxiylz6kur26KH5KqZdooGkWTawAoSMsKl98xE9DiEC6HYSXY9vPcbOwGXoVbMT-oNFyOz9Q0H5USDIWEycRx7IM10ik593xLewzg1e8FGirz_zFryp0u0K3n0m7kVwIQ-Kg2NblsMNm2YT04-CxoXq_xFYc6GumvIaSqG47hBNoMtW68oD4qqu4ABP1XMiPESOFvh05bw'}
     # for i in range(100):
     #     S=datetime.datetime.now()
     #     # print('请求',S)
     #     # r=requests.post('https://qatradeapi.nts.aaxbtc.com/v3/trade/web/orders',json=p,headers=header)
     #     E=datetime.datetime.now()
     #     # print('耗时',str((E - S))[:-3],r.json())
-    RabbitMq_WebRquest(SymbolList=['BTCUSDT'],PriceList=[(16000,19900)],ForNumer=1)  #🀆🀆🀆🀆🀆★★★★★Send Rabbit MQ★★★★★🀆🀆🀆🀆🀆
+    # RabbitMq_WebRquest(SymbolList=['BTCUSDT'],PriceList=[(16000,19900)],ForNumer=1)  #🀆🀆🀆🀆🀆★★★★★Send Rabbit MQ★★★★★🀆🀆🀆🀆🀆
     # for j in range (999999)
         # markPrice=[['BTCUSDT',19500],['ETHUSDT',1800]]
         # for i in markPrice:
@@ -559,4 +572,6 @@ if __name__ == '__main__':
         #     r=requests.post(url,json=p,headers=header)
         #     print(j+1,t(),i[0],r.text)
     #     time.sleep(60)
+    c=dd(28001)*10
+    print(c)
     #

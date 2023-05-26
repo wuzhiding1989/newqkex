@@ -63,6 +63,7 @@ class webapi():
                   "postOnly": postOnly,
                   "timeInForce": timeInForce}  # GTC/IOC/FOK
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        print(params)
         return res
 
      # 一键平仓
@@ -434,12 +435,21 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(3,server='test')
-    print(wb.headers['X-Authorization'])
-    # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
-    # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(wb.web_market_depth(tradeType=tradeType,gear=gear,symbol=symbol,limit=limit))
-    print(wb.web_market_ticker_mini(tradeType=tradeType,symbol=symbol,limit=limit))
-    print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
-    print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
-    print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))
+    # wb = webapi(3,server='test')
+    # print(wb.headers['X-Authorization'])
+    # # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
+    # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
+    # print(wb.web_market_depth(tradeType=tradeType,gear=gear,symbol=symbol,limit=limit))
+    # print(wb.web_market_ticker_mini(tradeType=tradeType,symbol=symbol,limit=limit))
+    # print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
+    # print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
+    # print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))
+    import os
+    import sys
+
+    # 将模块所在目录添加到 Python 导入路径
+    module_path = "/path/to/ws_pb2"
+    sys.path.append(os.path.abspath(module_path))
+
+    # 导入 ws_pb2 模块
+    import ws_pb2

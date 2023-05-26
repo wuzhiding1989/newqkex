@@ -23,7 +23,7 @@ class Testspottransfer:
         res_data=json.loads(res.response_data)
         assert_data=in_data['assert_data']
         assert res_data['code']==assert_data['errorCode']['value']
-        assert assert_data['errorCode']['message'] in res_data['msg']
+        assert assert_data['errorCode']['message']==res_data['msg']
 
 if __name__=='__main__':
     pytest.main(['test_trade_web_order.py', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])
