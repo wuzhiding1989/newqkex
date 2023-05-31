@@ -295,6 +295,7 @@ class webapi():
                 "marginType": marginType
                 }
         res = requests.post(url=self.queryurl + path, json=data, headers=self.headers).json()
+        print(self.queryurl + path)
         return res
 
     # 查询当前用户更杠信息 /v1/trade/web/leverage/info
@@ -307,6 +308,7 @@ class webapi():
 
         }
         res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
+        print(self.queryurl + path)
         return res
 
 
@@ -405,6 +407,7 @@ class webapi():
                 "limit":limit
         }
         res = requests.get(url=self.queryurl+path,params=params).json()
+        print(self.queryurl+path,params)
         return res
     def web_market_ticker_24hr(self,tradeType=None,symbol=None,limit=None):#/v1/market/ticker/24hr   行情
         path = '/v1/market/ticker/24hr'

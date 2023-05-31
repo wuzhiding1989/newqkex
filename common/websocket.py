@@ -4,7 +4,7 @@ from ws4py.client.threadedclient import WebSocketClient
 class CG_Client(WebSocketClient):
 
     def opened(self):
-        req = '{"event":"subscribe", "channel":"eth_usdt.deep"}'
+        req = '{"event":"subscribe","data":[{"tradeType":"linearPerpetual","symbol":"BTCUSDT","stream":"kline15m"}]}'
         self.send(req)
 
     def closed(self, code, reason=None):
@@ -23,7 +23,7 @@ class CG_Client(WebSocketClient):
 if __name__ == '__main__':
     ws = None
     try:
-        ws = CG_Client('ws://18.143.25.66:7100')
+        ws = CG_Client('wss://ws-socket.qkex.com/v1/market')
         ws.connect()
         ws.run_forever()
     except KeyboardInterrupt:

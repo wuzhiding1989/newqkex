@@ -4,6 +4,7 @@ import base64,datetime,gzip,hashlib,hmac,json,time,urllib.parse,requests,websock
 # import websocket
 import time,datetime,random;from decimal import *
 from common.lacks import send_slack_message as sendSlack
+import math
 
 def request_http(method,url,params,WebToken=None,auth=None,log_level=0,op=None,source=None,token=None):
     if WebToken==None: WebToken='3a7647b9-e835-43c8-ab34-555c76fe1baf'
@@ -574,4 +575,7 @@ if __name__ == '__main__':
     #     time.sleep(60)
     c=dd(28001)*10
     print(c)
-    #
+    a = 21000 + random.uniform(0.12, 0.55)
+    aa = int(21000 + random.uniform(0.12, 0.92) * 10)
+    print(a, aa)
+    print(dd(a,2))

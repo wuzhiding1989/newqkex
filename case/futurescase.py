@@ -28,13 +28,13 @@ def order_ad(use,side,positionSide):
 
     else:
         print('旧版本划转接口',available)
-    # se=user.web_order(tradeType=tradeType, symbol=symbol, side=side, positionSide=positionSide, orderType=orderType, reduceOnly=reduceOnly,
-    #               marginType=marginType, price='20042', priceType=priceType, orderQty=1, postOnly=postOnly, timeInForce=timeInForce)#下单
-    # if se['code'] != '0':
-    #     print(f"web_order() failed with error code {se['code']}: {se['msg']}")
-    #
-    # else:
-    #     print('下单接口',se)
+    se=user.web_order(tradeType=tradeType, symbol=symbol, side=side, positionSide=positionSide, orderType=orderType, reduceOnly=reduceOnly,
+                  marginType=marginType, price='21842.21', priceType=priceType, orderQty=3, postOnly=postOnly, timeInForce=timeInForce)#下单
+    if se['code'] != '0':
+        print(f"web_order() failed with error code {se['code']}: {se['msg']}")
+
+    else:
+        print('下单接口',se)
     op=user.web_position(tradeType=tradeType)
     if op['code'] != '0':
         print(f"web_position() failed with error code {op['code']}: {op['msg']}")
@@ -99,11 +99,20 @@ def order_ad(use,side,positionSide):
     print('调整杠杆接口',lev)
     #stop=user.se
 
+def order1(use):
+    user = wb.webapi(use, 'test')
+    buyaccprice = random.randint(26261, 26270);sellprice = random.randint(26271, 26280);acc=random.randint(2,7)
+    buy1=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
+                  marginType=marginType, price=buyaccprice, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
+    sell1=user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
+                  marginType=marginType, price=sellprice, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
+    print(1234,buy1['code'],sell1['code'])
 def order(use):
     user = wb.webapi(use, 'test')
     side1=['buy','sell']
     positionSide1=['long']
     price1=['20042.23','25000.34','21000.33']
+    acc=random.randint(2,7);buyaccprice=random.randint(26261,26270);sellprice=random.randint(26271,26280)
     side=random.choice(side1);positionSide=random.choice(positionSide1);price=random.choice(price1)
     # se=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='long', orderType='market', reduceOnly=reduceOnly,
     #               marginType=marginType, price=price, priceType='optimalN', orderQty=3, postOnly=postOnly, timeInForce=timeInForce)#下单
@@ -116,33 +125,47 @@ def order(use):
     print('买盘盘口',cc2)
     print('卖盘盘口',cc)
     print(max(aa),min(aa1))
+    aa123 = int(max(aa) - random.uniform(0.12, 0.92) * 10);aa124 = int(min(aa1) + random.uniform(0.12, 0.92) * 10)
+    print(aa123,aa124)
     print('历史成交接口', user.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
-    print('k线接口1m',user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period='1m'))
-    print('k线接口5m', user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit, period='5m'))
-    print('k线接口15m', user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit, period='15m'))
-    print('k线接口30m', user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit, period='30m'))
+    #print('k线接口1m',user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period='1m'))
+
+    # print('k线接口5m', user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit, period='5m'))
+    # print('k线接口15m', user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit, period='15m'))
+    # print('k线接口30m', user.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit, period='30m'))
     # ac1=(max(ak['data']['bids'], key=lambda x: float(x[1])))[0];ac2=ak['data']['asks'][-1][0]
     # # ac3=(min(cc, key=lambda x: float(x[-1])))
     # print(ac1,ac2)
     se1=user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price=max(aa), priceType=priceType, orderQty=1, postOnly=postOnly, timeInForce=timeInForce)#下单
+                  marginType=marginType, price=aa123, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
     print(se1)
-    orderid1=se1['data']['orderId']
-    time.sleep(60)
+    #orderid1=se1['data']['orderId']
+    time.sleep(10)
     se2=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='long', orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price=min(aa1), priceType=priceType, orderQty=1, postOnly=postOnly, timeInForce=timeInForce)#下单
+                  marginType=marginType, price=aa124, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
     print(se2)
-    time.sleep(60)
+    #time.sleep(30)
 
+def leverage_api():
+    user = wb.webapi(5, 'test')
+    post_leverage=user.web_leverage(tradeType=tradeType,symbol=symbol,leverage=34,marginType=marginType)
+    print('调整杠杆接口',post_leverage)
+    select_leverage = user.web_leverage_info(tradeType=tradeType,symbol=symbol,marginType=marginType)
+    print('查询调整后的杠杆接口', select_leverage)
 if __name__ == '__main__':
-    #user = wb.webapi(3, 'test')
-    # print(order_ad(use=2,side='buy',positionSide='long'))
-    # print(order_ad(use=2,side='buy',positionSide='short'))
-    # print(order_ad(use=2,side='sell',positionSide='long'))
-    # print(order_ad(use=2,side='sell',positionSide='short'))
-    for i in range(10):
-        print(order(2))
-    # lev=user.web_leverage(tradeType=tradeType,symbol=symbol,leverage=20,marginType=marginType)
+    user = wb.webapi(3, 'test')
+    #print(order_ad(use=2,side='buy',positionSide='long'))
+    print(leverage_api())
+    # a=26000+random.uniform(2.12,5.55)
+    # aa = int(21000 + random.uniform(0.12, 0.92) * 10)
+    # print(a,aa)
+    # for i in range(20):
+    #     print(order(2))
+        #print(order1(3))
+    # lev=user.web_order(tradeType='linearPerpetual', symbol='BTCUSDT', side='sell', positionSide='long', orderType='stop-limit', reduceOnly=reduceOnly,
+    #               marginType='cross', price=27887.3, priceType=priceType, orderQty=3, postOnly=postOnly, timeInForce=timeInForce)#下单
     # print(lev)
+    # print(user.web_leverage_info(tradeType=tradeType,symbol=symbol,marginType=marginType))
+    #print('历史成交接口',user.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
 
 
