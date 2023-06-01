@@ -1,6 +1,6 @@
 symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
-fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount=40;pairCode='P_R_USDT_USD';gear='depth0';limit=1000;period='1m'##short，long
+fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount=40;pairCode='P_R_USDT_USD';gear='depth-3';limit=1000;period='1m'##short，long
 from BU.futures.api import webapi as wb
 from common import util as ut
 import random,time
@@ -102,22 +102,17 @@ def order_ad(use,side,positionSide):
 def order1(use):
     user = wb.webapi(use, 'test')
     buyaccprice = random.randint(26261, 26270);sellprice = random.randint(26271, 26280);acc=random.randint(2,7)
-    buy1=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price=buyaccprice, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
-    sell1=user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price=sellprice, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
-    print(1234,buy1['code'],sell1['code'])
+    #buy1=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
+                  # marginType=marginType, price=buyaccprice, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
+    sell1=user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,marginType=marginType, price=sellprice, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
+    # print(1234,sell1['code'])
 def order(use):
     user = wb.webapi(use, 'test')
     side1=['buy','sell']
     positionSide1=['long']
     price1=['20042.23','25000.34','21000.33']
-    acc=random.randint(2,7);buyaccprice=random.randint(26261,26270);sellprice=random.randint(26271,26280)
+    acc=random.randint(4,4);buyaccprice=random.randint(26261,26270);sellprice=random.randint(26271,26280)
     side=random.choice(side1);positionSide=random.choice(positionSide1);price=random.choice(price1)
-    # se=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='long', orderType='market', reduceOnly=reduceOnly,
-    #               marginType=marginType, price=price, priceType='optimalN', orderQty=3, postOnly=postOnly, timeInForce=timeInForce)#下单
-    # if se['code'] != '0':
-    #     print(f"web_order() failed with error code {se['code']}: {se['msg']}")
     ak=user.web_market_depth(tradeType=tradeType,gear=gear,symbol=symbol,limit=limit)
     cc=ak['data']['bids'];cc2=ak['data']['asks']
     aa=[float(x[0]) for x in cc]
@@ -136,14 +131,26 @@ def order(use):
     # ac1=(max(ak['data']['bids'], key=lambda x: float(x[1])))[0];ac2=ak['data']['asks'][-1][0]
     # # ac3=(min(cc, key=lambda x: float(x[-1])))
     # print(ac1,ac2)
-    se1=user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price=aa123, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
-    print(se1)
-    #orderid1=se1['data']['orderId']
-    time.sleep(10)
-    se2=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='long', orderType=orderType, reduceOnly=reduceOnly,
-                  marginType=marginType, price=aa124, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
-    print(se2)
+    if random.randint(0,1)==0:
+        se1=user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType, reduceOnly=reduceOnly,
+                      marginType=marginType, price=aa123, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
+        print(1,se1)
+        se2=user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='long', orderType=orderType, reduceOnly=reduceOnly,
+                      marginType=marginType, price=aa124, priceType=priceType, orderQty=acc, postOnly=postOnly, timeInForce=timeInForce)#下单
+        print(se2)
+    else:
+        se2 = user.web_order(tradeType=tradeType, symbol=symbol, side='buy', positionSide='long', orderType=orderType,
+                             reduceOnly=reduceOnly,
+                             marginType=marginType, price=aa124, priceType=priceType, orderQty=acc, postOnly=postOnly,
+                             timeInForce=timeInForce)  # 下单
+        print(2,se2)
+        time.sleep(3)
+
+        se1 = user.web_order(tradeType=tradeType, symbol=symbol, side='sell', positionSide='short', orderType=orderType,
+                             reduceOnly=reduceOnly,
+                             marginType=marginType, price=aa123, priceType=priceType, orderQty=acc, postOnly=postOnly,
+                             timeInForce=timeInForce)  # 下单
+        print(se1)
     #time.sleep(30)
 
 def leverage_api():
@@ -155,12 +162,13 @@ def leverage_api():
 if __name__ == '__main__':
     user = wb.webapi(3, 'test')
     #print(order_ad(use=2,side='buy',positionSide='long'))
-    print(leverage_api())
+    #print(order1('5'))
     # a=26000+random.uniform(2.12,5.55)
     # aa = int(21000 + random.uniform(0.12, 0.92) * 10)
     # print(a,aa)
-    # for i in range(20):
-    #     print(order(2))
+    for i in range(1):
+        print(order(2))
+
         #print(order1(3))
     # lev=user.web_order(tradeType='linearPerpetual', symbol='BTCUSDT', side='sell', positionSide='long', orderType='stop-limit', reduceOnly=reduceOnly,
     #               marginType='cross', price=27887.3, priceType=priceType, orderQty=3, postOnly=postOnly, timeInForce=timeInForce)#下单
