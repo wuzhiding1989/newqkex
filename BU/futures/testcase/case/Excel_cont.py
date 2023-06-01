@@ -26,7 +26,7 @@ def update_data(symbol,Price):
     ws["C2"] = avgEntryPrice
     ws["D2"] = maintMarginRatio
     ws["E2"] = leverage
-    ws["F2"] = 26000 #avgPrice
+    ws["F2"] = 26040 #avgPrice
     ws["G2"] = takerRate
     ws["H2"] = 0.001  #Amount
     ws["I2"] = marginEquity#汇总资产
@@ -38,7 +38,7 @@ def update_data(symbol,Price):
     ws["O2"] = markPriceGreaterRatio
     ws['p2'] = makerRate
     # 将数据写入 Excel 表格
-    wb.save(filename=excel_path)
+    wb.save(excel_path)
 
 def java_read_cell_value(ac):
     # 读取 Excel 表格数据
@@ -56,5 +56,6 @@ def web_read_cell_value(ac):
     return result_cell
 
 if __name__ == '__main__':
-    #print(update_data(symbol,Price))
-    print(java_read_cell_value('C6'))
+    print(update_data(symbol,Price))
+    #print(java_read_cell_value('C6'))
+    # print(web_read_cell_value('C6'))
