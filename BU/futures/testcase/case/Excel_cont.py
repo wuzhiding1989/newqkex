@@ -3,12 +3,13 @@ from common import slacksend
 #coding:utf-8
 import pygsheets
 import openpyxl
-from BU.futures.api import webapi as wb
-user = wb.webapi(5, 'test')
+from BU.futures.api import webapi as web
+#user = wb.webapi(5, 'test')
 excel_path = "cccda12.xlsx"
 sheet_name = "计算";tradeType='linearPerpetual';gear='depth-3';limit=1000;Price='1800';symbol='ETHUSDT'
 
-def update_data(symbol,Price):
+def update_data(symbol,Price):#将用户的资产，交易对配置等填充到表格
+    user = web.webapi(5, 'test')
     res=user.web_instruments(tradeType=tradeType,symbol=symbol)
     takerRate=res['data'][0]['takerRate'];makerRate=res['data'][0]['makerRate']
     markPriceGreaterRatio = res['data'][0]['markPriceGreaterRatio'];maintMarginRatio = res['data'][0]['maintMarginRatio']
@@ -82,7 +83,7 @@ def str_add_n(s, n):
             new_char = '6'
         return s[:-1] + new_char
 
-def java_read_cell_value():
+def java_read_cell_value():#后端计算相关值
     # 读取 Excel 表格数据
     book = load_workbook(excel_path,data_only=True)
     sheet = book[sheet_name]
@@ -97,7 +98,7 @@ def java_read_cell_value():
         #print(result_1,result_2,result)
     return result
 
-def api_read_cell_value():
+def api_read_cell_value():#打印后端计算的值
     # 读取 Excel 表格数据
     book = load_workbook(excel_path,data_only=True)
     sheet = book[sheet_name]
@@ -111,7 +112,7 @@ def api_read_cell_value():
         result.append('%s:%s' % (result_1, result_2))
         #print(result_1,result_2,result)
     return result
-def web_read_cell_value():
+def web_read_cell_value():#前段计算值
     # 读取 Excel 表格数据
     book = load_workbook(excel_path,data_only=True)
     sheet = book[sheet_name]
