@@ -1,6 +1,6 @@
-symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
+symbol = 'ETHUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
-fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount=40;pairCode='P_R_USDT_USD';gear='depth-3';limit=1000;period='1m'##short，long
+fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount='40';pairCode='P_R_USDT_USD';gear='depth-3';limit=1000;period='1m'##short，long
 from BU.futures.api import webapi as wb
 from common import util as ut
 import random,time
@@ -161,13 +161,13 @@ def leverage_api():
     print('查询调整后的杠杆接口', select_leverage)
 if __name__ == '__main__':
     user = wb.webapi(3, 'test')
-    #print(order_ad(use=2,side='buy',positionSide='long'))
+    print(order_ad(use=2,side='buy',positionSide='long'))
     #print(order1('5'))
     # a=26000+random.uniform(2.12,5.55)
     # aa = int(21000 + random.uniform(0.12, 0.92) * 10)
     # print(a,aa)
-    for i in range(1):
-        print(order(2))
+    # for i in range(1):
+    #     print(order(2))
 
         #print(order1(3))
     # lev=user.web_order(tradeType='linearPerpetual', symbol='BTCUSDT', side='sell', positionSide='long', orderType='stop-limit', reduceOnly=reduceOnly,

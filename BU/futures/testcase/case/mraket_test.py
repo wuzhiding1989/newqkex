@@ -1,4 +1,5 @@
-import time,requests
+import time,requests,pygsheets
+
 
 symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
@@ -64,7 +65,15 @@ def kk():
         print("data2 中没有新数据")
 
 if __name__ == '__main__':
-    for i in range(2):
-    #     #print(market_kline())
-    #     print(maker_trade())
-        print(kk())
+    # for i in range(2):
+    # #     #print(market_kline())
+    # #     print(maker_trade())
+    #     print(kk())
+    pygsheets.debug_level = 3
+    client = pygsheets.authorize(service_file="lively-oxide-388602-33b9719fd3c6.json")
+    # 打开谷歌表格testPygSheets
+    sh = client.open('testqk')
+    # 获取表格中的而第一张工作表
+    wks = sh.sheet1
+    # 更新A1数据
+    wks.update_value('A1', "我是元素A1")

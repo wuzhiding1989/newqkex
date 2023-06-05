@@ -15,7 +15,7 @@ import json
 import requests
 # token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'  #slack的token
 
-token ='xoxb-5068079133173-5280684352613-MS8n6qZj7ivcb1SVu32TUj9q'
+token ='xoxb-5068079133173-5280684352613-2a1NFufOXf8S8iVud1aJh3IR'
 channel1='C05373RARLJ'  #slack的频道ID
 
 def send_Slack(message):
