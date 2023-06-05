@@ -203,7 +203,10 @@ class webapi():
             "symbol": symbol
         }
         res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
+        # c=res['data'][0]['takerRate']
+        # print(c)
         return res
+
 
 
     # 查询历史订单 /v1/trade/record/web/orders/history
@@ -438,21 +441,12 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    # wb = webapi(3,server='test')
+    wb = webapi(3,server='test')
     # print(wb.headers['X-Authorization'])
     # # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    # print(wb.web_market_depth(tradeType=tradeType,gear=gear,symbol=symbol,limit=limit))
-    # print(wb.web_market_ticker_mini(tradeType=tradeType,symbol=symbol,limit=limit))
+    print(wb.web_position(tradeType=tradeType,symbol=symbol))
+    #print(wb.web_instruments(tradeType=tradeType,symbol=symbol))
     # print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))
-    import os
-    import sys
-
-    # 将模块所在目录添加到 Python 导入路径
-    module_path = "/path/to/ws_pb2"
-    sys.path.append(os.path.abspath(module_path))
-
-    # 导入 ws_pb2 模块
-    import ws_pb2

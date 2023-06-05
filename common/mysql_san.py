@@ -49,4 +49,4 @@ if __name__ == '__main__':
     # sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
     # a = mysql_select(sql)
     # print(a)
-    print(add_account(uid='10122167',currency="USDT",balance='7000000.998'))
+    print(add_account(uid='10122307',currency="USDT",balance='70090000.98'))
