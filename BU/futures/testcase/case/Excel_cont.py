@@ -6,7 +6,7 @@ import openpyxl
 from BU.futures.api import webapi as web
 #user = wb.webapi(5, 'test')
 excel_path = "cccda12.xlsx"
-sheet_name = "计算";tradeType='linearPerpetual';gear='depth-3';limit=1000;Price='1800';symbol='ETHUSDT'
+sheet_name = "计算";tradeType='linearPerpetual';gear='depth-3';limit=1000;Price=1800;symbol='ETHUSDT'
 
 def update_data(symbol,Price):#将用户的资产，交易对配置等填充到表格
     user = web.webapi(5, 'test')
@@ -17,28 +17,29 @@ def update_data(symbol,Price):#将用户的资产，交易对配置等填充到�
     avgEntryPrice=res1['data'][0]['avgEntryPrice'];leverage=res1['data'][0]['leverage']
     markPrice=res1['data'][0]['markPrice'];liquidationPrice=res1['data'][0]['liquidationPrice']
     posMargin = res1['data'][0]['posMargin'];marginRate=res1['data'][0]['marginRate']
-    unrealisedPnl = res1['data'][0]['unrealisedPnl'];earningRate = res1['data'][0]['earningRate']
+    unrealisedPnl = res1['data'][0]['unrealisedPnl'];positionAmt = res1['data'][0]['positionAmt']
+    side = res1['data'][0]['side'];earningRate = res1['data'][0]['earningRate']
     res2=user.web_tradingAccount(currency='USDT')
     marginAvailable = res2['data'][0]['marginAvailable'];marginFrozen = res2['data'][0]['marginFrozen']
-    marginEquity = res2['data'][0]['marginEquity']
+    marginEquity = res2['data'][0]['marginEquity'];marginPosition=res2['data'][0]['marginPosition']
     ak = user.web_market_depth(tradeType=tradeType, gear=gear, symbol=symbol, limit=limit)
-    buy1 = ak['data']['bids'][0][0]
-    sell1 =ak['data']['asks'][0][0]
+    buy1 = ak['data']['bids'][0][0];buy1=f'{buy1}'
+    sell1 =ak['data']['asks'][0][0];sell1=f'{sell1}'
     # 读取 Excel 表格数据
     wb = load_workbook(excel_path)
     ws = wb[sheet_name]
     # 更新 data1 和 data2 属性值
     ws["A2"] = symbol;ws["B6"] = symbol;ws["A11"] = symbol;ws["B8"] = symbol
     ws["B2"] = Price
-    ws["C2"] = avgEntryPrice
-    ws["D2"] = maintMarginRatio
+    ws["C2"] = avgEntryPrice;ws["D2"] = side
+    ws["E21"] = maintMarginRatio
     ws["E2"] = leverage
     ws["F2"] = 26040 #avgPrice
     ws["G2"] = takerRate
-    ws["H2"] = 0.001  #Amount
-    ws["I2"] = marginEquity#汇总资产
-    ws["J2"] = marginAvailable
-    ws["K2"] = marginFrozen
+    ws["H2"] = positionAmt  #Amount
+    ws["B21"] = marginEquity#汇总资产
+    ws["C21"] = marginAvailable;ws["F21"] = marginPosition
+    ws["D21"] = marginFrozen
     ws["L2"] = markPrice
     ws["M2"] = buy1
     ws["N2"] = sell1
@@ -47,8 +48,8 @@ def update_data(symbol,Price):#将用户的资产，交易对配置等填充到�
 
     ws['C8'] = liquidationPrice;ws['D8'] = posMargin;ws['E8'] = marginRate;ws['F8'] = None#维持保证金
     ws['H8'] = unrealisedPnl
-    ws['I8'] = unrealisedPnl
-    ws['J8'] = earningRate
+    ws['I8'] = earningRate
+    #ws['J8'] = earningRate
     # 将数据写入 Excel 表格
     wb.save(excel_path)
     ############写入完数据后需要手动保存一下文件，否则无法生效
@@ -137,4 +138,5 @@ if __name__ == '__main__':
     # slacksend.send_Slack(web_read_cell_value())
     print(java_read_cell_value())
     print(api_read_cell_value())
+    print(web_read_cell_value())
 
