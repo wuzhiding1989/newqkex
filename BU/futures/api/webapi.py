@@ -446,6 +446,7 @@ if __name__ == '__main__':
     # # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
     print(wb.web_position(tradeType=tradeType,symbol=symbol))
+    #12345234
     #print(wb.web_instruments(tradeType=tradeType,symbol=symbol))
     # print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
