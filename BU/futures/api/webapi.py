@@ -441,7 +441,7 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(3,server='test')
+    wb = webapi(4,server='test')
     # print(wb.headers['X-Authorization'])
     # # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
