@@ -34,6 +34,13 @@ class webapi():
             "amount": amount}
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         return res
+    #用户资产
+    def exchange_assets(self):
+        path = '/exchange/assets'
+        res = requests.get(url=self.qkurl + path, headers=self.headers).json()
+        return res
+
+    # 划转现货
     def web_wallet_transfer(self,fromAccountType=None, toAccountType=None, currency=None, amount=None,pairCode=None,symbol=None):
         path = '/wallet/transfer'
         params = {
