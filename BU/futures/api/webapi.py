@@ -63,9 +63,11 @@ class webapi():
                   "postOnly": postOnly,
                   "timeInForce": timeInForce}  # GTC/IOC/FOK
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
-        print(params)
         return res
-
+    def tickpre(self):
+        path='https://www.qkex.com/exchange/public/tickers'
+        res = requests.get(url=path, headers=self.headers).json()
+        return res
      # 一键平仓
     def web_oneClickClose(self,tradeType=None, symbol=None):
         path = '/v1/trade/web/oneClickClose'
@@ -94,6 +96,7 @@ class webapi():
             "symbol": symbol,
             "orderId": orderId}
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        print(params)
         return res
 
 
@@ -441,13 +444,14 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(4,server='test')
+    wb = webapi(5,server='test')
     # print(wb.headers['X-Authorization'])
     # # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(wb.web_position(tradeType=tradeType,symbol=symbol))
-    #1234523423456789
-    #print(wb.web_instruments(tradeType=tradeType,symbol=symbol))
+    # print(wb.web_position(tradeType=tradeType,symbol=symbol))
+    #print(wb.web_stopOrdersHistory(tradeType=tradeType,symbol=symbol,marginType=marginType))
+    a=wb.tickpre()
+    print(1,a)
     # print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))

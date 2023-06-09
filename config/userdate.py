@@ -12,8 +12,7 @@ weblogin = {
         "secret": 'DBBGNEM3POXAYRSO'
     },
     3: {
-        "username": 'y001@cc.com',
-
+        "username": 'y005@cc.com',
         "password": 'q123456',
         "emailcode": 111111,
         "secret": '2K6E7WL5S3J2JSP7'
