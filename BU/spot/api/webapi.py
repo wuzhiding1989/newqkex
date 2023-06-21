@@ -6,7 +6,7 @@ from werkzeug.sansio.multipart import MultipartEncoder
 
 headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2OWE4M2EyNS1mZDdkLTQ0YjMtOWVmMi1iYWY0NTQ2YThkYmQyMDE1NjYwNTQyIiwidWlkIjoieUdxdFQwbzMvZmdwN08wRlcvR1pZQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJXWU5oVGYvdXNWUkFQb3BFenpra0RnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NDgxMzc3NSwiZXhwIjoxNjg0OTAwMTc1LCJpc3MiOiJ3Y3MifQ.zEQVXWWqnqbwtYlVBSU40ZxJpNB5mvS7WLBgr09e8TE'
+Authorization='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxYTA2NDE0OC0wNWE0LTQ1MWUtYjI3Mi01OTNmZTZmN2ZlNTkxMzEzMTcxNjg0IiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJnbDUyNWNjdzZyUDZndXJId2IvbEpnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4NjYyMjUyOSwiZXhwIjoxNjg2NzA4OTI5LCJpc3MiOiJ3Y3MifQ.pXQMJE4Rv7GTadjj9GTUkoMZtnYuuq41Bo1ldo1uN8Y'
 Authorization1='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyYTJmZjgzOC1iZjY3LTQ5ZjktYjA0Ny03MGE2ODU0NzQzNGYzNTIwMDQ2NDMiLCJ1aWQiOiJWbDhaZ3lJWWkxZ2w1L1BDRjE1RlN3PT0iLCJiaWQiOiJtV09PN0YyenNOMFR3UkF5UURsaytBPT0iLCJpcCI6ImpwTE9wdlFUMzF1djJyNlo3S0FjeFE9PSIsImRldiI6IkE4b0xOZVJWdkZHb3hMOVBaZWhrcEE9PSIsInN0cyI6MCwiaWF0IjoxNjg0MzE5MDcwLCJleHAiOjE2ODQ0MDU0NzAsImlzcyI6IndjcyJ9.9VTdrYJZbrgpZ0rNWWXobKuGQZT1nNDKEsa3lB9_4h8'
 headers['X-Authorization']=Authorization
 url = 'https://test-public-rest.qkex.com'
@@ -232,6 +232,11 @@ def otc_orders_adsid(id):#根据广告id查询广告订单
     path = f'/otc/orders/{id}'
     res = requests.get(url=url+path,headers=headers).json()
     return res
+def otc_bill(page=None,pageSize=None,symbol=None):#查询otc流水
+    path = '/otc/bill'
+    parms = {'page': page,'pageSize': pageSize,'symbol': symbol}
+    res = requests.get(url=url+path,headers=headers,params=parms).json()
+    return res
 
 #http://13.215.135.141/otc/pendings/1179/cancel 取消otc订单
 def otc_cancel(id):
@@ -289,4 +294,8 @@ if __name__ == '__main__':
     #print(exchange_convert(baseSymbol='ABC',quoteSymbol='USDT',amount=2090))
     #print(otc_PublicOrde)rs(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))
     # print(otc_orders(amount="0.10000000",side="sell",base="BTC",quote="USD",price="30000.00000000",payType=[3]))
-    print(consumer_otc_pendings_paid(orderid="1910",payment="403"))
+    a=otc_bill(page=1,pageSize=1000,symbol='USDT')
+    print(len(a['data']['bills']))
+    print(a)
+    for tmp in a['data']['bills']:
+        print(tmp)
