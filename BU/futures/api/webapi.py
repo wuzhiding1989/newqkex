@@ -3,7 +3,7 @@ import requests
 from BU.admin import web
 from config import userdate,serverdate
 
-symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'positionSide'
+symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'buy';marginType = 'cross';positionSide = 'long'
 postOnly = 'false';reduceOnly = 'false';orderType = 'limit';priceType = 'optimalN';pageNum = '1';pageSize = '10'
 gear='depth0';limit=1000;period='1m'
 
@@ -51,6 +51,7 @@ class webapi():
             'symbol':symbol,
             "amount": amount}
         res = requests.post(url=self.qkurl + path, json=params, headers=self.headers).json()
+        print(self.qkurl + path,params)
         return res
 
     # 单个下单
@@ -70,6 +71,29 @@ class webapi():
                   "postOnly": postOnly,
                   "timeInForce": timeInForce}  # GTC/IOC/FOK
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        #print(params)
+        return res
+    def web_stopOrders(self,tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,
+                      marginType=None, slOrdPx=None, priceType=None, tpOrdPx=None, postOnly=None,  tpTriggerPxType=None, slTriggerPxType=None,tpOrderQty=None,slOrderQty=None):
+        path = '/v1/trade/web/stopOrders'
+        params = {"tradeType": tradeType,
+                  "symbol": symbol,
+                  "side": side,
+                  "positionSide": positionSide,
+                  "orderType": orderType,  # market，limit
+                  "reduceOnly": reduceOnly,
+                  "tpTriggerPxType": tpTriggerPxType,
+                  "slTriggerPxType": slTriggerPxType,
+                  "marginType": marginType,
+                  "slOrdPx": slOrdPx,
+                  "tpOrdPx": tpOrdPx,
+                  "priceType": priceType,
+                  "slOrderQty": slOrderQty,
+                  "tpOrderQty": tpOrderQty,
+                  "postOnly": postOnly}
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        print(self.tradeurl + path)
+        print(params)
         return res
     def tickpre(self):
         path='https://www.qkex.com/exchange/public/tickers'
@@ -134,7 +158,7 @@ class webapi():
     # 查询历史计划委托 /v1/trade/record/web/stopOrdersHistory
     def web_stopOrdersHistory(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                           marginType=None, orderType=None, stopOrderId=None):
-        path = '/v1/record/web/stopOrdersHistory'
+        path = '/v1/trade/web/stopOrders/search'
         params = {
             "tradeType": tradeType,
             "symbol": symbol,
@@ -451,14 +475,17 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(5,server='test')
+    wb = webapi(3,server='test')
     # print(wb.headers['X-Authorization'])
-    # # print(wb.web_order(tradeType,symbol,side,positionSide,orderType,reduceOnly))
+    print(wb.web_stopOrders(tradeType=tradeType,symbol='ETHUSDT',slOrdPx='1800',marginType=marginType,
+                            side='sell',positionSide='long',orderType="tpsl",reduceOnly=reduceOnly,
+                            slTriggerPxType='last',slOrderQty=20))###,slTriggerPxType='last',slOrderQty=1 tpTriggerPxType='last',tpOrderQty=20,tpOrdPx='31700'
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
     # print(wb.web_position(tradeType=tradeType,symbol=symbol))
-    #print(wb.web_stopOrdersHistory(tradeType=tradeType,symbol=symbol,marginType=marginType))
-    a=wb.tickpre()
-    print(1,a)
+    print(wb.web_stopOrdersHistory(tradeType=tradeType,pageNum=1,pageSize=100))
+    #a=wb.web_wallet_transfer(fromAccountType="exchange", toAccountType="perpetual", currency="USDT", amount=1,pairCode='P_R_USDT_USD',symbol="USDT")
+    #a.web_wallet_transfer(fromAccountType=fromAccountType, toAccountType=toAccountType, currency=currency,amount=amount, pairCode=pairCode, symbol=currency)
+    #print(1,a)
     # print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))

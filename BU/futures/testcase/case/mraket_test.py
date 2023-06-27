@@ -1,7 +1,7 @@
 import time,requests,pygsheets
 
 
-symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
+symbol = 'ETHUSDT';tradeType = 'linearPerpetual';side = 'sell';marginType = 'cross';positionSide = 'short'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
 fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount=40;pairCode='P_R_USDT_USD';gear='depth0';limit=1000
 period='1m'
@@ -66,14 +66,17 @@ def kk():
 
 if __name__ == '__main__':
     # for i in range(2):
-    # #     #print(market_kline())
-    # #     print(maker_trade())
+    #     print(market_kline())
+    #     print(maker_trade())
     #     print(kk())
-    pygsheets.debug_level = 3
-    client = pygsheets.authorize(service_file="lively-oxide-388602-33b9719fd3c6.json")
-    # 打开谷歌表格testPygSheets
-    sh = client.open('testqk')
-    # 获取表格中的而第一张工作表
-    wks = sh.sheet1
-    # 更新A1数据
-    wks.update_value('A1', "我是元素A1")
+    data='Cghwb3NpdGlvbhC97LyejDEaATAq+AIKU3R5cGUuZ29vZ2xlYXBpcy5jb20vY29tLnFrZXgubm90aWZpY2F0aW9uLnByb3ZpZGVyLm1vZGVsLndlYi5Xc1dlYlBvc2l0aW9uUmVzcFByb3RvEqACCp0CCg9saW5lYXJQZXJwZXR1YWwSBGxvbmcaB0VUSFVTRFQiBWNyb3NzKhcxNjcwLjY0MDAwMDAwMDAwMDAwMDAwMDIGbm9ybWFsOhQ0LjAwMDAwMDAwMDAwMDAwMDAwMEIBMEoUMS4zMzY2MDAwMDAwMDAwMDAwMDBSATVaFDQuMDAwMDAwMDAwMDAwMDAwMDAwahUtMC4yMDI1MDAwMDAwMDAwMDAwMDByFDAuMDAwODAwMDAwMDAwMDAwMDAweAGCARcxNjcwLjg1MDAwMDAwMDAwMDAwMDAwMIoBFDAuMDAwNTAwMDAwMDAwMDAwMDAwkgEUMC4wMDAxNzMxNDUyMDAwMDAwMDCaARMxMTE5MzM2NTM0MTA1OTcyNzM2'
+    import base64
+    decoded_data = base64.b64decode(data)
+    print(decoded_data.decode('utf-8', 'ignore'))
+
+    import WsWebPositionProto_pb2
+
+    message = WsWebPositionProto_pb2.WsWebPositionProto()
+    message.ParseFromString(decoded_data)
+    print(message.symbol)
+

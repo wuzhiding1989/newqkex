@@ -15,19 +15,16 @@ def order_ad(use,side,positionSide):
 
     else:
         print('资产接口',tradingAccount)
-        # if 'currency' not in tradingAccount['data'][0] or 'marginEquity' not in tradingAccount['data'][0]:
-        #     print("Error: tradingAccount response does not contain 'currency' or 'marginEquity' field")
+        if 'currency' not in tradingAccount['data'][0] or 'marginEquity' not in tradingAccount['data'][0]:
+            print("Error: tradingAccount response does not contain 'currency' or 'marginEquity' field")
     tra=user.web_transfer(fromAccountType=fromAccountType,toAccountType=toAccountType,currency=currency,amount=amount)
     if tra['code'] != 0:
         print(f"web_transfer() failed with error code {tra['code']}: {tra['msg']}")
     else:
         print('划转接口',tra)
-    available=user.web_wallet_transfer(fromAccountType=fromAccountType,toAccountType=toAccountType,currency=currency,amount=amount,pairCode=pairCode,symbol=currency)#划转
-    if available['code'] != 0:
-        print(f"web_wallet_transfer() failed with error code {available['code']}: {available['msg']}")
-
-    else:
-        print('旧版本划转接口',available)
+    wb1 = wb.webapi(5, server='test')
+    aa = wb1.web_wallet_transfer(fromAccountType="exchange", toAccountType="perpetual", currency="USDT", amount=1, pairCode='P_R_USDT_USD', symbol="USDT")
+    print('旧版划转接口',aa)
     se=user.web_order(tradeType=tradeType, symbol=symbol, side=side, positionSide=positionSide, orderType=orderType, reduceOnly=reduceOnly,
                   marginType=marginType, price='21842.21', priceType=priceType, orderQty=3, postOnly=postOnly, timeInForce=timeInForce)#下单
     if se['code'] != '0':
@@ -161,7 +158,7 @@ def leverage_api():
     print('查询调整后的杠杆接口', select_leverage)
 if __name__ == '__main__':
     user = wb.webapi(3, 'test')
-    print(order_ad(use=2,side='buy',positionSide='long'))
+    print(order_ad(use=3,side='buy',positionSide='long'))
     #print(order1('5'))
     # a=26000+random.uniform(2.12,5.55)
     # aa = int(21000 + random.uniform(0.12, 0.92) * 10)

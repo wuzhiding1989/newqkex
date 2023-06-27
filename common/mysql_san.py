@@ -49,5 +49,5 @@ if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
     # sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
     # a = mysql_select(sql)
-    print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122307)"))#查询账号邮箱
-    #print(add_account(uid='10122493',currency="USDT",balance='70090000.98'))#给钱包价钱，加到钱包账户
+    print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122446)"))#查询账号邮箱
+    #print(add_account(uid='10122014',currency="USDT",balance='70000000'))#给钱包价钱，加到钱包账户

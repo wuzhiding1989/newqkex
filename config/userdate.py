@@ -12,13 +12,13 @@ weblogin = {
         "secret": 'DBBGNEM3POXAYRSO'
     },
     3: {
-        "username": 'y005@cc.com',
+        "username": 'y006@cc.com',
         "password": 'q123456',
         "emailcode": 111111,
         "secret": '2K6E7WL5S3J2JSP7'
     },
     5: {
-        "username": 'y003@cc.com',
+        "username": 'y005@cc.com',
         "password": 'q123456',
         "emailcode": 111111,
         "secret": '2K6E7WL5S3J2JSP7'
@@ -31,6 +31,16 @@ weblogin = {
     },6:{
         "username": '102345678@qq.com',
         "password": 'qa123456',
+        "emailcode": 111111,
+        "secret": 'N4R2D3746R6XEGVE'
+    },7:{
+        "username": 'y003@cc.com',
+        "password": 'q123456',
+        "emailcode": 111111,
+        "secret": 'N4R2D3746R6XEGVE'
+    },8:{
+        "username": '1000@cc.ocm',
+        "password": 'q123456',
         "emailcode": 111111,
         "secret": 'N4R2D3746R6XEGVE'
     }

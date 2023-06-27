@@ -321,7 +321,7 @@ if __name__ == '__main__':
     # 批量撤单 (测试通过)
     print(cancelOrders(symbol='ADA_USDT'))
     # 查询当前订单列表 （返回空数组[]）
-    print(123,order(pairCode='ADA_USDT'))
+    # print(123,order(pairCode='ADA_USDT'))
     # 查询市场价格(测试通过)
     # print(ticker(pairCode='QK_USDT'))
     # 查盘口数据 （测试通过）
@@ -335,7 +335,7 @@ if __name__ == '__main__':
     # 查所有资产 （测试通过）
     # print(assetsAll())
     # 查单个币种资产 (测试通过)
-    # print(assets(symbol='QK'))171613964292160
+    print(assets(symbol='QK'))#171613964292160
     #A=(order(pairCode='QK_USDT',side='buy',price='0.0795',volume='300',systemOrderType='limit',source='api'))
     # print(123,orders(pairCode='QK_USDT'))
     # time.sleep(2)
