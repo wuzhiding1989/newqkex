@@ -26,7 +26,7 @@ def admin_query_order(uid=None,tradeTyp=None,symbol=None):#查询uid下的当前
     path=f'/v1/admin/memory/query/order?conditionUid={uid}&currency=USDT&tradeType={tradeTyp}&symbol={symbol}'
     res = requests.get(url=url+path,headers=headers).json()
     return res
-def admin_symbol_conf_upsert(symbolId):#btc:81000201 eth:81000301  修改交易对配置
+def admin_symbol_conf_upsert(symbolId):#btc:81000201 eth:81000301  FIL 81000401  修改交易对配置
     path="/v1/admin/manager/symbol/conf/upsert"
     params={
       "symbolId": "81000301",
@@ -62,6 +62,6 @@ def admin_symbol_conf_upsert(symbolId):#btc:81000201 eth:81000301  修改交易�
 
 if __name__ == '__main__':
     #print(admin_symbol_conf_upsert('81000301'))
-    a=admin_query_order(uid=10122333,tradeTyp=tradeTyp,symbol='ETHUSDT')
-    print(a)
-    #print(symbol_upsert(base='FIL'))
+    # a=admin_query_order(uid=10122333,tradeTyp=tradeTyp,symbol='ETHUSDT')
+    # print(a)
+    print(admin_symbol_upsert(base='FIL'))

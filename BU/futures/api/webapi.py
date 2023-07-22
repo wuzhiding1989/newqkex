@@ -24,6 +24,10 @@ class webapi():
         sdf=headers['X-Authorization']
         return sdf
 
+    def web_uid(self):#https://test-public-rest.qkex.com/user/detail
+        path = '/user/detail'
+        res = requests.get(url=self.qkurl + path,headers=self.headers).json()
+        return  res
     # 划转
     def web_transfer(self,fromAccountType=None, toAccountType=None, currency=None, amount=None):
         path = '/v1/trade/web/account/transfer'
@@ -73,13 +77,15 @@ class webapi():
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         #print(params)
         return res
-    def web_stopOrders(self,tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,
+    def web_stopOrders(self,tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,orderQty=None,ordPx=None,price=None,triggerPxType=None,timeInForce=None,
                       marginType=None, slOrdPx=None, priceType=None, tpOrdPx=None, postOnly=None,  tpTriggerPxType=None, slTriggerPxType=None,tpOrderQty=None,slOrderQty=None):
         path = '/v1/trade/web/stopOrders'
         params = {"tradeType": tradeType,
                   "symbol": symbol,
+                  "timeInForce":timeInForce,
                   "side": side,
                   "positionSide": positionSide,
+                  "triggerPxType":triggerPxType,
                   "orderType": orderType,  # market，limit
                   "reduceOnly": reduceOnly,
                   "tpTriggerPxType": tpTriggerPxType,
@@ -87,10 +93,13 @@ class webapi():
                   "marginType": marginType,
                   "slOrdPx": slOrdPx,
                   "tpOrdPx": tpOrdPx,
+                  "price":price,
                   "priceType": priceType,
                   "slOrderQty": slOrderQty,
                   "tpOrderQty": tpOrderQty,
-                  "postOnly": postOnly}
+                  "postOnly": postOnly,
+                  "ordPx":ordPx,
+                  'orderQty':orderQty}
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
         print(self.tradeurl + path)
         print(params)
@@ -127,7 +136,7 @@ class webapi():
             "symbol": symbol,
             "orderId": orderId}
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
-        print(params)
+        #print(params)
         return res
 
 
@@ -137,6 +146,8 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol}
         res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        print(self.tradeurl + path)
+        print(params)
         return res
 
     # 当前委托
@@ -158,7 +169,7 @@ class webapi():
     # 查询历史计划委托 /v1/trade/record/web/stopOrdersHistory
     def web_stopOrdersHistory(self,tradeType=None, symbol=None, startTime=None, endTime=None, pageNum=None, pageSize=None,
                           marginType=None, orderType=None, stopOrderId=None):
-        path = '/v1/trade/web/stopOrders/search'
+        path = '/v1/record/web/stopOrdersHistory'
         params = {
             "tradeType": tradeType,
             "symbol": symbol,
@@ -171,6 +182,8 @@ class webapi():
             "stopOrderId": stopOrderId
         }
         res = requests.get(url=self.queryurl + path, params=params, headers=self.headers).json()
+        print(self.queryurl + path)
+        print(params)
         return res
 
 
@@ -476,16 +489,37 @@ class webapi():
 
 if __name__ == '__main__':
     wb = webapi(3,server='test')
+    from BU.futures.testcase.case import ket1
+    print(wb.web_transfer(currency="USDT",amount= "50",fromAccountType="funding", toAccountType="futures"))##funding,futures,
     # print(wb.headers['X-Authorization'])
-    print(wb.web_stopOrders(tradeType=tradeType,symbol='ETHUSDT',slOrdPx='1800',marginType=marginType,
-                            side='sell',positionSide='long',orderType="tpsl",reduceOnly=reduceOnly,
-                            slTriggerPxType='last',slOrderQty=20))###,slTriggerPxType='last',slOrderQty=1 tpTriggerPxType='last',tpOrderQty=20,tpOrdPx='31700'
+    # print(wb.web_stopOrders(tradeType=tradeType,symbol='FILUSDT',slOrdPx='3',marginType=marginType,
+    #                         side='sell',positionSide='long',orderType="tpsl",reduceOnly=reduceOnly,
+    #                         slTriggerPxType='last',slOrderQty=20))###,slTriggerPxType='last',slOrderQty=1 tpTriggerPxType='last',tpOrderQty=20,tpOrdPx='31700'
+    # print(wb.web_stopOrders(tradeType=tradeType,symbol='ETHUSDT',ordPx=1663.8,marginType=marginType,
+    #                         side='buy',positionSide='long',orderType="triggerLimit",reduceOnly=reduceOnly,
+    #                         triggerPxType='last',orderQty=4,price=1663.8,timeInForce='GTC'))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
     # print(wb.web_position(tradeType=tradeType,symbol=symbol))
-    print(wb.web_stopOrdersHistory(tradeType=tradeType,pageNum=1,pageSize=100))
+    # a=wb.web_stopOrdersHistory(tradeType=tradeType,pageNum=1,pageSize=200)
+    # print(a)
+    # print(len(a['data']['list']))
+    # for tmp in a['data']['list']:
+    #     print(tmp)
+    # a=wb.web_account_income(tradeType=tradeType,pageSize=10,pageNum=1)
+    # print(a)
+    # for i in a['data']['list']:
+    #     print(i)
+    #print(wb.web_orders_oneClickClose(tradeType=tradeType,symbol='ETHUSDT'))
+    # print(wb.web_oneClickClose(tradeType=tradeType, symbol='FILUSDT'))
     #a=wb.web_wallet_transfer(fromAccountType="exchange", toAccountType="perpetual", currency="USDT", amount=1,pairCode='P_R_USDT_USD',symbol="USDT")
     #a.web_wallet_transfer(fromAccountType=fromAccountType, toAccountType=toAccountType, currency=currency,amount=amount, pairCode=pairCode, symbol=currency)
     #print(1,a)
     # print(wb.web_market_ticker_24hr(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_trade(tradeType=tradeType, symbol=symbol, limit=limit))
     # print(wb.web_market_kline(tradeType=tradeType, symbol=symbol, limit=limit,period=period))
+    #print(wb.web_allRiskLimit(tradeType=tradeType,marginType=marginType,symbol=symbol))
+    # print(wb.web_order(tradeType=tradeType, symbol='BNBUSDT', side='buy', positionSide=positionSide, orderType='limit', reduceOnly=reduceOnly,
+    #               marginType=marginType, price='249.58', priceType=priceType, orderQty=1400, postOnly=postOnly))
+    # a=wb.web_openOrders(tradeType='linearPerpetual',pageNum=1,pageSize=100,side='buy',symbol='LINKUSDT')
+    # iid_list = [d['orderId'] for d in a['data']['list'] if float(d['price'] )< 7]
+    # print(iid_list)
