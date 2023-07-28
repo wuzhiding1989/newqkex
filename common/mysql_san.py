@@ -52,17 +52,21 @@ def add_account(uid,currency,balance):#给钱包价钱，加到钱包账户
 def mysql_reconciliation(uid):#排除用户的账是否正确
     a=mysql_select(f"SELECT action_id,income,after_balance FROM futures_btc1.t_account_action WHERE uid={uid}  ORDER BY id DESC ",ac=0)
     id2=[];id1=[];id3=[]
+    equal_flag = True
     for tmp in a:
         id1.append(tmp[2])
         id2.append(tmp[1])
         id3.append(tmp[0])
     for i in range(len(id1) - 1):
         if id1[i] - id2[i] != id1[i + 1]:
+            equal_flag = False
             print("数据当前的action_id：", id3[i])
             print("数据上一个的action_id：", id3[i+1])
             print("id1[{}]-id2[{}] 不等于 id1[{}]: ".format(i, i, i + 1))
             print("id1[{}]-id2[{}] = {}".format(i, i, id1[i] - id2[i]))
             print("id1[{}] = {}".format(i + 1, id1[i + 1]))
+    if equal_flag:
+        print("当前用户的数据正常")
 def sql_send_with_timeout(sql, timeout):
     start_time = time.time()
     while True:
@@ -98,7 +102,7 @@ if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
     # sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
     # a = mysql_select(sql)
-    print(mysql_reconciliation(uid='10122688'))
+    print(mysql_reconciliation(uid='10122709'))
     #print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122688)",ac=1))#查询账号邮箱
     #print(add_account(uid='10122167',currency="ETH",balance='70000000'))#给钱包价钱，加到钱包账户
     # for i in  range(2000):
