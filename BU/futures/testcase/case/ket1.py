@@ -71,5 +71,5 @@ if __name__ == '__main__':
     # print(orderid1())
     for i in range(10000):
         print(clorder())
-        #print(orders_cancel(nex=0.013))
+        print(orders_cancel(nex=0.013))
         time.sleep(10)

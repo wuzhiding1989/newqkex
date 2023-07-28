@@ -15,8 +15,9 @@ import json
 import requests
 # token='xoxb-5068079133173-5118181219971-y15tDTXdWjGHxWDDY3W4kBob'  #slack的token
 
-token ='xoxb-5068079133173-5280684352613-2a1NFufOXf8S8iVud1aJh3IR'
-channel1='C05373RARLJ'  #slack的频道ID
+token ='xoxb-5068079133173-5104401884982-ns0mCO4XoEbpamyLMmMip6CP'
+###'xoxb-5068079133173-5104401884982-ns0mCO4XoEbpamyLMmMip6CP'  'xoxb-5068079133173-5280684352613-ErmBxURkLmwUHovRB8XzjijU'
+channel1='C05373RARLJ'  #slack的频道ID  D05KC16BDR7    test-api:C05373RARLJ   henry:D0584SW4JMU
 
 def send_Slack(message):
     # token = 'xoxb-5068079133173-5280684352613-b5BYGOxC06kXzxyDq6E6skIt'

@@ -20,32 +20,21 @@ def place_order(side, position_side, **kwargs):
 def sidess2(num=None,acc1=None,acc2=None,time11=None):#成交控制
     try:
     #for i in range(num):
-
+        pri = float(ket3.getSpotList(symbol, ne=3))
     # def execute_place_order():
-        d = round(random.uniform(acc1, acc2))
-        pri = float(ket3.getSpotList(symbol,ne=3))
-        swq = random.randint(0, 1)
-        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        #print(swq)
-        #tmp=['buy', 'long']
-        if swq == 1:
-            b=place_order('buy', 'long', price=pri, orderQty=d)
-            a=place_order('sell', 'short', price=pri, orderQty=d)
-            vo=d*0.001*pri
-            print(b['msg'],pri,current_time)
-            #print(a['code'],pri,d)
-
-            # with open('data.txt', 'a') as file:
-            #     file.write(f"{a['code']},'buy', {current_time},{vo}, {pri}, {d}\n")
-
-        else:
-            b=place_order('sell', 'short', price=pri, orderQty=d)
-            a=place_order('buy', 'long', price=pri, orderQty=d)
-            vo = d * 0.001 * pri
-            print(b['msg'],pri,d,current_time)
-        #     with open('data.txt', 'a') as file:
-        #         file.write(f"{a['code']}, {current_time},{vo}， {pri}, {d}\n")
-        time.sleep(time11)
+        for i in range(num):
+            d = round(random.uniform(acc1, acc2))
+            swq = random.randint(0, 1)
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            if swq == 1:
+                b=place_order('buy', 'long', price=pri, orderQty=d)
+                a=place_order('sell', 'short', price=pri, orderQty=d)
+                print(b['msg'],pri,current_time)
+            else:
+                b=place_order('sell', 'short', price=pri, orderQty=d)
+                a=place_order('buy', 'long', price=pri, orderQty=d)
+                print(b['msg'],pri,d,current_time)
+            time.sleep(time11)
     except Exception as e:
         print(e)
 
@@ -85,4 +74,4 @@ def save_data():
 
 if __name__ == '__main__':
     for i in range(10000):
-        print(sidess2(num=1000,time11=1,acc1=50,acc2=600))
+        print(sidess2(num=50,time11=0.02,acc1=50,acc2=60))

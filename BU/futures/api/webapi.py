@@ -74,7 +74,7 @@ class webapi():
                   "orderQty": orderQty,
                   "postOnly": postOnly,
                   "timeInForce": timeInForce}  # GTC/IOC/FOK
-        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers,timeout=10).json()
         #print(params)
         return res
     def web_stopOrders(self,tradeType=None, symbol=None, side=None, positionSide=None, orderType=None, reduceOnly=None,orderQty=None,ordPx=None,price=None,triggerPxType=None,timeInForce=None,
@@ -114,7 +114,7 @@ class webapi():
         params = {
             "tradeType": tradeType,
             "symbol": symbol}
-        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers,timeout=10).json()
         return res
 
 
@@ -135,7 +135,7 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol,
             "orderId": orderId}
-        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers).json()
+        res = requests.post(url=self.tradeurl + path, json=params, headers=self.headers,timeout=10).json()
         #print(params)
         return res
 
@@ -162,7 +162,7 @@ class webapi():
             "clOrdId": clOrdId,
             "pageNum": pageNum,
             "pageSize": pageSize}
-        res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers,timeout=10).json()
         return res
 
 

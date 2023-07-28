@@ -3,24 +3,27 @@ import random,time,requests,re
 symbol = 'LINKUSDT';tradeType = 'linearPerpetual';side ='buy';marginType = 'cross';positionSide = 'long'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
 fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount='40';pairCode='P_R_USDT_USD';gear='depth-3';limit=1000;period='1m'##short，long
-us=20
+us=8
 user=wb.webapi(us,'test')
 
-def sidess2():
+def sidess2(num,time1):
     try:
-        pores = user.web_position(tradeType=tradeType, symbol=symbol, marginType=marginType)
-        availPos = pores['data'][0]['availPos'];availPos1 = pores['data'][1]['availPos']
-        print('当前多空可平量分别是',availPos,availPos1)
-        pri = getSpotList(symbol,ne=3)
-        sides = [('buy', 'short'), ('sell', 'long')]
-        random.shuffle(sides)
-        for side, position_side in sides:
-            ac =min(min(int(availPos),int(availPos1),3000),3000)
-            order_response = user.web_order(tradeType=tradeType, symbol=symbol, side=side, positionSide=position_side,
-                                            orderType=orderType, reduceOnly=reduceOnly,
-                                            marginType=marginType, price=pri, priceType=priceType, orderQty=ac,
-                                            postOnly=postOnly, timeInForce=timeInForce)
-            print(ac,order_response)
+        for i in range(num):
+            pores = user.web_position(tradeType=tradeType, symbol=symbol, marginType=marginType)
+            availPos = pores['data'][0]['availPos'];availPos1 = pores['data'][1]['availPos']
+            print('当前多空可平量分别是',availPos,availPos1)
+            pri = getSpotList(symbol,ne=3)
+            sides = [('buy', 'short'), ('sell', 'long')]
+            random.shuffle(sides)
+            for side, position_side in sides:
+                ac =min(min(int(availPos),int(availPos1),3000),3000)
+                order_response = user.web_order(tradeType=tradeType, symbol=symbol, side=side, positionSide=position_side,
+                                                orderType=orderType, reduceOnly=reduceOnly,
+                                                marginType=marginType, price=pri, priceType=priceType, orderQty=ac,
+                                                postOnly=postOnly, timeInForce=timeInForce)
+                print(ac,order_response)
+                time.sleep(time1)
+        #print(user.web_oneClickClose(tradeType=tradeType))
     except Exception as e:
         print('Error :', e)
 
@@ -76,7 +79,7 @@ def getSpotList(symbol, ne=None):
         '_CDCODE': '8ea89804b788344153b54f4a6caaeae2'
     }
     url = 'https://app.ueex.com/MarketV2/getSpotList'
-    response = requests.post(url, data=data).json()
+    response = requests.post(url, data=data,timeout=10).json()
     se = response['data']
     for tmp_obj in response['data']:
         if tmp_obj['name'] == name:
@@ -91,7 +94,5 @@ if __name__ == '__main__':
     #     time.sleep(2)
     #print(getSpotList(symbol='BNBUSDT',ne=2))
     for i in range(10000):
-        print(user.web_oneClickClose(tradeType=tradeType))
-        for i in range(10):
-            print(sidess2())
-            time.sleep(1)
+            print(sidess2(num=100,time1=10))
+
