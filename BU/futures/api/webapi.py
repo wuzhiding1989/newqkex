@@ -127,6 +127,7 @@ class webapi():
             "symbol": symbol,
             "marginType": marginType}
         res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers,timeout=5).json()
+        #print(self.tradeurl + path)
         return res
 
      # 撤销单个订单
@@ -436,7 +437,7 @@ class webapi():
     def web_tradingAccount(self,currency=None):#/v1/trade/web/tradingAccount资产接口
         path = '/v1/trade/web/tradingAccount'
         params ={'currency':currency}
-        print(self.tradeurl+path)
+        #print(self.tradeurl+path)
         res = requests.get(url=self.tradeurl+path,json=params,headers=self.headers).json()
         return res
     def web_market_depth(self,tradeType=None,symbol=None,limit=None,gear=None):#/v1/market/depth 查询指定档位深度
@@ -444,10 +445,10 @@ class webapi():
         params = {
                 "tradeType": tradeType,
                 "symbol": symbol,
-                "gear": gear,
-                "limit":limit
+                "gear": gear
         }
-        res = requests.get(url=self.queryurl+path,params=params).json()
+        res = requests.get(url=self.tradeurl+path,params=params).json()
+        #print(self.tradeurl+path)
         return res
     def web_market_kline(self,tradeType=None,symbol=None,limit=None,period=None):#/v1/market/kline   k线
         path = '/v1/market/kline'
@@ -500,7 +501,7 @@ if __name__ == '__main__':
     #                         side='buy',positionSide='long',orderType="triggerLimit",reduceOnly=reduceOnly,
     #                         triggerPxType='last',orderQty=4,price=1663.8,timeInForce='GTC'))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(wb.web_position(tradeType=tradeType,symbol=symbol))
+    print(wb.web_market_depth(tradeType=tradeType,symbol=symbol,gear=0.01))
     # a=wb.web_stopOrdersHistory(tradeType=tradeType,pageNum=1,pageSize=200)
     # print(a)
     # print(len(a['data']['list']))
