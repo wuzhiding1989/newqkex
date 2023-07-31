@@ -1,9 +1,9 @@
 from BU.futures.api import webapi as wb
 import random,time,requests,re
-symbol = 'LINKUSDT';tradeType = 'linearPerpetual';side ='buy';marginType = 'cross';positionSide = 'long'
+symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side ='buy';marginType = 'cross';positionSide = 'long'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
 fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount='40';pairCode='P_R_USDT_USD';gear='depth-3';limit=1000;period='1m'##short，long
-us=8
+us=10
 user=wb.webapi(us,'test')
 
 def sidess2(num,time1):

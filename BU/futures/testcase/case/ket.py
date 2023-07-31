@@ -12,7 +12,7 @@ def sides(number, min1, max1, accmax, accmin, symbol, time1):
     # 定义买卖方向及其他参数
     try:
         sides = ['buy', 'sell']
-        pri = ket3.getSpotList(symbol, ne=3)  # 获取当前价格
+        pri = ket3.getSpotList(symbol, ne=2)  # 获取当前价格
         pri = float(pri)
 
         # 计算价格区间
@@ -25,7 +25,7 @@ def sides(number, min1, max1, accmax, accmin, symbol, time1):
                 positionSide = 'short'
                 pri1 = pri + min1
                 pri2 = pri + max1
-            return positionSide, round(random.uniform(pri1, pri2), 3)
+            return positionSide, round(random.uniform(pri1, pri2), 2)
 
         # 下单
         retries = 0
@@ -69,13 +69,13 @@ if __name__ == '__main__':
    a=user.web_tradingAccount();
    c=user.web_uid()
    print('当前账号的uid',c['data']['userId'])
-   if not a['data'] or (a['data'][0]['marginAvailable']) !='null' or float(a['data'][0]['marginAvailable']) < 2000:
-       #print('请求数据为空')
-       print(user.web_transfer(currency="USDT", amount="100000", fromAccountType="funding", toAccountType="futures"))
-       #print(result)
-   else:
-       print('当前账号的可用资产为', a['data'][0]['marginAvailable'])
+   # if not a['data'] or (a['data'][0]['marginAvailable']) !='null' or float(a['data'][0]['marginAvailable']) < 2000:
+   #     #print('请求数据为空')
+   #     print(user.web_transfer(currency="USDT", amount="100000", fromAccountType="funding", toAccountType="futures"))
+   #     #print(result)
+   # else:
+   #     print('当前账号的可用资产为', a['data'][0]['marginAvailable'])
    for i in range(10000):
-        sides(symbol=symbol,number=100,min1=0.07,max1=0.2,accmax=100,accmin=200,time1=0.5)
+        sides(symbol=symbol,number=100,min1=0.07,max1=0.2,accmax=10,accmin=20,time1=0.5)
         #time.sleep(5)
 

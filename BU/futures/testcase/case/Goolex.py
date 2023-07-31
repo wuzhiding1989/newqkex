@@ -8,7 +8,7 @@ SPREADSHEET_ID = 'testqk'
 RANGE_NAME = 'teql!A1:I1000'
 
 def main():
-    user = web.webapi(3, 'test')
+    user = web.webapi(10, 'test')
     res1=user.web_position(tradeType=tradeType,symbol=symbol,marginType='cross')
     avgEntryPrice=res1['data'][0]['avgEntryPrice'];leverage=res1['data'][0]['leverage']
     markPrice=res1['data'][0]['markPrice'];liquidationPrice=res1['data'][0]['liquidationPrice']
@@ -133,5 +133,5 @@ def web_read_cell_value():#前段计算值
 
 if __name__ == '__main__':
     print(main())
-    print(java_read_cell_value())
-    print(web_read_cell_value())
+    # print(java_read_cell_value())
+    # print(web_read_cell_value())

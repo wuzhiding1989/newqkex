@@ -63,27 +63,39 @@ def admin_symbol_conf_upsert(symbolId):#btc:81000201 eth:81000301  FIL 81000401 
     print(res)
 
 def admin_memory_query_position(uid=None,tradeTyp=None,symbol=None):#查询uid下的当前委托订单
-    path=f'/v1/admin/memory/query/position?conditionUid={uid}&currency=USDT&tradeType={tradeTyp}&symbol={symbol}'
+    path=f'/v1/admin/memory/query/position?tradeType={tradeTyp}'
     res = requests.get(url=url+path,headers=headers).json()
-    print(res)#availPos返回为空
+    return  res #availPos返回为空
 
 def admin_bigdata_reconciliation_amend(id):
     path=f'/v1/admin/bigdata/reconciliation/amend/check/{id}'
     res = requests.post(url=url+path,headers=headers).json()
     print(url+path)
     print(res)
+
+def admin_memory_query_account(conditionUid):
+    params={"conditionUid": conditionUid}
+    path='/v1/admin/memory/query/account'
+    res = requests.get(url=url+path,params=params,headers=headers).json()
+    #print(url+path)
+    #print(params)
+    print(res['data']['list'])
+
 if __name__ == '__main__':
     #print(admin_symbol_conf_upsert('81000301'))
-    # a=admin_query_order(uid=10122333,tradeTyp=tradeTyp,symbol='ETHUSDT')
-    # print(a)
+    a=admin_memory_query_position(tradeTyp=tradeTyp)
+    for tmp in  a['data']['list']:
+        print(tmp)
     #print(admin_memory_query_position(tradeTyp=tradeTyp,uid='10122688',symbol='LINKUSDT'))
-    #print(admin_bigdata_reconciliation_amend(30004))
-    id1 = [Decimal('997.720194440000000000'), Decimal('997.720194440000000000'), Decimal('997.720194440000000000')]
-    id2 = [Decimal('0E-18'), Decimal('0E-18'), Decimal('-0.000119620000000000'), Decimal('0.000143550000000000')]
-
-    for i in range(len(id1) - 1):
-        if id1[i] - id2[i] == id1[i + 1]:
-            print("数据当前的ID：", i + 1)
-            print("id1[{}]-id2[{}] 不等于 id1[{}]: ".format(i, i, i + 1))
-            print("id1[{}]-id2[{}] = {}".format(i, i, id1[i] - id2[i]))
-            print("id1[{}] = {}".format(i + 1, id1[i + 1]))
+    tmp=[10122521,10122522,10122523,10122524]
+    for tm in tmp:
+        print(admin_memory_query_account(tm))
+    # id1 = [Decimal('997.720194440000000000'), Decimal('997.720194440000000000'), Decimal('997.720194440000000000')]
+    # id2 = [Decimal('0E-18'), Decimal('0E-18'), Decimal('-0.000119620000000000'), Decimal('0.000143550000000000')]
+    #
+    # for i in range(len(id1) - 1):
+    #     if id1[i] - id2[i] == id1[i + 1]:
+    #         print("数据当前的ID：", i + 1)
+    #         print("id1[{}]-id2[{}] 不等于 id1[{}]: ".format(i, i, i + 1))
+    #         print("id1[{}]-id2[{}] = {}".format(i, i, id1[i] - id2[i]))
+    #         print("id1[{}] = {}".format(i + 1, id1[i + 1]))

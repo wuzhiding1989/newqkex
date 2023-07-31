@@ -36,9 +36,9 @@ def read_google_authenticator_code(secret_key):
 
 
 if __name__ == '__main__':
-    # secret_key = 'KAYMZOHRHT2LO3VY'
+    secret_key = 'KAYMZOHRHT2LO3VY'
     #secret_key = '2KYSFNGE3YJCZGTS'
-    for i in  range(20):
-        print('商家',read_google_authenticator_code(s_Googlekey))
-        print('用户',read_google_authenticator_code(y_Googlekey))
-        time.sleep(20)
+    # for i in  range(20):
+    #     print('商家',read_google_authenticator_code(s_Googlekey))
+    #     print('用户',read_google_authenticator_code(y_Googlekey))
+    #     time.sleep(20)

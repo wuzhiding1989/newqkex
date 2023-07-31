@@ -48,6 +48,11 @@ weblogin = {
         "password": 'q123456',
         "emailcode": 111111,
         "secret": '2K6E7WL5S3J2JSP7'
+    },10:{
+        "username": '100@uat.com',
+        "password": 'q123456',
+        "emailcode": 111111,
+        "secret": '2K6E7WL5S3J2JSP7'
     },20:{
         "username": '200@cc.com',
         "password": 'q123456',

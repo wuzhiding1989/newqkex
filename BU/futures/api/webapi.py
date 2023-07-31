@@ -10,7 +10,7 @@ gear='depth0';limit=1000;period='1m'
 
 class webapi():
     def __init__(self,user,server):
-        self.headers = {"Content-Type": "application/json", "Accept-Language": "zh-TW", "source": "web"}
+        self.headers = {"Content-Type": "application/json", "Accept-Language": "zh-CN", "source": "web"}
         self.account = userdate.weblogin[user]['username']
         self.password = userdate.weblogin[user]['password']
         self.secret = userdate.weblogin[user]['secret']
@@ -18,6 +18,7 @@ class webapi():
         self.tradeurl = serverdate.server[server]['tradeapi']
         self.queryurl = serverdate.server[server]['queryapi']
         self.qkurl = serverdate.server[server]['qkurl']
+        self.uaturl = serverdate.server[server]['uaturl']
 
     def headers(self):
         headers=self.headers
@@ -125,7 +126,7 @@ class webapi():
             "tradeType": tradeType,
             "symbol": symbol,
             "marginType": marginType}
-        res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers).json()
+        res = requests.get(url=self.tradeurl + path, params=params, headers=self.headers,timeout=5).json()
         return res
 
      # 撤销单个订单
@@ -435,7 +436,7 @@ class webapi():
     def web_tradingAccount(self,currency=None):#/v1/trade/web/tradingAccount资产接口
         path = '/v1/trade/web/tradingAccount'
         params ={'currency':currency}
-        #print(self.tradeurl+path)
+        print(self.tradeurl+path)
         res = requests.get(url=self.tradeurl+path,json=params,headers=self.headers).json()
         return res
     def web_market_depth(self,tradeType=None,symbol=None,limit=None,gear=None):#/v1/market/depth 查询指定档位深度
@@ -488,9 +489,9 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(3,server='test')
+    wb = webapi(10,server='uat')
     from BU.futures.testcase.case import ket1
-    print(wb.web_transfer(currency="USDT",amount= "50",fromAccountType="funding", toAccountType="futures"))##funding,futures,
+    #print(wb.web_transfer(currency="USDT",amount= "50",fromAccountType="funding", toAccountType="futures"))##funding,futures,
     # print(wb.headers['X-Authorization'])
     # print(wb.web_stopOrders(tradeType=tradeType,symbol='FILUSDT',slOrdPx='3',marginType=marginType,
     #                         side='sell',positionSide='long',orderType="tpsl",reduceOnly=reduceOnly,
@@ -499,7 +500,7 @@ if __name__ == '__main__':
     #                         side='buy',positionSide='long',orderType="triggerLimit",reduceOnly=reduceOnly,
     #                         triggerPxType='last',orderQty=4,price=1663.8,timeInForce='GTC'))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    # print(wb.web_position(tradeType=tradeType,symbol=symbol))
+    print(wb.web_position(tradeType=tradeType,symbol=symbol))
     # a=wb.web_stopOrdersHistory(tradeType=tradeType,pageNum=1,pageSize=200)
     # print(a)
     # print(len(a['data']['list']))

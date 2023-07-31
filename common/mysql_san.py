@@ -67,6 +67,7 @@ def mysql_reconciliation(uid):#排除用户的账是否正确
             print("id1[{}] = {}".format(i + 1, id1[i + 1]))
     if equal_flag:
         print("当前用户的数据正常")
+        #return "当前用户的数据正常"
 def sql_send_with_timeout(sql, timeout):
     start_time = time.time()
     while True:
@@ -89,10 +90,12 @@ def t_account_action():
         a = sql_send_with_timeout(sql1, timeout=10)
 
         if not a:  # 如果a为空或者a为[]
-            print(slacksend.send_Slack('当前所有用户对账正确'))
+            print('当前所有用户对账正确')
         else:
             print(slacksend.send_Slack('对账异常，异常uid为：'))
             print(slacksend.send_Slack(a))
+            ac=mysql_reconciliation(a[0])
+            print(slacksend.send_Slack(ac))
     except TimeoutError:
         print('查询超时，请检查网络连接或稍后重试')
     except Exception as e:
@@ -102,9 +105,9 @@ if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
     # sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
     # a = mysql_select(sql)
-    print(mysql_reconciliation(uid='10122709'))
+    #print(mysql_reconciliation(uid='10122709'))
     #print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122688)",ac=1))#查询账号邮箱
     #print(add_account(uid='10122167',currency="ETH",balance='70000000'))#给钱包价钱，加到钱包账户
-    # for i in  range(2000):
-    #     print(t_account_action())
-    #     time.sleep(30 * 65)
+    for i in  range(2000):
+        print(t_account_action())
+        time.sleep(2 * 65)
