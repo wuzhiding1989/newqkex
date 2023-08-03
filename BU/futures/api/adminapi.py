@@ -1,8 +1,10 @@
 import  requests,time
 from decimal import Decimal
+from common import slacksend
 
 tradeTyp='linearPerpetual'
-url="https://test-futures-rest.qkex.com"
+#url="https://test-futures-rest.qkex.com"
+url="https://uat-admin-grpc.qkex.com"
 headers = {"Content-Type":"application/json","source":"api"}
 
 def admin_symbol_upsert(base): #修改交易对配置
@@ -77,19 +79,28 @@ def admin_memory_query_account(conditionUid):
     params={"conditionUid": conditionUid}
     path='/v1/admin/memory/query/account'
     res = requests.get(url=url+path,params=params,headers=headers).json()
-    #print(url+path)
-    #print(params)
+    # print(url+path)
+    # print(params)
     print(res['data']['list'])
 
 if __name__ == '__main__':
     #print(admin_symbol_conf_upsert('81000301'))
     a=admin_memory_query_position(tradeTyp=tradeTyp)
+    tt=['该uid有问题，保证率大于1，但是没爆仓掉：']
     for tmp in  a['data']['list']:
-        print(tmp)
+        if tmp['marginRate']>1:
+            tt.append(tmp)
+        #print(tmp)
+    print(tt)
+    slacksend.send_Slack(tt)
     #print(admin_memory_query_position(tradeTyp=tradeTyp,uid='10122688',symbol='LINKUSDT'))
-    tmp=[10122521,10122522,10122523,10122524]
-    for tm in tmp:
-        print(admin_memory_query_account(tm))
+    #tmp=[10122521,10122522,10122523,10122524]
+    # tmp = [169324, 169325, 169326, 169327]
+    # print(admin_bigdata_reconciliation_amend('60010'))
+    #print(admin_memory_query_account(conditionUid=None))
+    #tmp=[168910,134,137,133,169319]
+    # for tm in tmp:
+    #     print(admin_memory_query_account(tm))
     # id1 = [Decimal('997.720194440000000000'), Decimal('997.720194440000000000'), Decimal('997.720194440000000000')]
     # id2 = [Decimal('0E-18'), Decimal('0E-18'), Decimal('-0.000119620000000000'), Decimal('0.000143550000000000')]
     #

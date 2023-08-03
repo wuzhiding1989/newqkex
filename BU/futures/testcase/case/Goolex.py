@@ -1,7 +1,7 @@
 import os,pygsheets
 from BU.futures.api import webapi as web
 from common import slacksend
-tradeType='linearPerpetual';gear='0.01';limit=1000;Price=1800;symbol='BTCUSDT'
+tradeType='linearPerpetual';gear='0.01';limit=1000;Price=1800;symbol='ETHUSDT'
 #谷歌文档地址https://docs.google.com/spreadsheets/d/12XuiWo6u1nobwM8B0_xzvM7wB1IyzaV1E8y3P0JntxI/edit#gid=1284457170
 # 填写您的凭据文件名以及需要更新的工作表 ID 和范围
 CREDENTIALS_FILE = 'lively-oxide-388602-33b9719fd3c6.json'
@@ -9,7 +9,7 @@ SPREADSHEET_ID = 'testqk'
 RANGE_NAME = 'teql!A1:I1000'
 
 def main():
-    user = web.webapi(10, 'uat')
+    user = web.webapi(11, 'prod')
     res1=user.web_position(tradeType=tradeType,symbol=symbol,marginType='cross')
     print(res1)
     avgEntryPrice=res1['data'][0]['avgEntryPrice'];leverage=res1['data'][0]['leverage']
@@ -134,7 +134,8 @@ def web_read_cell_value():#前段计算值
     return result
 
 if __name__ == '__main__':
-    print(main())
+    #print(main())
     a=java_read_cell_value()
-    slacksend.send_Slack(a)
+    b=api_read_cell_value()
+    slacksend.send_Slack(b)
     # print(web_read_cell_value())
