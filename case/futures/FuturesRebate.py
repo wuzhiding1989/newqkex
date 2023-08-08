@@ -1,9 +1,11 @@
-import requests
+import sys
 
+import requests
+import urllib3
 from BU.admin.web import getAccessToken
 from common.mysql_san import add_wallet_account
 
-
+urllib3.disable_warnings()
 class FuturesRebate:
     def __init__(self,user,password):
         self.Authorization=Login().login(user,password)
@@ -50,9 +52,17 @@ class FuturesRebate:
 
         return res.json()
     def get_uid(self):
+        """#获取uid"""
         url="https://test-public-rest.qkex.com/user/detail"
         res=requests.request(method="get",headers=self.headers,url=url,verify=False)
         return res.json()
+    def do_transfer(self):
+        """划转"""
+        url="https://test-public-rest.qkex.com/wallet/transfer"
+        data={"amount":4999,"currency":"USDT","from":"wallet","pairCode":"P_R_USDT_USD","symbol":"USDT","to":"perpetual"}
+        res = requests.request(method="post", headers=self.headers, url=url, json=data,verify=False)
+        return res.json()
+
 
 class Login:
 
@@ -81,8 +91,10 @@ if __name__ == '__main__':
                print("用户资产够5000")
             else:
                 add_wallet_account(uid=uid,currency="USDT",balance="5000")
+                user.do_transfer()
         except Exception as e:
             print(e)
+            sys.exit()
 
         finally:
             for i in range(5):
