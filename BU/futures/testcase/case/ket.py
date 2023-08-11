@@ -62,20 +62,22 @@ def sides(number, min1, max1, accmax, accmin, symbol, time1):
 
 def tipicer():
     a=user.tickpre()
-    cc=a['data'][1][3]
+    print(a['data'])
+    cc=a['data'][0][3]
     return cc
 
 if __name__ == '__main__':
-   a=user.web_tradingAccount();
-   c=user.web_uid()
-   print('当前账号的uid',c['data']['userId'])
+   # a=user.web_tradingAccount();
+   # c=user.web_uid()
+   # print('当前账号的uid',c['data']['userId'])
    # if not a['data'] or (a['data'][0]['marginAvailable']) !='null' or float(a['data'][0]['marginAvailable']) < 2000:
    #     #print('请求数据为空')
    #     print(user.web_transfer(currency="USDT", amount="100000", fromAccountType="funding", toAccountType="futures"))
    #     #print(result)
    # else:
    #     print('当前账号的可用资产为', a['data'][0]['marginAvailable'])
-   for i in range(10000):
-        sides(symbol=symbol,number=100,min1=0.07,max1=0.2,accmax=10,accmin=20,time1=0.5)
+   # for i in range(10000):
+   #      sides(symbol=symbol,number=100,min1=0.07,max1=0.2,accmax=10,accmin=20,time1=0.5)
         #time.sleep(5)
+   print(tipicer())
 

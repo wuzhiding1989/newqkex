@@ -1,9 +1,9 @@
 server = {
     'test': {
-        'tradeapi': 'https://test-futures-rest.qkex.com',
-        'queryapi': 'https://test-futures-rest.qkex.com',
+        'tradeapi': 'http://test-futures-rest.qkex.com',
+        'queryapi': 'http://test-futures-rest.qkex.com',
         'qkurl':    'https://test-public-rest.qkex.com',
-        'uaturl': 'https://uat-futures-rest.qkex.com'
+        'uaturl': 'http://uat-futures-rest.qkex.com'
     },'uat': {
         'tradeapi': 'https://uat-futures-rest.qkex.com',
         'queryapi': 'https://test-futures-rest.qkex.com',

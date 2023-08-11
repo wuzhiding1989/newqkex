@@ -3,6 +3,7 @@ import logging
 from common import slacksend
 host='database-1.cnxpymarugg3.ap-southeast-1.rds.amazonaws.com'
 host1='172.31.24.122';user1='root';password1='12@3456';port1=4000
+uat_host='172.31.28.33';uat_user='dev_user';uat_password='dev_user#dev_us111er'
 user='admin'
 password='6Gp0iz1ZHNceJKwSpNg6'
 database='otc'
@@ -12,6 +13,8 @@ sql="SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid a
 def mysql_select(sql,ac):#根据主库,返回内容,查询表,查询条件进行查询
     if ac==0:
         db = pymysql.connect(host=host1, user=user1, password=password1,port=port1, database="")# 打开数据库连接
+    elif ac==1:
+        db = pymysql.connect(host=uat_host, user=uat_user, password=uat_password, port=port1, database="")  # 打开数据库连接
     else:
         db = pymysql.connect(host=host, user=user, password=password, database="")  # 打开数据库连接
     cursor = db.cursor()# 使用cursor()方法获取操作游标
@@ -49,8 +52,8 @@ def add_account(uid,currency,balance):#给钱包价钱，加到钱包账户
         a=mysql_execute(updata_select)
         print(updata_select,a)
 
-def mysql_reconciliation(uid):#排除用户的账是否正确
-    a=mysql_select(f"SELECT action_id,income,after_balance FROM futures_btc1.t_account_action WHERE uid={uid}  ORDER BY id DESC ",ac=0)
+def mysql_reconciliation(ac,uid):#排除用户的账是否正确
+    a=mysql_select(f"SELECT action_id,income,after_balance FROM futures_btc1.t_account_action WHERE uid={uid} AND create_date='2023-08-07'  ORDER BY id DESC ",ac=ac)
     id2=[];id1=[];id3=[]
     equal_flag = True
     for tmp in a:
@@ -64,6 +67,7 @@ def mysql_reconciliation(uid):#排除用户的账是否正确
             print("数据上一个的action_id：", id3[i+1])
             print("id1[{}]-id2[{}] 不等于 id1[{}]: ".format(i, i, i + 1))
             print("id1[{}]-id2[{}] = {}".format(i, i, id1[i] - id2[i]))
+            print("id1[{}] = {}".format(i + 1, id1[i + 1]))
             print("id1[{}] = {}".format(i + 1, id1[i + 1]))
     if equal_flag:
         print("当前用户的数据正常")
@@ -105,9 +109,9 @@ if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
     # sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
     # a = mysql_select(sql)
-    #print(mysql_reconciliation(uid='10122709'))
+    print(mysql_reconciliation(ac=1,uid='169321'))
     #print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122688)",ac=1))#查询账号邮箱
     #print(add_account(uid='10122167',currency="ETH",balance='70000000'))#给钱包价钱，加到钱包账户
-    for i in  range(2000):
-        print(t_account_action())
-        time.sleep(2 * 65)
+    # for i in  range(2000):
+    #     print(t_account_action())
+    #     time.sleep(2 * 65)

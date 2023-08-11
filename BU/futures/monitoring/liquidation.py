@@ -9,12 +9,12 @@ def liquidation():
         for tmp in  a['data']['list']:
             if tmp['marginRate']>1:
                 tt.append(tmp)
-            #print(tmp)
-        #print(tt)
-        slacksend.send_Slack(tt)
+            print(tmp)
+        print(tt)
+        #slacksend.send_Slack(tt)
     except Exception as e:
         print(e)
 if __name__ == '__main__':
     for i in  range(1000):
-        time.sleep(60 * 60)
+        #time.sleep(60 * 60)
         liquidation()

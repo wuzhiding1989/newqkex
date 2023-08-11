@@ -74,6 +74,16 @@ weblogin = {
         "password": 'q123456',
         "emailcode": 111111,
         "secret": '2K6E7WL5S3J2JSP7'
+    },41:{
+        "username": 'eth@test.com',
+        "password": 'qa123456',
+        "emailcode": 111111,
+        "secret": '2K6E7WL5S3J2JSP7'
+    },42:{
+        "username": 's001@cc.com',
+        "password": 'q123456',
+        "emailcode": 111111,
+        "secret": 'DBBGNEM3POXAYRSO'
     }
 
 }

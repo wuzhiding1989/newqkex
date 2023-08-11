@@ -490,7 +490,7 @@ class webapi():
         return res
 
 if __name__ == '__main__':
-    wb = webapi(10,server='uat')
+    wb = webapi(5,server='test')
     from BU.futures.testcase.case import ket1
     #print(wb.web_transfer(currency="USDT",amount= "50",fromAccountType="funding", toAccountType="futures"))##funding,futures,
     # print(wb.headers['X-Authorization'])
@@ -501,7 +501,7 @@ if __name__ == '__main__':
     #                         side='buy',positionSide='long',orderType="triggerLimit",reduceOnly=reduceOnly,
     #                         triggerPxType='last',orderQty=4,price=1663.8,timeInForce='GTC'))
     # # print(wb.web_openOrders(tradeType=tradeType, symbol=symbol))
-    print(wb.web_market_depth(tradeType=tradeType,symbol=symbol,gear=0.01))
+    #print(wb.web_market_depth(tradeType=tradeType,symbol=symbol,gear=0.01))
     # a=wb.web_stopOrdersHistory(tradeType=tradeType,pageNum=1,pageSize=200)
     # print(a)
     # print(len(a['data']['list']))
@@ -511,7 +511,7 @@ if __name__ == '__main__':
     # print(a)
     # for i in a['data']['list']:
     #     print(i)
-    #print(wb.web_orders_oneClickClose(tradeType=tradeType,symbol='ETHUSDT'))
+    print(wb.web_orders_oneClickClose(tradeType=tradeType,symbol='ETHUSDT'))
     # print(wb.web_oneClickClose(tradeType=tradeType, symbol='FILUSDT'))
     #a=wb.web_wallet_transfer(fromAccountType="exchange", toAccountType="perpetual", currency="USDT", amount=1,pairCode='P_R_USDT_USD',symbol="USDT")
     #a.web_wallet_transfer(fromAccountType=fromAccountType, toAccountType=toAccountType, currency=currency,amount=amount, pairCode=pairCode, symbol=currency)

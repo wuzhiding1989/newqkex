@@ -8,11 +8,11 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
 headers1 = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5","Cookie":"token=c7ebd817-d668-46eb-a80f-d5de9cd2f866; expire_time=20211029155728",
                "Accept": "application/json, text/plain, */*","Content-Type":"application/json","Connection":"close","Accept-Language":"zh-CN","X-Authorization":"","language":"Chinese"}
-stoken="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4M2EzMTQzMy05Zjg4LTQ2NjEtYmM3NC04NzdiNDg2MjRlNjkxODEwMTUwODk0IiwidWlkIjoiT3dBa05jdFk5R1Jpcy9GekJaY2RkQT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJRbXM0VVlDZmVNNHNVdkh3L1UvWHRnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4OTU4NDUxNywiZXhwIjoxNjg5NjcwOTE3LCJpc3MiOiJ3Y3MifQ.qHmZUt2x20BaDN_1IJLT2U6u5GFgecNAnPo_KdFZDh8"
-ytoken='eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzZTRkMDM3Mi00NmE1LTQyYjAtODA4ZC1hMTQyOTAzZjA4YmIxODAxNTkyMTU5IiwidWlkIjoiaDBsVXZiR0t2SkdkdGVscGYxQWRZUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiJRbXM0VVlDZmVNNHNVdkh3L1UvWHRnPT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY4OTU4NDcxMCwiZXhwIjoxNjg5NjcxMTEwLCJpc3MiOiJ3Y3MifQ.ea0UoJRePl6BZVb4qfbTlWOHoOm2PyHYXIeFRiC_hGI'
+stoken="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI2ZjA4NjkzNy0wMTUwLTRhMWItODU5ZS0zZmRlNjk5YjRkNDAxNDI0Nzk5MDM2IiwidWlkIjoiaDBsVXZiR0t2SkdkdGVscGYxQWRZUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiIzZU1oTTZVOXJuSllMNzNVQTdMeTl3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY5MTcyMTg1MSwiZXhwIjoxNjkxODA4MjUxLCJpc3MiOiJ3Y3MifQ.l3pXtezLGPsOxlDI7z5dVferWMRfJhOhCCA5WLQLzK0"
+ytoken="eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIwNjA3M2ExMi00ZTJhLTRjOTUtYWUyYy04N2ZjNWIzMmU0YTgxMTIwNDMyNTA1IiwidWlkIjoiaDBsVXZiR0t2SkdkdGVscGYxQWRZUT09IiwiYmlkIjoibVdPTzdGMnpzTjBUd1JBeVFEbGsrQT09IiwiaXAiOiIzZU1oTTZVOXJuSllMNzNVQTdMeTl3PT0iLCJkZXYiOiJBOG9MTmVSVnZGR294TDlQWmVoa3BBPT0iLCJzdHMiOjAsImlhdCI6MTY5MTYzNDEwNywiZXhwIjoxNjkxNzIwNTA3LCJpc3MiOiJ3Y3MifQ.HZOfGJlFCa2TxyvWHGSEA9jOmuiZY-lt3R4jQacYU7Q"
 headers['X-Authorization']=stoken
-headers1['X-Authorization']=ytoken
-url = 'https://test-public-rest.qkex.com'
+headers1['X-Authorization']=stoken
+url = 'http://test-public-rest.qkex.com'
 account='12345678@qq.com'
 password='aa123456'
 verifyCode='111111'
@@ -318,6 +318,7 @@ if __name__ == '__main__':
     # print(login(account='y005@cc.com',password='q123456',verifyCode='111111'))
     # print(orders(symbol='BTC_USDT',systemOrderType='limit',side='buy',volume=0.01,price=1003,source='web'))
     print(otc_orders_computeMax())
+    print(otc_pending(orderId=1089,amount=0.00740584,googleVerifyCode='123321',tradePassword='q123456'))
     #print(exchange_convert(baseSymbol='ABC',quoteSymbol='USDT',amount=2090))
     #print(otc_PublicOrde)rs(amount=None,payType=None,symbol='BTC',legalSymbol='USD',side='buy',page=1,pageSize=1000))
     # print(otc_orders(amount="0.10000000",side="sell",base="BTC",quote="USD",price="30000.00000000",payType=[3]))

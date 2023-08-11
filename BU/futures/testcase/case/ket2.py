@@ -74,4 +74,4 @@ def save_data():
 
 if __name__ == '__main__':
     for i in range(10000):
-        print(sidess2(num=50,time11=0.02,acc1=50,acc2=60))
+        print(sidess2(num=50,time11=1,acc1=2,acc2=10))

@@ -3,8 +3,8 @@ from decimal import Decimal
 from common import slacksend
 
 tradeTyp='linearPerpetual'
-#url="https://test-futures-rest.qkex.com"
-url="https://uat-admin-grpc.qkex.com"
+url="http://test-futures-rest.qkex.com"
+#url="https://uat-admin-grpc.qkex.com"
 headers = {"Content-Type":"application/json","source":"api"}
 
 def admin_symbol_upsert(base): #修改交易对配置
@@ -75,24 +75,35 @@ def admin_bigdata_reconciliation_amend(id):
     print(url+path)
     print(res)
 
+def admin_memory_update_account(conditionUid,currency,jsonStr):
+    path='/v1/admin/memory/update/account'
+    params={"conditionUid":conditionUid,"currency":currency,"jsonStr":jsonStr}
+    res = requests.post(url=url+path,headers=headers,json=params).json()
+    print(url+path)
+    print(params)
+    print(res)
+
 def admin_memory_query_account(conditionUid):
     params={"conditionUid": conditionUid}
     path='/v1/admin/memory/query/account'
     res = requests.get(url=url+path,params=params,headers=headers).json()
     # print(url+path)
     # print(params)
-    print(res['data']['list'])
+    print(res)
 
 if __name__ == '__main__':
     #print(admin_symbol_conf_upsert('81000301'))
     a=admin_memory_query_position(tradeTyp=tradeTyp)
-    tt=['该uid有问题，保证率大于1，但是没爆仓掉：']
+    tt=[]
     for tmp in  a['data']['list']:
-        if tmp['marginRate']>1:
-            tt.append(tmp)
-        #print(tmp)
-    print(tt)
-    slacksend.send_Slack(tt)
+        # if tmp['marginRate']<1:
+        #     print('账号正常')
+        # else:
+        #     tt.append('该uid有问题，保证率大于1，但是没爆仓掉：')
+        tt.append(tmp)
+        print(tmp)
+    #print(tt)
+    # slacksend.send_Slack(tt)
     #print(admin_memory_query_position(tradeTyp=tradeTyp,uid='10122688',symbol='LINKUSDT'))
     #tmp=[10122521,10122522,10122523,10122524]
     # tmp = [169324, 169325, 169326, 169327]
@@ -110,3 +121,5 @@ if __name__ == '__main__':
     #         print("id1[{}]-id2[{}] 不等于 id1[{}]: ".format(i, i, i + 1))
     #         print("id1[{}]-id2[{}] = {}".format(i, i, id1[i] - id2[i]))
     #         print("id1[{}] = {}".format(i + 1, id1[i + 1]))
+    #print(admin_memory_query_account(conditionUid=169325))
+    #print(admin_memory_update_account(conditionUid=10122688,currency='USDT',jsonStr="{'uid': '10122688', 'accountType': 1, 'currency': 'USDT', 'balance': 10}"))

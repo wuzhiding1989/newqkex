@@ -1,9 +1,9 @@
 from BU.futures.api import webapi as wb
 import random,time,requests,re
-symbol = 'BTCUSDT';tradeType = 'linearPerpetual';side ='buy';marginType = 'cross';positionSide = 'long'
+symbol = 'ETHUSDT';tradeType = 'linearPerpetual';side ='buy';marginType = 'cross';positionSide = 'long'
 postOnly = None;reduceOnly = None;orderType = 'limit';priceType=None;pageNum = '1';pageSize = '10';timeInForce=None
 fromAccountType='exchange';toAccountType='perpetual';currency='USDT';amount='40';pairCode='P_R_USDT_USD';gear='depth-3';limit=1000;period='1m'##short，long
-us=10
+us=42
 user=wb.webapi(us,'test')
 
 def sidess2(num,time1):
@@ -23,7 +23,7 @@ def sidess2(num,time1):
                                                 postOnly=postOnly, timeInForce=timeInForce)
                 print(ac,order_response)
                 time.sleep(time1)
-        #print(user.web_oneClickClose(tradeType=tradeType))
+        print(user.web_oneClickClose(tradeType=tradeType))
     except Exception as e:
         print('Error :', e)
 
@@ -94,5 +94,5 @@ if __name__ == '__main__':
     #     time.sleep(2)
     #print(getSpotList(symbol='BNBUSDT',ne=2))
     for i in range(10000):
-            print(sidess2(num=100,time1=10))
+            print(sidess2(num=2,time1=10))
 
