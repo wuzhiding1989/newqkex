@@ -44,7 +44,7 @@ def add_account(uid,currency,balance):#给钱包价钱，加到钱包账户
     sql_select = f"SELECT balance FROM wallet.user_balance WHERE user_id in ({uid}) AND parent_symbol='{currency}' AND currency_id=0"
     install_select = f"INSERT INTO wallet.user_balance ( `currency_id`, `parent_symbol`, `user_id`, `balance`, `create_on`, `update_on`) VALUES ( 0, '{currency}', {uid}, {balance}, '2023-02-22 11:08:19', '2023-02-25 14:30:41')"
     updata_select = f"UPDATE wallet.user_balance SET balance = '{balance}' WHERE parent_symbol ='{currency}' AND currency_id=0 AND user_id in ({uid})"
-    abc=mysql_select(sql_select)
+    abc=mysql_select(sql_select,ac=1)
     if len(abc)==0:#判断钱包是否有数据
         a=mysql_execute(install_select)
         print(a,install_select)
@@ -104,6 +104,26 @@ def t_account_action():
         print('查询超时，请检查网络连接或稍后重试')
     except Exception as e:
         print('Error:', e)
+
+def add_wallet_account(uid,currency,balance):#给钱包价钱，加到钱包账户
+    sql_select = f"SELECT balance FROM wallet.user_balance WHERE user_id in ({uid}) AND parent_symbol='{currency}' AND currency_id=0"
+    install_select = f"INSERT INTO wallet.user_balance ( `currency_id`, `parent_symbol`, `user_id`, `balance`, `create_on`, `update_on`) VALUES ( 0, '{currency}', {uid}, {balance}, '2023-02-22 11:08:19', '2023-02-25 14:30:41')"
+    updata_select = f"UPDATE wallet.user_balance SET balance = '{balance}' WHERE parent_symbol ='{currency}' AND currency_id=0 AND user_id in ({uid})"
+
+    install_transfer_record = f"insert into transfer_record (symbol, user_id, broker_id, to_address, amount,btc_amount, fee, confirmation, biz, trader_no, transfer_type, transaction_type,status, create_on, update_on) values ('USDT',  {uid}, 10000, unix_timestamp()+600, {balance}, 0, 0.00000000, 0, 9,unix_timestamp(), 13, 0, 2, now(), now());"
+    install_bill_statements= f"insert into bill_statements (user_id, statements_no, symbol, amount, after_amount,trans_type, create_time)values ( {uid}, unix_timestamp(), 'USDT', {balance}, 0, 13, now());"
+
+    abc=mysql_select(sql_select,ac=1)
+    if len(abc)==0:#判断钱包是否有数据
+        a=mysql_execute(install_select)
+        print(a,install_select)
+    else:
+        a=mysql_execute(updata_select)
+        print(updata_select,a)
+    #插入钱包划转记录
+    a = mysql_execute(install_transfer_record)
+    # 插入钱包划转记录
+    a = mysql_execute(install_bill_statements)
 
 if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
