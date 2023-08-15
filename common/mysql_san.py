@@ -1,12 +1,12 @@
 import pymysql,time
 import logging
 from common import slacksend
-host='database-1.cnxpymarugg3.ap-southeast-1.rds.amazonaws.com'
+host='192.168.200.101';user='dev-user';password='dev-user@123456';port=3306
 host1='172.31.24.122';user1='root';password1='12@3456';port1=4000
 uat_host='172.31.28.33';uat_user='dev_user';uat_password='dev_user#dev_us111er'
-user='admin'
-password='6Gp0iz1ZHNceJKwSpNg6'
-database='otc'
+# user='admin'
+# password='6Gp0iz1ZHNceJKwSpNg6'
+# database='otc'
 from decimal import Decimal as d
 #sql='SELECT available_balance FROM assets WHERE id=4594227'
 sql="SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM config_currency WHERE symbol='btc' AND legal_symbol='usd') AS fee FROM user_info a,rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in (10122165)"
@@ -110,10 +110,10 @@ def add_wallet_account(uid,currency,balance):#给钱包价钱，加到钱包账�
     install_select = f"INSERT INTO wallet.user_balance ( `currency_id`, `parent_symbol`, `user_id`, `balance`, `create_on`, `update_on`) VALUES ( 0, '{currency}', {uid}, {balance}, '2023-02-22 11:08:19', '2023-02-25 14:30:41')"
     updata_select = f"UPDATE wallet.user_balance SET balance = '{balance}' WHERE parent_symbol ='{currency}' AND currency_id=0 AND user_id in ({uid})"
 
-    install_transfer_record = f"insert into transfer_record (symbol, user_id, broker_id, to_address, amount,btc_amount, fee, confirmation, biz, trader_no, transfer_type, transaction_type,status, create_on, update_on) values ('USDT',  {uid}, 10000, unix_timestamp()+600, {balance}, 0, 0.00000000, 0, 9,unix_timestamp(), 13, 0, 2, now(), now());"
-    install_bill_statements= f"insert into bill_statements (user_id, statements_no, symbol, amount, after_amount,trans_type, create_time)values ( {uid}, unix_timestamp(), 'USDT', {balance}, 0, 13, now());"
+    install_transfer_record = f"insert into wallet.transfer_record (symbol, user_id, broker_id, to_address, amount,btc_amount, fee, confirmation, biz, trader_no, transfer_type, transaction_type,status, create_on, update_on) values ('USDT',  {uid}, 10000, unix_timestamp()+600, {balance}, 0, 0.00000000, 0, 9,unix_timestamp(), 13, 0, 2, now(), now());"
+    install_bill_statements= f"insert into wallet.bill_statements (user_id, statements_no, symbol, amount, after_amount,trans_type, create_time)values ( {uid}, unix_timestamp(), 'USDT', {balance}, 0, 13, now());"
 
-    abc=mysql_select(sql_select,ac=1)
+    abc=mysql_select(sql_select,ac=3)
     if len(abc)==0:#判断钱包是否有数据
         a=mysql_execute(install_select)
         print(a,install_select)
@@ -129,9 +129,10 @@ if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
     # sql = f"SELECT a.fee_rate,b.`status`, b.ratio,b.target_uid AS s_uid ,b.source_uid as f_uid,(SELECT platform_commission_rate FROM OTC.config_currency WHERE symbol='{symbol}' AND legal_symbol='{legal_symbol}') AS fee FROM OTC.user_info a,OTC.rebate_config b WHERE a.user_id=b.source_uid AND a.user_id in ({user_id})"
     # a = mysql_select(sql)
-    print(mysql_reconciliation(ac=1,uid='169321'))
-    #print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122688)",ac=1))#查询账号邮箱
-    #print(add_account(uid='10122167',currency="ETH",balance='70000000'))#给钱包价钱，加到钱包账户
+    # print(mysql_reconciliation(ac=1,uid='169321'))
+    # #print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122688)",ac=1))#查询账号邮箱
+    # print(add_account(uid='10122628',currency="USDT",balance='10000'))#给钱包价钱，加到钱包账户
+    print(add_wallet_account(uid='10122628',currency="USDT",balance='10000'))#给钱包价钱，加到钱包账户
     # for i in  range(2000):
     #     print(t_account_action())
     #     time.sleep(2 * 65)
