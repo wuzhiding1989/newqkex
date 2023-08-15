@@ -1,7 +1,7 @@
 import pymysql,time
 import logging
 from common import slacksend
-host='192.168.200.101';user='dev-user';password='dev-user@123456';port=3306
+host='192.168.200.150';user='test-user';password='test-user@123456';port=3306
 host1='172.31.24.122';user1='root';password1='12@3456';port1=4000
 uat_host='172.31.28.33';uat_user='dev_user';uat_password='dev_user#dev_us111er'
 # user='admin'
