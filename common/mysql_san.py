@@ -1,3 +1,6 @@
+import decimal
+import sys
+
 import pymysql,time
 import logging
 from common import slacksend
@@ -114,16 +117,32 @@ def add_wallet_account(uid,currency,balance):#给钱包价钱，加到钱包账�
     install_bill_statements= f"insert into wallet.bill_statements (user_id, statements_no, symbol, amount, after_amount,trans_type, create_time)values ( {uid}, unix_timestamp(), 'USDT', {balance}, 0, 13, now());"
 
     abc=mysql_select(sql_select,ac=3)
+    print(abc)
     if len(abc)==0:#判断钱包是否有数据
         a=mysql_execute(install_select)
         print(a,install_select)
+        a = mysql_execute(install_transfer_record)
+        # 插入钱包划转记录
+        a = mysql_execute(install_bill_statements)
     else:
-        a=mysql_execute(updata_select)
-        print(updata_select,a)
+        balance=decimal.Decimal(balance)
+        abc=abc[0][0]
+        if balance>abc:#判断更新的资金是否比数据库中的大
+            update_balance=balance-abc
+        elif balance==abc:
+            sys.exit()
+        else:
+            update_balance=abc-balance
+        a = mysql_execute(updata_select)
+        # print(updata_select,a)
+        update_transfer_record = f"insert into wallet.transfer_record (symbol, user_id, broker_id, to_address, amount,btc_amount, fee, confirmation, biz, trader_no, transfer_type, transaction_type,status, create_on, update_on) values ('USDT',  {uid}, 10000, unix_timestamp()+600, {update_balance}, 0, 0.00000000, 0, 9,unix_timestamp(), 13, 0, 2, now(), now());"
+        mysql_execute(update_transfer_record)
+        update_bill_statements = f"insert into wallet.bill_statements (user_id, statements_no, symbol, amount, after_amount,trans_type, create_time)values ( {uid}, unix_timestamp(), 'USDT', {update_balance}, {balance}, 13, now());"
+        mysql_execute(update_bill_statements)
     #插入钱包划转记录
-    a = mysql_execute(install_transfer_record)
-    # 插入钱包划转记录
-    a = mysql_execute(install_bill_statements)
+    # a = mysql_execute(install_transfer_record)
+    # # 插入钱包划转记录
+    # a = mysql_execute(install_bill_statements)
 
 if __name__ == '__main__':
     # user_id=10122165; legal_symbol='usd'; symbol='btc'
@@ -132,7 +151,13 @@ if __name__ == '__main__':
     # print(mysql_reconciliation(ac=1,uid='169321'))
     # #print(sql_send("SELECT email FROM user_center.user_info WHERE id in (10122688)",ac=1))#查询账号邮箱
     # print(add_account(uid='10122628',currency="USDT",balance='10000'))#给钱包价钱，加到钱包账户
-    print(add_wallet_account(uid='10122628',currency="USDT",balance='10000'))#给钱包价钱，加到钱包账户
+    print(add_wallet_account(uid='10122637',currency="USDT",balance='1000000'))#给钱包价钱，加到钱包账户
     # for i in  range(2000):
     #     print(t_account_action())
     #     time.sleep(2 * 65)
+    # uid="10122637"
+    # currency="USDT"
+    # sql=f"SELECT * FROM wallet.user_balance WHERE user_id in ({uid}) AND parent_symbol='{currency}' AND currency_id=0"
+    # data=mysql_select(sql,3)
+    # print(data[0][4])
+    # data
